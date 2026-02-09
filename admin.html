@@ -14,6 +14,7 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <style>
@@ -155,8 +156,8 @@
             gap: 10px;
         }
 
-        .btn-profile {
-            background: var(--primary-color);
+        .btn-profile,
+        .btn-logout {
             color: var(--white);
             border: none;
             padding: 12px;
@@ -166,11 +167,15 @@
             font-weight: 600;
             width: 100%;
             transition: background 0.2s;
-            margin-bottom: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .btn-profile {
+            background: var(--primary-color);
         }
 
         .btn-profile:hover {
@@ -179,19 +184,6 @@
 
         .btn-logout {
             background: var(--danger-color);
-            color: var(--white);
-            border: none;
-            padding: 12px;
-            cursor: pointer;
-            border-radius: 8px;
-            font-family: 'Sarabun', sans-serif;
-            font-weight: 600;
-            width: 100%;
-            transition: background 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
         }
 
         .btn-logout:hover {
@@ -618,7 +610,6 @@
             background: #c0392b;
         }
 
-        /* 🔥🔥🔥 แก้ไขเฉพาะส่วนนี้ สำหรับรูปในถังขยะเท่านั้น 🔥🔥🔥 */
         .approval-item.trash-item img {
             filter: grayscale(100%);
             opacity: 0.85;
@@ -1041,7 +1032,6 @@
 
             .main-content {
                 padding: 80px 10px 30px 10px;
-                /* ลด padding ข้างนิดนึง */
                 width: 100%;
             }
 
@@ -1062,7 +1052,6 @@
             .card-header-title {
                 margin: 0 !important;
                 font-size: 18px !important;
-                /* ลดขนาดฟอนต์หัวข้อหน่อย */
                 flex: 1;
                 white-space: nowrap;
                 overflow: hidden;
@@ -1080,22 +1069,18 @@
             .card .bulk-toolbar {
                 display: flex !important;
                 flex-direction: row !important;
-                /* บังคับแนวนอน */
                 flex-wrap: nowrap !important;
-                /* ห้ามปัดบรรทัด */
                 align-items: center !important;
                 justify-content: space-between !important;
                 gap: 8px !important;
                 padding: 10px !important;
                 overflow-x: auto;
-                /* กันล้นจอเล็กมากๆ */
             }
 
             /* ปุ่มเลือกทั้งหมด (ฝั่งซ้าย) */
             #btnSelectAllTrash {
                 width: auto !important;
                 flex: 1;
-                /* ให้ยืดกินพื้นที่ว่าง */
                 margin: 0 !important;
                 height: 38px !important;
                 font-size: 12px !important;
@@ -1112,7 +1097,6 @@
                 gap: 5px !important;
                 margin: 0 !important;
                 flex-shrink: 0;
-                /* ห้ามหด */
             }
 
             /* ปุ่ม กู้คืน/ลบถาวร */
@@ -1200,7 +1184,6 @@
             }
 
             /* --- 🔥 IMPROVED MOBILE LOGS (FORCE STYLE) --- */
-            /* 1. ล้างค่าพื้นฐานของตารางออกให้หมด */
             .log-table,
             .log-table tbody,
             .log-table tr,
@@ -1210,17 +1193,14 @@
                 box-sizing: border-box !important;
             }
 
-            /* 2. จัด Layout ของ Card (tr) */
             .log-table tr {
                 display: grid !important;
-                /* ซ้าย: ชื่อ User, ขวา: Badge Action */
                 grid-template-columns: 1fr auto !important;
                 grid-template-areas:
                     "datetime datetime"
                     "user badge"
                     "details details";
                 gap: 5px 10px !important;
-
                 background: white !important;
                 margin-bottom: 15px !important;
                 padding: 15px !important;
@@ -1230,7 +1210,6 @@
                 border-left: 5px solid var(--primary-color) !important;
             }
 
-            /* Cell 1: Date & Time -> พื้นที่ด้านบนสุด */
             .log-table td:nth-child(1) {
                 grid-area: datetime !important;
                 border-bottom: 1px solid #f0f0f0 !important;
@@ -1238,14 +1217,12 @@
                 padding-bottom: 8px !important;
             }
 
-            /* จัดให้วันที่กับเวลาอยู่คนละฝั่ง */
             .log-table td:nth-child(1)>div {
                 flex-direction: row !important;
                 justify-content: space-between !important;
                 width: 100% !important;
             }
 
-            /* Cell 2: Username -> ซ้าย */
             .log-table td:nth-child(2) {
                 grid-area: user !important;
                 font-weight: bold;
@@ -1255,7 +1232,6 @@
                 gap: 25px;
             }
 
-            /* Add User Icon */
             .log-table td:nth-child(2)::before {
                 content: '\f007';
                 font-family: "Font Awesome 6 Free";
@@ -1263,14 +1239,12 @@
                 color: #bdc3c7;
             }
 
-            /* Cell 3: Action Badge -> ขวา */
             .log-table td:nth-child(3) {
                 grid-area: badge !important;
                 text-align: right !important;
                 justify-self: end !important;
             }
 
-            /* Cell 4: Details -> ล่างสุดเต็มจอ */
             .log-table td:nth-child(4) {
                 grid-area: details !important;
                 background-color: #f8f9fa !important;
@@ -1301,7 +1275,6 @@
                 background: white;
                 margin-bottom: 15px;
                 padding: 0 !important;
-                /* 🔥 ลบ Padding เพื่อให้ขีดชนขอบ */
                 border-radius: 12px;
                 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
                 border: 1px solid #eee;
@@ -1316,7 +1289,6 @@
                 border-bottom: 1px solid #f0f0f0 !important;
             }
 
-            /* จัดระยะห่างใน Cell */
             .user-cell {
                 gap: 15px !important;
             }
@@ -1471,7 +1443,8 @@
             <div style="margin-top: auto;">
                 <button onclick="openProfileSettings()" class="btn-profile"><i class="fas fa-cog"></i>
                     ตั้งค่าส่วนตัว</button>
-                <button onclick="logout()" class="btn-logout"><i class="fas fa-sign-out-alt"></i> ออกจากระบบ</button>
+                <button onclick="logout()" class="btn-logout"><i class="fas fa-sign-out-alt"></i>
+                    ออกจากระบบ</button>
             </div>
         </div>
     </div>
@@ -1497,7 +1470,6 @@
         </div>
 
         <div class="card" style="border-top: 5px solid #9b59b6;">
-
             <div class="card-header-wrapper header-color-storage">
                 <h3 class="card-header-title" style="color: #9b59b6;">
                     <i class="fas fa-hdd"></i> พื้นที่จัดเก็บข้อมูล
@@ -1512,13 +1484,11 @@
                     <span style="font-weight:600; color:#555; font-size: 14px;">เครดิตที่ใช้ไป (Usage)</span>
                     <span id="storagePercentage" style="font-weight:bold; color:#9b59b6; font-size:18px;">0%</span>
                 </div>
-
                 <div style="width:100%; height:26px; background:#ecf0f1; border-radius:15px; position:relative; overflow:hidden; box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);">
                     <div id="storageBar" style="height:100%; background:linear-gradient(90deg, #3498db, #9b59b6); width:0%; transition:width 0.8s cubic-bezier(0.4, 0, 0.2, 1); display:flex; align-items:center; padding-left: 12px;">
                         <span id="storageBarText" style="color:#fff; font-weight:bold; font-size:13px; text-shadow: 0 1px 1px rgba(0,0,0,0.3); line-height: 26px; white-space: nowrap;">0.00%</span>
                     </div>
                 </div>
-
                 <div style="display:flex; justify-content:space-between; margin-top:5px; font-size:12px; color:#7f8c8d;">
                     <span id="storageUsed">Bandwidth+Storage: 0 MB</span>
                     <span id="storageLimit">Plan Limit: ~25 GB</span>
@@ -1541,9 +1511,7 @@
             </div>
 
             <div>
-                <h4 style="color:#666; margin-bottom:5px; font-size:14px; font-weight:600;"><i class="fas fa-clock"></i>
-                    กิจกรรมที่อัปเดตล่าสุด (5 อันดับแรก)</h4>
-
+                <h4 style="color:#666; margin-bottom:5px; font-size:14px; font-weight:600;"><i class="fas fa-clock"></i> กิจกรรมที่อัปเดตล่าสุด (5 อันดับแรก)</h4>
                 <div id="topCategoriesList" style="margin-top: 15px;">
                     <p style="text-align:center; color:#999; padding:15px; font-size: 13px;">กำลังโหลด...</p>
                 </div>
@@ -1556,7 +1524,6 @@
         </div>
 
         <div class="card" style="border-top: 5px solid #3498db;">
-
             <div class="card-header-wrapper header-color-upload">
                 <h3 class="card-header-title" style="color: #3498db;">
                     <i class="fas fa-cloud-upload-alt"></i> อัปโหลดรูปภาพกิจกรรม
@@ -1565,7 +1532,6 @@
 
             <form id="uploadForm">
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-
                     <div style="display:flex; flex-direction:column;">
                         <label style="font-size:14px; color:#555; margin-bottom:5px;"><b>1. ชื่อกิจกรรม</b></label>
                         <input type="text" id="categoryName" list="categoryList" placeholder="พิมพ์ชื่อกิจกรรม..." required style="margin-bottom: 0; font-size:14px; height: 42px; border-radius: 8px;">
@@ -1574,14 +1540,11 @@
 
                     <div style="display:flex; flex-direction:column;">
                         <label style="font-size:14px; color:#555; margin-bottom:5px;"><b>2. เลือกรูปภาพ</b></label>
-
                         <div class="file-upload-wrapper" style="min-height: 120px; padding: 15px;">
                             <div id="uploadPlaceholder" style="text-align: center;">
                                 <span class="upload-icon" style="font-size: 32px; color: #3498db; margin-bottom: 5px;"><i class="fas fa-images"></i></span>
-                                <div class="upload-text" style="font-size: 14px; color: #3498db; font-weight: 600;">
-                                    คลิกเพื่อเลือกรูป / ถ่ายภาพ</div>
-                                <span style="font-size:11px; color:#7f8c8d; display:block; margin-top:2px;">(สูงสุด 30
-                                    รูป)</span>
+                                <div class="upload-text" style="font-size: 14px; color: #3498db; font-weight: 600;">คลิกเพื่อเลือกรูป / ถ่ายภาพ</div>
+                                <span style="font-size:11px; color:#7f8c8d; display:block; margin-top:2px;">(สูงสุด 30 รูป)</span>
                             </div>
                             <div id="previewContainer" class="preview-grid" style="margin-top: 10px; gap: 10px;"></div>
                             <input type="file" id="fileInput" multiple accept="image/*" onchange="previewImages()">
@@ -1596,92 +1559,30 @@
         </div>
 
         <div class="card" style="border-top: 5px solid #2ecc71;">
-
             <div class="card-header-wrapper header-color-gallery">
                 <h3 id="photoSectionTitle" class="card-header-title" style="color: #2ecc71;">
                     <i class="fas fa-images"></i> จัดการรูปภาพ (แก้ไข/ลบ)
                 </h3>
             </div>
 
-            <div class="search-toolbar" style="
-                display: grid; 
-                grid-template-columns: 1fr auto auto; 
-                gap: 10px; 
-                padding: 10px; 
-                background: #f8f9fa; 
-                border: 1px solid #e0e0e0; 
-                border-radius: 12px; 
-                margin-bottom: 15px;
-                align-items: center; 
-            ">
-
+            <div class="search-toolbar" style="display: grid; grid-template-columns: 1fr auto auto; gap: 10px; padding: 10px; background: #f8f9fa; border: 1px solid #e0e0e0; border-radius: 12px; margin-bottom: 15px; align-items: center;">
                 <div style="position: relative; height: 36px;">
-                    <input type="text" id="searchInput" class="search-input" placeholder="🔍 ค้นหาชื่อรูป..." style="
-                            width: 100%; 
-                            height: 100%; 
-                            border-radius: 30px; 
-                            padding-left: 15px; 
-                            margin: 0; 
-                            border: 1px solid #ccc; 
-                            font-size: 13px; 
-                            box-sizing: border-box; 
-                            outline: none;
-                            display: block;
-                        ">
+                    <input type="text" id="searchInput" class="search-input" placeholder="🔍 ค้นหาชื่อรูป..." style="width: 100%; height: 100%; border-radius: 30px; padding-left: 15px; margin: 0; border: 1px solid #ccc; font-size: 13px; box-sizing: border-box; outline: none; display: block;">
                 </div>
-
                 <div style="position: relative; height: 36px;">
-                    <select id="filterCategory" class="filter-select" style="
-                            width: 100%; 
-                            min-width: 160px;
-                            height: 100%; 
-                            border-radius: 30px; 
-                            padding: 0 30px 0 15px; 
-                            border: 1px solid #ccc; 
-                            font-size: 13px; 
-                            color: #333;
-                            background-color: #fff; 
-                            cursor: pointer; 
-                            box-sizing: border-box; 
-                            outline: none;
-                            display: block;
-                            -webkit-appearance: none; 
-                            -moz-appearance: none; 
-                            appearance: none;
-                            background-image: url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%23555\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'%3e%3cpolyline points=\'6 9 12 15 18 9\'%3e%3c/polyline%3e%3c/svg%3e');
-                            background-repeat: no-repeat;
-                            background-position: right 10px center;
-                            background-size: 12px;
-                        ">
+                    <select id="filterCategory" class="filter-select" style="width: 100%; min-width: 160px; height: 100%; border-radius: 30px; padding: 0 30px 0 15px; border: 1px solid #ccc; font-size: 13px; color: #333; background-color: #fff; cursor: pointer; box-sizing: border-box; outline: none; display: block; -webkit-appearance: none; -moz-appearance: none; appearance: none; background-image: url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%23555\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'%3e%3cpolyline points=\'6 9 12 15 18 9\'%3e%3c/polyline%3e%3c/svg%3e'); background-repeat: no-repeat; background-position: right 10px center; background-size: 12px;">
                         <option value="">📁 ทุกหมวดหมู่</option>
                     </select>
                 </div>
-
-                <button onclick="loadApprovedPhotos(1)" class="btn-search" style="
-                        height: 36px; 
-                        padding: 0 20px; 
-                        background: #2c3e50; 
-                        font-size: 13px; 
-                        border-radius: 30px; 
-                        color: white; 
-                        border: none; 
-                        cursor: pointer; 
-                        white-space: nowrap; 
-                        display: flex; 
-                        align-items: center; 
-                        justify-content: center;
-                        box-shadow: none;
-                    ">
+                <button onclick="loadApprovedPhotos(1)" class="btn-search" style="height: 36px; padding: 0 20px; background: #2c3e50; font-size: 13px; border-radius: 30px; color: white; border: none; cursor: pointer; white-space: nowrap; display: flex; align-items: center; justify-content: center; box-shadow: none;">
                     <i class="fas fa-search" style="margin-right: 5px;"></i> ค้นหา
                 </button>
             </div>
 
             <div class="bulk-toolbar admin-only" id="approvedToolbar" style="display:none; justify-content:space-between; padding: 8px 12px; margin-bottom: 10px; background: #fff; border: 1px dashed #ccc; border-radius: 8px;">
-
                 <button type="button" id="btnSelectAllApproved" onclick="toggleSelectAllApproved()" style="font-size: 12px; padding: 6px 12px; border-radius: 6px; border: 1px solid #ddd; background: #fff; cursor: pointer; display: flex; align-items: center; gap: 5px; color: #333; transition:0.2s;">
                     <i class="far fa-square"></i> เลือกทั้งหมด
                 </button>
-
                 <div class="bulk-actions-right">
                     <button onclick="bulkDelete()" class="btn-bulk-delete" style="font-size: 12px; padding: 6px 15px; background: #c0392b; color: white; border: none; border-radius: 6px; cursor: pointer;">
                         <i class="fas fa-trash"></i> ลบที่เลือก
@@ -1701,7 +1602,6 @@
         </div>
 
         <div class="card admin-only" style="border-top: 5px solid #e74c3c; margin-top: 30px;">
-
             <div class="card-header-wrapper header-color-trash">
                 <h3 class="card-header-title" style="color: #e74c3c;">
                     <i class="fas fa-trash-alt"></i> ถังขยะ (กู้คืนได้)
@@ -1712,47 +1612,14 @@
             </div>
 
             <div class="bulk-toolbar" style="display:flex; justify-content:space-between; align-items:center; padding: 10px; margin-bottom: 10px; background: #fff; border: 1px dashed #ccc; border-radius: 8px; gap: 10px;">
-
-                <button type="button" id="btnSelectAllTrash" onclick="toggleSelectAllTrash()" style="
-                        padding: 8px 15px; 
-                        border-radius: 6px; 
-                        border: 1px solid #ddd; 
-                        background: #fff; 
-                        cursor: pointer; 
-                        display: flex; 
-                        align-items: center; 
-                        gap: 8px; 
-                        color: #333; 
-                        font-size: 13px;
-                    ">
+                <button type="button" id="btnSelectAllTrash" onclick="toggleSelectAllTrash()" style="padding: 8px 15px; border-radius: 6px; border: 1px solid #ddd; background: #fff; cursor: pointer; display: flex; align-items: center; gap: 8px; color: #333; font-size: 13px;">
                     <i class="fas fa-check-square"></i> เลือกทั้งหมด
                 </button>
-
                 <div class="bulk-actions-right" style="display:flex; gap:10px;">
-                    <button onclick="restoreSelected()" style="
-                            padding: 8px 15px; 
-                            background: #3498db; 
-                            color: white; 
-                            border: none; 
-                            border-radius: 6px; 
-                            cursor: pointer; 
-                            font-size: 13px; 
-                            display: flex; align-items: center; gap: 5px;
-                            white-space: nowrap;
-                        ">
+                    <button onclick="restoreSelected()" style="padding: 8px 15px; background: #3498db; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; display: flex; align-items: center; gap: 5px; white-space: nowrap;">
                         <i class="fas fa-trash-restore"></i> กู้คืน
                     </button>
-                    <button onclick="deletePermanentSelected()" style="
-                            padding: 8px 15px; 
-                            background: #c0392b; 
-                            color: white; 
-                            border: none; 
-                            border-radius: 6px; 
-                            cursor: pointer; 
-                            font-size: 13px; 
-                            display: flex; align-items: center; gap: 5px;
-                            white-space: nowrap;
-                        ">
+                    <button onclick="deletePermanentSelected()" style="padding: 8px 15px; background: #c0392b; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; display: flex; align-items: center; gap: 5px; white-space: nowrap;">
                         <i class="fas fa-times"></i> ลบถาวร
                     </button>
                 </div>
@@ -1764,13 +1631,11 @@
         </div>
 
         <div class="card admin-only" style="border-top: 5px solid #f39c12;">
-
             <div class="card-header-wrapper header-color-logs">
                 <h3 class="card-header-title" style="color: #f39c12;">
                     <i class="fas fa-history"></i> ประวัติการใช้งาน (Logs)
                 </h3>
             </div>
-
             <div style="overflow-x: auto;">
                 <table class="log-table" style="margin-top: 0 !important;">
                     <thead>
@@ -1796,7 +1661,6 @@
         </div>
 
         <div class="card admin-only" style="border-top: 5px solid #8e44ad;">
-
             <div class="card-header-wrapper header-color-users">
                 <h3 class="card-header-title" style="color: #8e44ad;">
                     <i class="fas fa-users-cog"></i> จัดการเจ้าหน้าที่
@@ -1852,7 +1716,6 @@
             });
             document.getElementById('photoSectionTitle').innerText = '🖼️ ภาพที่อัปโหลดโดยคุณ';
             document.title = 'Uploader Dashboard';
-
             document.getElementById('sidebarTitle').innerText = 'Uploader Panel';
         } else {
             document.title = 'Admin Panel';
@@ -1868,6 +1731,8 @@
 
         let currentApprovedPhotos = [];
         let selectedApprovedIds = new Set();
+        let allTrashFiles = [];
+        let selectedTrashIds = new Set();
 
         function getAuthHeaders() {
             return {
@@ -2179,8 +2044,6 @@
         // ==========================================
         // 🗑️ 🔥 TRASH LOGIC (UPDATED UI)
         // ==========================================
-        let allTrashFiles = [];
-        let selectedTrashIds = new Set();
 
         async function loadTrash() {
             try {
@@ -2585,18 +2448,6 @@
         }
 
         // --- Storage & Settings ---
-        // ✅ เพิ่มฟังก์ชันนี้สำหรับแปลงหน่วย (เผื่อ Server ส่งมาพัง)
-        function formatBytes(bytes, decimals = 2) {
-            if (!+bytes) return '0 Bytes';
-            if (bytes < 0) return '0 Bytes'; // ถ้าติดลบ ให้เป็น 0
-            const k = 1024;
-            const dm = decimals < 0 ? 0 : decimals;
-            const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
-            const i = Math.floor(Math.log(bytes) / Math.log(k));
-            return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
-        }
-
-        // ✅ แก้ไขฟังก์ชัน loadStorageStats ให้รองรับค่าผิดพลาด
         async function loadStorageStats() {
             try {
                 const h = getAuthHeaders();
@@ -2608,59 +2459,43 @@
                 if (!res.ok) return;
 
                 const data = await res.json();
+                let used = data.cloudinary.used_bytes || 0;
+                let limit = data.cloudinary.limit_bytes || 26843545600;
+                let p = (used / limit) * 100;
+                let pText = p.toFixed(2) + '%';
 
-                // 1. ดึงค่าและป้องกันค่าผิดพลาด (ติดลบ หรือ ไม่ใช่ตัวเลข)
-                let used = Number(data.cloudinary.used_bytes);
-                let limit = Number(data.cloudinary.limit_bytes) || 26843545600; // Default ~25GB
-
-                if (isNaN(used) || used < 0) {
-                    console.warn("Storage usage data invalid:", used);
-                    used = 0; // บังคับเป็น 0 ถ้าค่ามาผิด
+                if (p > 0 && p < 0.01) {
+                    pText = p.toFixed(4) + '%';
+                } else if (p < 0.0001 && p > 0) {
+                    pText = "< 0.0001%";
                 }
 
-                // 2. คำนวณเปอร์เซ็นต์
-                let p = (used / limit) * 100;
-                if (p > 100) p = 100;
-
-                let pText = p.toFixed(2) + '%';
-                if (p > 0 && p < 0.01) pText = "< 0.01%";
-                if (used === 0) pText = "0%";
-
-                // 3. แสดงผล Progress Bar
                 document.getElementById('storagePercentage').innerText = pText;
                 document.getElementById('storageBarText').innerText = pText;
-                document.getElementById('storageBar').style.width = (p === 0 ? 0 : Math.max(1, p)) + '%';
+                document.getElementById('storageBar').style.width = ((p > 0 && p < 1) ? 1 : p) + '%';
 
-                // เปลี่ยนสีหลอดตามความหนาแน่น
-                const bar = document.getElementById('storageBar');
-                if (p > 90) bar.style.background = 'linear-gradient(90deg, #e74c3c, #c0392b)';
-                else if (p > 80) bar.style.background = 'linear-gradient(90deg, #f39c12, #e67e22)';
-                else bar.style.background = 'linear-gradient(90deg, #3498db, #9b59b6)';
-
-                // 4. แสดงผลข้อความ (ใช้ formatBytes ของเรา ถ้า Server ส่งมาพัง)
-                let readableUsed = data.cloudinary.used_readable;
-                if (!readableUsed || readableUsed.includes('NaN') || readableUsed.includes('undefined')) {
-                    readableUsed = formatBytes(used);
+                if (p > 90) {
+                    document.getElementById('storageBar').style.background = 'linear-gradient(90deg, #e74c3c, #c0392b)';
+                } else if (p > 80) {
+                    document.getElementById('storageBar').style.background = 'linear-gradient(90deg, #f39c12, #e67e22)';
+                } else {
+                    document.getElementById('storageBar').style.background = 'linear-gradient(90deg, #3498db, #9b59b6)';
                 }
 
-                let readableLimit = data.cloudinary.limit_readable || formatBytes(limit);
+                document.getElementById('storageUsed').innerText = 'ใช้ไป: ' + data.cloudinary.used_readable;
+                document.getElementById('storageLimit').innerText = 'ลิมิต: ' + data.cloudinary.limit_readable;
+                document.getElementById('totalPhotosCount').innerText = data.database.active_photos;
+                document.getElementById('cloudinaryPlan').innerText = data.cloudinary.plan.toUpperCase();
 
-                document.getElementById('storageUsed').innerText = 'ใช้ไป: ' + readableUsed;
-                document.getElementById('storageLimit').innerText = 'ลิมิต: ' + readableLimit;
-
-                // อัปเดต Stats อื่นๆ
-                document.getElementById('totalPhotosCount').innerText = data.database.active_photos || 0;
-                document.getElementById('cloudinaryPlan').innerText = (data.cloudinary.plan || 'FREE').toUpperCase();
-
-                // ... ส่วนแสดงรายการล่าสุด (code เดิม) ...
                 const list = document.getElementById('topCategoriesList');
                 if (!data.latest_categories || !data.latest_categories.length) {
                     list.innerHTML = '<p style="text-align:center;color:#999;padding:20px;">ไม่มีข้อมูล</p>';
                     return;
                 }
+
                 list.innerHTML = '';
+
                 data.latest_categories.forEach((c, index) => {
-                    // ... (ใช้โค้ดเดิมในส่วน render list ได้เลย) ...
                     const dateStr = new Date(c.last_update).toLocaleDateString('th-TH', {
                         day: 'numeric',
                         month: 'short',
@@ -2668,9 +2503,9 @@
                     });
                     const rank = index + 1;
                     let rankColor = '#999';
-                    if (rank === 1) rankColor = '#f1c40f';
-                    if (rank === 2) rankColor = '#bdc3c7';
-                    if (rank === 3) rankColor = '#e67e22';
+                    if (rank === 1) rankColor = '#f1c40f'; // ทอง
+                    if (rank === 2) rankColor = '#bdc3c7'; // เงิน
+                    if (rank === 3) rankColor = '#e67e22'; // ทองแดง
 
                     list.innerHTML += `
                     <div style="margin-bottom:10px; padding:10px; background:white; border-radius:6px; border-left: 3px solid #3498db; box-shadow:0 1px 3px rgba(0,0,0,0.05); display: flex; gap: 10px; align-items: flex-start;">
@@ -2687,15 +2522,13 @@
                     </div>`;
                 });
 
-                // ... ส่วน Average (code เดิม) ...
                 const resAvg = await fetch('/storage/average?t=' + Date.now(), {
                     headers: h
                 });
                 if (resAvg.ok) {
                     const d = await resAvg.json();
-                    document.getElementById('avgPhotoSize').innerText = d.average_readable || '0 MB';
+                    document.getElementById('avgPhotoSize').innerText = d.average_readable;
                 }
-
             } catch (error) {
                 console.error('Storage Error:', error);
             }
