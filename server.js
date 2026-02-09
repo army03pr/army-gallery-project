@@ -22,7 +22,12 @@ if (!process.env.CLOUDINARY_CLOUD_NAME || !process.env.CLOUDINARY_API_KEY || !pr
     console.warn("⚠️  คำเตือน: คุณยังไม่ได้ใส่ค่า Cloudinary ในไฟล์ .env (ฟังก์ชันอัปโหลดและ Stats จะทำงานไม่สมบูรณ์)");
 }
 
-const JWT_SECRET = process.env.JWT_SECRET || 'army_secret_key_1234';
+// 🔥 Security Fix: บังคับให้ต้องมี JWT_SECRET
+if (!process.env.JWT_SECRET) {
+    console.error("FATAL ERROR: JWT_SECRET is not defined in .env or Render Environment.");
+    process.exit(1);
+}
+const JWT_SECRET = process.env.JWT_SECRET;
 const PORT = process.env.PORT || 3001;
 
 // ==========================================
@@ -57,6 +62,7 @@ app.use(
                     "'self'",
                     "data:",
                     "https://res.cloudinary.com",
+                    "https://*.cloudinary.com", // เพิ่มเผื่อไว้
                     "blob:"
                 ],
                 fontSrc: [
@@ -80,7 +86,7 @@ app.use((req, res, next) => {
 
 // Rate Limiting
 const apiLimiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 100, message: "Too many requests, please try again later." });
-const uploadLimiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 20, message: "Upload limit exceeded." });
+const uploadLimiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 50, message: "Upload limit exceeded." }); // ขยายเป็น 50 สำหรับการใช้งานจริง
 app.use('/api/', apiLimiter);
 
 // ==========================================
@@ -182,8 +188,15 @@ async function logAction(userId, username, action, details, req) {
     }
 }
 
+// 🔥 Improved ID Extraction
 function getPublicIdFromUrl(url) {
     try {
+        const regex = /\/([^/]+)\/([^/]+)\.[a-z]+$/i;
+        const match = url.match(regex);
+        if (match) {
+            return `${match[1]}/${match[2]}`;
+        }
+        // Fallback
         const parts = url.split('/');
         const filename = parts.pop();
         const folder = parts.pop();
@@ -385,6 +398,13 @@ app.post('/upload', uploadLimiter, authenticateToken, upload.array('photos', 30)
         res.status(201).json({ message: `อัปโหลดสำเร็จ ${req.files.length} รูป` });
     } catch (err) {
         console.error('Upload error:', err);
+        // 🔥 Rollback: ลบรูปที่ Cloudinary ทิ้ง หากลง DB ไม่สำเร็จ
+        if (req.files) {
+            req.files.forEach(f => {
+                // public_id มักจะอยู่ใน f.filename สำหรับ Cloudinary Storage
+                cloudinary.uploader.destroy(f.filename).catch(e => console.error('Rollback error:', e));
+            });
+        }
         res.status(500).json({ error: 'Upload failed' });
     }
 });
@@ -444,7 +464,6 @@ app.get('/photos', authenticateToken, async (req, res) => {
     }
 });
 
-// 🔥 แก้ไขข้อมูลรูป (เพิ่ม logAction)
 app.put('/photos/:id/details', authenticateToken, adminOnly, async (req, res) => {
     const { category_name, custom_date } = req.body;
     const photoId = req.params.id;
@@ -463,7 +482,6 @@ app.put('/photos/:id/details', authenticateToken, adminOnly, async (req, res) =>
 
         await pool.query('UPDATE Photos SET category_id = ?, upload_date = ? WHERE photo_id = ?', [catId, custom_date, photoId]);
 
-        // ✅ บันทึก Log
         const [users] = await pool.query('SELECT username FROM Users WHERE user_id = ?', [req.user.id]);
         const actor = users[0] ? users[0].username : 'Admin';
         await logAction(req.user.id, actor, 'Edit', `แก้ไขข้อมูลรูป ID: ${photoId}`, req);
@@ -475,14 +493,12 @@ app.put('/photos/:id/details', authenticateToken, adminOnly, async (req, res) =>
     }
 });
 
-// 🔥 เปลี่ยนชื่อรูป (เพิ่ม logAction)
 app.put('/photos/:id/rename', authenticateToken, adminOnly, async (req, res) => {
     const newName = req.body.new_name?.trim();
     if (!newName) return res.status(400).json({ message: 'New name required' });
     try {
         await pool.query('UPDATE Photos SET file_name = ? WHERE photo_id = ?', [newName, req.params.id]);
 
-        // ✅ บันทึก Log
         const [users] = await pool.query('SELECT username FROM Users WHERE user_id = ?', [req.user.id]);
         const actor = users[0] ? users[0].username : 'Admin';
         await logAction(req.user.id, actor, 'Rename', `เปลี่ยนชื่อรูป ID: ${req.params.id} เป็น "${newName}"`, req);
@@ -495,12 +511,10 @@ app.put('/photos/:id/rename', authenticateToken, adminOnly, async (req, res) => 
 
 // --- DELETE / RESTORE Operations ---
 
-// 🔥 ลบลงถังขยะ (เพิ่ม logAction)
 app.delete('/photos/:id/soft-delete', authenticateToken, adminOnly, async (req, res) => {
     try {
         await pool.query('UPDATE Photos SET is_deleted = 1 WHERE photo_id = ?', [req.params.id]);
 
-        // ✅ บันทึก Log
         const [users] = await pool.query('SELECT username FROM Users WHERE user_id = ?', [req.user.id]);
         const actor = users[0] ? users[0].username : 'Admin';
         await logAction(req.user.id, actor, 'Delete', `ลบรูป ID: ${req.params.id} ลงถังขยะ`, req);
@@ -511,14 +525,12 @@ app.delete('/photos/:id/soft-delete', authenticateToken, adminOnly, async (req, 
     }
 });
 
-// 🔥 ลบหลายรูป (เพิ่ม logAction)
 app.post('/photos/bulk-delete', authenticateToken, adminOnly, async (req, res) => {
     const { photo_ids } = req.body;
     if (!photo_ids || !photo_ids.length) return res.status(400).json({ message: 'No photos selected' });
     try {
         await pool.query('UPDATE Photos SET is_deleted = 1 WHERE photo_id IN (?)', [photo_ids]);
 
-        // ✅ บันทึก Log
         const [users] = await pool.query('SELECT username FROM Users WHERE user_id = ?', [req.user.id]);
         const actor = users[0] ? users[0].username : 'Admin';
         await logAction(req.user.id, actor, 'Bulk Delete', `ลบรูปจำนวน ${photo_ids.length} รูป ลงถังขยะ`, req);
@@ -539,14 +551,12 @@ app.get('/photos/trash', authenticateToken, adminOnly, async (req, res) => {
     }
 });
 
-// 🔥 กู้คืนรูป (เพิ่ม logAction)
 app.post('/photos/trash/restore', authenticateToken, adminOnly, async (req, res) => {
     const { photo_ids } = req.body;
     if (!photo_ids || !photo_ids.length) return res.status(400).json({ message: 'No photos to restore' });
     try {
         await pool.query('UPDATE Photos SET is_deleted = 0 WHERE photo_id IN (?)', [photo_ids]);
 
-        // ✅ บันทึก Log
         const [users] = await pool.query('SELECT username FROM Users WHERE user_id = ?', [req.user.id]);
         const actor = users[0] ? users[0].username : 'Admin';
         await logAction(req.user.id, actor, 'Restore', `กู้คืนรูปจำนวน ${photo_ids.length} รูป`, req);
@@ -557,7 +567,6 @@ app.post('/photos/trash/restore', authenticateToken, adminOnly, async (req, res)
     }
 });
 
-// 🔥 ลบถาวร (เพิ่ม logAction)
 app.delete('/photos/trash/empty', authenticateToken, adminOnly, async (req, res) => {
     const { photo_ids } = req.body;
     if (!photo_ids || !photo_ids.length) return res.status(400).json({ message: 'No photos to delete' });
@@ -571,7 +580,6 @@ app.delete('/photos/trash/empty', authenticateToken, adminOnly, async (req, res)
         }
         await pool.query('DELETE FROM Photos WHERE photo_id IN (?)', [photo_ids]);
 
-        // ✅ บันทึก Log
         const [users] = await pool.query('SELECT username FROM Users WHERE user_id = ?', [req.user.id]);
         const actor = users[0] ? users[0].username : 'Admin';
         await logAction(req.user.id, actor, 'Permanent Delete', `ลบรูปถาวรจำนวน ${photo_ids.length} รูป`, req);
@@ -816,7 +824,7 @@ app.put('/users/:id/username', authenticateToken, adminOnly, async (req, res) =>
     }
 });
 
-// --- Download Zip ---
+// --- Download Zip (🔥 Optimized Parallel Download) ---
 
 app.get('/download-zip/:categoryName', async (req, res) => {
     try {
@@ -831,17 +839,28 @@ app.get('/download-zip/:categoryName', async (req, res) => {
         res.attachment(`${req.params.categoryName}.zip`);
         archive.pipe(res);
 
-        for (const photo of photos) {
-            await new Promise((resolve) => {
-                https.get(photo.file_path, (response) => {
-                    if (response.statusCode === 200) {
-                        archive.append(response, { name: photo.file_name });
-                    }
-                    response.on('end', resolve);
-                    response.on('error', resolve);
-                }).on('error', resolve);
+        // 🔥 Function สำหรับโหลดไฟล์เดียว (Promise Wrapper)
+        const downloadFile = (photo) => new Promise((resolve) => {
+            https.get(photo.file_path, (response) => {
+                if (response.statusCode === 200) {
+                    archive.append(response, { name: photo.file_name });
+                } else {
+                    console.error(`Failed to load: ${photo.file_path}`);
+                }
+                resolve(); // resolve เสมอ เพื่อให้ process ไม่หยุด
+            }).on('error', (err) => {
+                console.error(`Error downloading: ${photo.file_path}`, err);
+                resolve();
             });
+        });
+
+        // 🔥 Parallel Download: โหลดทีละ 5 รูปพร้อมกัน (Batch Processing)
+        const chunkSize = 5;
+        for (let i = 0; i < photos.length; i += chunkSize) {
+            const chunk = photos.slice(i, i + chunkSize);
+            await Promise.all(chunk.map(downloadFile));
         }
+
         archive.finalize();
     } catch (e) {
         console.error('Zip Error:', e);
@@ -852,10 +871,8 @@ app.get('/download-zip/:categoryName', async (req, res) => {
 // ==========================================
 // 🔥 ระบบทำความสะอาด Logs อัตโนมัติ (Log Retention)
 // ==========================================
-// ฟังก์ชันนี้จะลบ Logs ที่เก่ากว่า 90 วัน ทิ้งอัตโนมัติ ทุกครั้งที่เริ่ม Server และวนซ้ำทุก 24 ชม.
 async function cleanOldLogs() {
     try {
-        // ตั้งค่าอายุ Logs (เช่น 90 วัน)
         const DAYS_TO_KEEP = 90; 
         
         const [result] = await pool.query(
@@ -871,15 +888,11 @@ async function cleanOldLogs() {
     }
 }
 
-// สั่งให้รันทันทีที่เปิด Server
 cleanOldLogs();
-
-// และสั่งให้รันซ้ำทุกๆ 24 ชั่วโมง (วันละครั้ง)
 setInterval(cleanOldLogs, 24 * 60 * 60 * 1000);
 
 // 404 & Error Handler
 app.use((req, res) => { res.status(404).json({ message: 'Route not found' }); });
 app.use((err, req, res, next) => { console.error('Server error:', err); res.status(500).json({ error: 'Internal server error' }); });
 
-const port = process.env.PORT || 3001;
-app.listen(port, () => console.log(`🚀 Server running on port ${port}`));
+app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
