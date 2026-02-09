@@ -12,8 +12,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/1042/1042339.png">
 
-    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -1472,8 +1471,7 @@
             <div style="margin-top: auto;">
                 <button onclick="openProfileSettings()" class="btn-profile"><i class="fas fa-cog"></i>
                     ตั้งค่าส่วนตัว</button>
-                <button onclick="logout()" class="btn-logout"><i class="fas fa-sign-out-alt"></i>
-                    ออกจากระบบ</button>
+                <button onclick="logout()" class="btn-logout"><i class="fas fa-sign-out-alt"></i> ออกจากระบบ</button>
             </div>
         </div>
     </div>
@@ -1509,46 +1507,36 @@
                 </button>
             </div>
 
-            <div
-                style="background:#f8f9fa; padding:15px; border-radius:12px; margin-bottom:15px; border: 1px solid #d2b4de; box-shadow: 0 2px 5px rgba(0,0,0,0.03);">
+            <div style="background:#f8f9fa; padding:15px; border-radius:12px; margin-bottom:15px; border: 1px solid #d2b4de; box-shadow: 0 2px 5px rgba(0,0,0,0.03);">
                 <div style="display:flex; justify-content:space-between; margin-bottom:5px;">
-                    <span style="font-weight:600; color:#555; font-size: 14px;">เครดิตที่ใช้ไป
-                        (Usage)</span>
+                    <span style="font-weight:600; color:#555; font-size: 14px;">เครดิตที่ใช้ไป (Usage)</span>
                     <span id="storagePercentage" style="font-weight:bold; color:#9b59b6; font-size:18px;">0%</span>
                 </div>
 
-                <div
-                    style="width:100%; height:26px; background:#ecf0f1; border-radius:15px; position:relative; overflow:hidden; box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);">
-                    <div id="storageBar"
-                        style="height:100%; background:linear-gradient(90deg, #3498db, #9b59b6); width:0%; transition:width 0.8s cubic-bezier(0.4, 0, 0.2, 1); display:flex; align-items:center; padding-left: 12px;">
-                        <span id="storageBarText"
-                            style="color:#fff; font-weight:bold; font-size:13px; text-shadow: 0 1px 1px rgba(0,0,0,0.3); line-height: 26px; white-space: nowrap;">0.00%</span>
+                <div style="width:100%; height:26px; background:#ecf0f1; border-radius:15px; position:relative; overflow:hidden; box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);">
+                    <div id="storageBar" style="height:100%; background:linear-gradient(90deg, #3498db, #9b59b6); width:0%; transition:width 0.8s cubic-bezier(0.4, 0, 0.2, 1); display:flex; align-items:center; padding-left: 12px;">
+                        <span id="storageBarText" style="color:#fff; font-weight:bold; font-size:13px; text-shadow: 0 1px 1px rgba(0,0,0,0.3); line-height: 26px; white-space: nowrap;">0.00%</span>
                     </div>
                 </div>
 
-                <div
-                    style="display:flex; justify-content:space-between; margin-top:5px; font-size:12px; color:#7f8c8d;">
+                <div style="display:flex; justify-content:space-between; margin-top:5px; font-size:12px; color:#7f8c8d;">
                     <span id="storageUsed">Bandwidth+Storage: 0 MB</span>
                     <span id="storageLimit">Plan Limit: ~25 GB</span>
                 </div>
             </div>
 
-            <div
-                style="display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); gap:10px; margin-bottom:15px;">
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); gap:10px; margin-bottom:15px;">
                 <div style="background:#e3f2fd; padding:12px; border-radius:12px; border-left:4px solid #2196f3;">
                     <div style="font-size:12px; color:#546e7a; margin-bottom:2px;">รูปทั้งหมด</div>
                     <div id="totalPhotosCount" style="font-size:22px; font-weight:bold; color:#2196f3;">0</div>
                 </div>
                 <div style="background:#fff3e0; padding:12px; border-radius:12px; border-left:4px solid #ff9800;">
-                    <div style="font-size:12px; color:#5d4037; margin-bottom:2px;">ขนาดเฉลี่ย/รูป
-                    </div>
-                    <div id="avgPhotoSize" style="font-size:22px; font-weight:bold; color:#ff9800;">
-                        0 MB</div>
+                    <div style="font-size:12px; color:#5d4037; margin-bottom:2px;">ขนาดเฉลี่ย/รูป</div>
+                    <div id="avgPhotoSize" style="font-size:22px; font-weight:bold; color:#ff9800;">0 MB</div>
                 </div>
                 <div style="background:#f3e5f5; padding:12px; border-radius:12px; border-left:4px solid #9c27b0;">
                     <div style="font-size:12px; color:#4a148c; margin-bottom:2px;">แพลน</div>
-                    <div id="cloudinaryPlan"
-                        style="font-size:22px; font-weight:bold; color:#9c27b0; text-transform:uppercase;">FREE</div>
+                    <div id="cloudinaryPlan" style="font-size:22px; font-weight:bold; color:#9c27b0; text-transform:uppercase;">FREE</div>
                 </div>
             </div>
 
@@ -1557,17 +1545,13 @@
                     กิจกรรมที่อัปเดตล่าสุด (5 อันดับแรก)</h4>
 
                 <div id="topCategoriesList" style="margin-top: 15px;">
-                    <p style="text-align:center; color:#999; padding:15px; font-size: 13px;">
-                        กำลังโหลด...</p>
+                    <p style="text-align:center; color:#999; padding:15px; font-size: 13px;">กำลังโหลด...</p>
                 </div>
             </div>
 
-            <div id="storageWarning"
-                style="display:none; background:#fff3cd; border-left:5px solid #ffc107; padding:10px; margin-top:15px; border-radius:8px;">
-                <strong style="color:#856404; font-size:13px; display:block; margin-bottom:2px;">⚠️
-                    คำเตือน:</strong>
-                <span style="color:#856404; font-size: 12px;">พื้นที่ใกล้เต็มแล้ว!
-                    กรุณาลบไฟล์ที่ไม่จำเป็นออก</span>
+            <div id="storageWarning" style="display:none; background:#fff3cd; border-left:5px solid #ffc107; padding:10px; margin-top:15px; border-radius:8px;">
+                <strong style="color:#856404; font-size:13px; display:block; margin-bottom:2px;">⚠️ คำเตือน:</strong>
+                <span style="color:#856404; font-size: 12px;">พื้นที่ใกล้เต็มแล้ว! กรุณาลบไฟล์ที่ไม่จำเป็นออก</span>
             </div>
         </div>
 
@@ -1583,22 +1567,17 @@
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
 
                     <div style="display:flex; flex-direction:column;">
-                        <label style="font-size:14px; color:#555; margin-bottom:5px;"><b>1.
-                                ชื่อกิจกรรม</b></label>
-                        <input type="text" id="categoryName" list="categoryList" placeholder="พิมพ์ชื่อกิจกรรม..."
-                            required style="margin-bottom: 0; font-size:14px; height: 42px; border-radius: 8px;">
+                        <label style="font-size:14px; color:#555; margin-bottom:5px;"><b>1. ชื่อกิจกรรม</b></label>
+                        <input type="text" id="categoryName" list="categoryList" placeholder="พิมพ์ชื่อกิจกรรม..." required style="margin-bottom: 0; font-size:14px; height: 42px; border-radius: 8px;">
                         <datalist id="categoryList"></datalist>
                     </div>
 
                     <div style="display:flex; flex-direction:column;">
-                        <label style="font-size:14px; color:#555; margin-bottom:5px;"><b>2.
-                                เลือกรูปภาพ</b></label>
+                        <label style="font-size:14px; color:#555; margin-bottom:5px;"><b>2. เลือกรูปภาพ</b></label>
 
                         <div class="file-upload-wrapper" style="min-height: 120px; padding: 15px;">
                             <div id="uploadPlaceholder" style="text-align: center;">
-                                <span class="upload-icon"
-                                    style="font-size: 32px; color: #3498db; margin-bottom: 5px;"><i
-                                        class="fas fa-images"></i></span>
+                                <span class="upload-icon" style="font-size: 32px; color: #3498db; margin-bottom: 5px;"><i class="fas fa-images"></i></span>
                                 <div class="upload-text" style="font-size: 14px; color: #3498db; font-weight: 600;">
                                     คลิกเพื่อเลือกรูป / ถ่ายภาพ</div>
                                 <span style="font-size:11px; color:#7f8c8d; display:block; margin-top:2px;">(สูงสุด 30
@@ -1610,8 +1589,7 @@
                     </div>
                 </div>
 
-                <button type="submit" class="btn-primary"
-                    style="width:100%; margin-top:15px; padding:10px; font-size:15px; border-radius:30px; background-color: #3498db; font-weight:600; box-shadow: 0 3px 6px rgba(52, 152, 219, 0.3);">
+                <button type="submit" class="btn-primary" style="width:100%; margin-top:15px; padding:10px; font-size:15px; border-radius:30px; background-color: #3498db; font-weight:600; box-shadow: 0 3px 6px rgba(52, 152, 219, 0.3);">
                     <i class="fas fa-upload"></i> อัปโหลดทันที
                 </button>
             </form>
@@ -1626,27 +1604,27 @@
             </div>
 
             <div class="search-toolbar" style="
-                display: grid;
-                grid-template-columns: 1fr auto auto;
-                gap: 10px;
-                padding: 10px;
-                background: #f8f9fa;
-                border: 1px solid #e0e0e0;
-                border-radius: 12px;
+                display: grid; 
+                grid-template-columns: 1fr auto auto; 
+                gap: 10px; 
+                padding: 10px; 
+                background: #f8f9fa; 
+                border: 1px solid #e0e0e0; 
+                border-radius: 12px; 
                 margin-bottom: 15px;
-                align-items: center;
+                align-items: center; 
             ">
 
                 <div style="position: relative; height: 36px;">
                     <input type="text" id="searchInput" class="search-input" placeholder="🔍 ค้นหาชื่อรูป..." style="
-                            width: 100%;
-                            height: 100%;
-                            border-radius: 30px;
-                            padding-left: 15px;
-                            margin: 0;
-                            border: 1px solid #ccc;
-                            font-size: 13px;
-                            box-sizing: border-box;
+                            width: 100%; 
+                            height: 100%; 
+                            border-radius: 30px; 
+                            padding-left: 15px; 
+                            margin: 0; 
+                            border: 1px solid #ccc; 
+                            font-size: 13px; 
+                            box-sizing: border-box; 
                             outline: none;
                             display: block;
                         ">
@@ -1654,21 +1632,21 @@
 
                 <div style="position: relative; height: 36px;">
                     <select id="filterCategory" class="filter-select" style="
-                            width: 100%;
+                            width: 100%; 
                             min-width: 160px;
-                            height: 100%;
-                            border-radius: 30px;
-                            padding: 0 30px 0 15px;
-                            border: 1px solid #ccc;
-                            font-size: 13px;
+                            height: 100%; 
+                            border-radius: 30px; 
+                            padding: 0 30px 0 15px; 
+                            border: 1px solid #ccc; 
+                            font-size: 13px; 
                             color: #333;
-                            background-color: #fff;
-                            cursor: pointer;
-                            box-sizing: border-box;
+                            background-color: #fff; 
+                            cursor: pointer; 
+                            box-sizing: border-box; 
                             outline: none;
                             display: block;
-                            -webkit-appearance: none;
-                            -moz-appearance: none;
+                            -webkit-appearance: none; 
+                            -moz-appearance: none; 
                             appearance: none;
                             background-image: url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%23555\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'%3e%3cpolyline points=\'6 9 12 15 18 9\'%3e%3c/polyline%3e%3c/svg%3e');
                             background-repeat: no-repeat;
@@ -1680,17 +1658,17 @@
                 </div>
 
                 <button onclick="loadApprovedPhotos(1)" class="btn-search" style="
-                        height: 36px;
-                        padding: 0 20px;
-                        background: #2c3e50;
-                        font-size: 13px;
-                        border-radius: 30px;
-                        color: white;
-                        border: none;
-                        cursor: pointer;
-                        white-space: nowrap;
-                        display: flex;
-                        align-items: center;
+                        height: 36px; 
+                        padding: 0 20px; 
+                        background: #2c3e50; 
+                        font-size: 13px; 
+                        border-radius: 30px; 
+                        color: white; 
+                        border: none; 
+                        cursor: pointer; 
+                        white-space: nowrap; 
+                        display: flex; 
+                        align-items: center; 
                         justify-content: center;
                         box-shadow: none;
                     ">
@@ -1698,35 +1676,27 @@
                 </button>
             </div>
 
-            <div class="bulk-toolbar admin-only" id="approvedToolbar"
-                style="display:none; justify-content:space-between; padding: 8px 12px; margin-bottom: 10px; background: #fff; border: 1px dashed #ccc; border-radius: 8px;">
+            <div class="bulk-toolbar admin-only" id="approvedToolbar" style="display:none; justify-content:space-between; padding: 8px 12px; margin-bottom: 10px; background: #fff; border: 1px dashed #ccc; border-radius: 8px;">
 
-                <button type="button" id="btnSelectAllApproved" onclick="toggleSelectAllApproved()"
-                    style="font-size: 12px; padding: 6px 12px; border-radius: 6px; border: 1px solid #ddd; background: #fff; cursor: pointer; display: flex; align-items: center; gap: 5px; color: #333; transition:0.2s;">
+                <button type="button" id="btnSelectAllApproved" onclick="toggleSelectAllApproved()" style="font-size: 12px; padding: 6px 12px; border-radius: 6px; border: 1px solid #ddd; background: #fff; cursor: pointer; display: flex; align-items: center; gap: 5px; color: #333; transition:0.2s;">
                     <i class="far fa-square"></i> เลือกทั้งหมด
                 </button>
 
                 <div class="bulk-actions-right">
-                    <button onclick="bulkDelete()" class="btn-bulk-delete"
-                        style="font-size: 12px; padding: 6px 15px; background: #c0392b; color: white; border: none; border-radius: 6px; cursor: pointer;">
+                    <button onclick="bulkDelete()" class="btn-bulk-delete" style="font-size: 12px; padding: 6px 15px; background: #c0392b; color: white; border: none; border-radius: 6px; cursor: pointer;">
                         <i class="fas fa-trash"></i> ลบที่เลือก
                     </button>
                 </div>
             </div>
 
             <div id="approvedList" class="approval-grid" style="gap: 10px; margin-top: 0;">
-                <p style="grid-column: 1/-1; text-align: center; padding: 40px; color: #999;">
-                    กำลังโหลด...</p>
+                <p style="grid-column: 1/-1; text-align: center; padding: 40px; color: #999;">กำลังโหลด...</p>
             </div>
 
-            <div class="pagination-container" id="paginationControls"
-                style="display:none; margin-top: 20px; padding-top: 15px; border-top: 1px solid #eee; gap: 10px;">
-                <button onclick="changePage(-1)" class="btn-page" id="btnPrev"
-                    style="padding: 6px 15px; font-size: 13px;"><i class="fas fa-chevron-left"></i> ก่อนหน้า</button>
-                <span id="pageIndicator" style="font-size: 13px; color: #2c3e50; font-weight: 600;">หน้า
-                    1</span>
-                <button onclick="changePage(1)" class="btn-page" id="btnNext"
-                    style="padding: 6px 15px; font-size: 13px;">ถัดไป <i class="fas fa-chevron-right"></i></button>
+            <div class="pagination-container" id="paginationControls" style="display:none; margin-top: 20px; padding-top: 15px; border-top: 1px solid #eee; gap: 10px;">
+                <button onclick="changePage(-1)" class="btn-page" id="btnPrev" style="padding: 6px 15px; font-size: 13px;"><i class="fas fa-chevron-left"></i> ก่อนหน้า</button>
+                <span id="pageIndicator" style="font-size: 13px; color: #2c3e50; font-weight: 600;">หน้า 1</span>
+                <button onclick="changePage(1)" class="btn-page" id="btnNext" style="padding: 6px 15px; font-size: 13px;">ถัดไป <i class="fas fa-chevron-right"></i></button>
             </div>
         </div>
 
@@ -1741,19 +1711,18 @@
                 </button>
             </div>
 
-            <div class="bulk-toolbar"
-                style="display:flex; justify-content:space-between; align-items:center; padding: 10px; margin-bottom: 10px; background: #fff; border: 1px dashed #ccc; border-radius: 8px; gap: 10px;">
+            <div class="bulk-toolbar" style="display:flex; justify-content:space-between; align-items:center; padding: 10px; margin-bottom: 10px; background: #fff; border: 1px dashed #ccc; border-radius: 8px; gap: 10px;">
 
                 <button type="button" id="btnSelectAllTrash" onclick="toggleSelectAllTrash()" style="
-                        padding: 8px 15px;
-                        border-radius: 6px;
-                        border: 1px solid #ddd;
-                        background: #fff;
-                        cursor: pointer;
-                        display: flex;
-                        align-items: center;
-                        gap: 8px;
-                        color: #333;
+                        padding: 8px 15px; 
+                        border-radius: 6px; 
+                        border: 1px solid #ddd; 
+                        background: #fff; 
+                        cursor: pointer; 
+                        display: flex; 
+                        align-items: center; 
+                        gap: 8px; 
+                        color: #333; 
                         font-size: 13px;
                     ">
                     <i class="fas fa-check-square"></i> เลือกทั้งหมด
@@ -1761,26 +1730,26 @@
 
                 <div class="bulk-actions-right" style="display:flex; gap:10px;">
                     <button onclick="restoreSelected()" style="
-                            padding: 8px 15px;
-                            background: #3498db;
-                            color: white;
-                            border: none;
-                            border-radius: 6px;
-                            cursor: pointer;
-                            font-size: 13px;
+                            padding: 8px 15px; 
+                            background: #3498db; 
+                            color: white; 
+                            border: none; 
+                            border-radius: 6px; 
+                            cursor: pointer; 
+                            font-size: 13px; 
                             display: flex; align-items: center; gap: 5px;
                             white-space: nowrap;
                         ">
                         <i class="fas fa-trash-restore"></i> กู้คืน
                     </button>
                     <button onclick="deletePermanentSelected()" style="
-                            padding: 8px 15px;
-                            background: #c0392b;
-                            color: white;
-                            border: none;
-                            border-radius: 6px;
-                            cursor: pointer;
-                            font-size: 13px;
+                            padding: 8px 15px; 
+                            background: #c0392b; 
+                            color: white; 
+                            border: none; 
+                            border-radius: 6px; 
+                            cursor: pointer; 
+                            font-size: 13px; 
                             display: flex; align-items: center; gap: 5px;
                             white-space: nowrap;
                         ">
@@ -1790,8 +1759,7 @@
             </div>
 
             <div id="trashList" class="approval-grid">
-                <p style="grid-column: 1/-1; text-align: center; padding: 40px; color: #999;">
-                    ไม่มีไฟล์ในถังขยะ</p>
+                <p style="grid-column: 1/-1; text-align: center; padding: 40px; color: #999;">ไม่มีไฟล์ในถังขยะ</p>
             </div>
         </div>
 
@@ -1821,11 +1789,9 @@
                 </table>
             </div>
             <div class="pagination-container" id="logPaginationControls" style="display:none; margin-top:20px;">
-                <button onclick="changeLogPage(-1)" class="btn-page" id="btnLogPrev" disabled><i
-                        class="fas fa-chevron-left"></i> ก่อนหน้า</button>
+                <button onclick="changeLogPage(-1)" class="btn-page" id="btnLogPrev" disabled><i class="fas fa-chevron-left"></i> ก่อนหน้า</button>
                 <span id="logPageIndicator" style="margin:0 15px;">หน้า 1</span>
-                <button onclick="changeLogPage(1)" class="btn-page" id="btnLogNext">ถัดไป <i
-                        class="fas fa-chevron-right"></i></button>
+                <button onclick="changeLogPage(1)" class="btn-page" id="btnLogNext">ถัดไป <i class="fas fa-chevron-right"></i></button>
             </div>
         </div>
 
@@ -1835,17 +1801,14 @@
                 <h3 class="card-header-title" style="color: #8e44ad;">
                     <i class="fas fa-users-cog"></i> จัดการเจ้าหน้าที่
                 </h3>
-                <button onclick="openAddUserModal()" class="btn-primary"
-                    style="background:#8e44ad; width:auto; display:flex; align-items:center; gap:6px; padding: 6px 14px; border-radius: 30px; box-shadow: 0 4px 6px rgba(142, 68, 173, 0.2);">
+                <button onclick="openAddUserModal()" class="btn-primary" style="background:#8e44ad; width:auto; display:flex; align-items:center; gap:6px; padding: 6px 14px; border-radius: 30px; box-shadow: 0 4px 6px rgba(142, 68, 173, 0.2);">
                     <span style="font-size:13px; line-height: 1;"><i class="fas fa-user-plus"></i></span>
                     <span style="font-size:13px;">เพิ่มเจ้าหน้าที่</span>
                 </button>
             </div>
 
             <div style="margin-bottom: 5px;">
-                <input type="text" id="userSearch" class="search-input"
-                    style="width:100%; margin-top: 0; margin-bottom: 0 !important; padding-left: 15px; border-radius: 30px; background: #f8f9fa; height: 38px;"
-                    placeholder="🔍 ค้นหาชื่อเจ้าหน้าที่..." onkeyup="filterUsers()">
+                <input type="text" id="userSearch" class="search-input" style="width:100%; margin-top: 0; margin-bottom: 0 !important; padding-left: 15px; border-radius: 30px; background: #f8f9fa; height: 38px;" placeholder="🔍 ค้นหาชื่อเจ้าหน้าที่..." onkeyup="filterUsers()">
             </div>
 
             <div style="overflow-x: auto;">
@@ -1867,7 +1830,6 @@
         </div>
 
     </div>
-
 
     <script>
         // Init Service Worker
@@ -1998,7 +1960,7 @@
                 document.getElementById('uploadPlaceholder').style.display = 'none';
                 Array.from(files).forEach(file => {
                     const reader = new FileReader();
-                    reader.onload = function (e) {
+                    reader.onload = function(e) {
                         const img = document.createElement('img');
                         img.src = e.target.result;
                         img.className = 'preview-img';
@@ -2628,136 +2590,84 @@
                 const h = getAuthHeaders();
                 if (!h) return;
 
-                const res = await fetch('/storage/usage?t=' + Date.now(), { headers: h });
+                const res = await fetch('/storage/usage?t=' + Date.now(), {
+                    headers: h
+                });
                 if (!res.ok) return;
 
                 const data = await res.json();
+                let used = data.cloudinary.used_bytes || 0;
+                let limit = data.cloudinary.limit_bytes || 26843545600;
+                let p = (used / limit) * 100;
+                let pText = p.toFixed(2) + '%';
 
-                // 🔥 แก้ไข 1: รับค่าและตรวจสอบให้แน่ใจว่าเป็นตัวเลข
-                let used = parseFloat(data?.cloudinary?.used_bytes || 0);
-                let limit = parseFloat(data?.cloudinary?.limit_bytes || 26843545600); // Default 25GB
-
-                // คำนวณเปอร์เซ็นต์
-                let p = 0;
-                if (limit > 0 && !isNaN(used) && !isNaN(limit)) {
-                    p = (used / limit) * 100;
-                }
-
-                // จัดการข้อความแสดงผล
-                let pText = '0%';
                 if (p > 0 && p < 0.01) {
-                    pText = '< 0.01%';
-                } else if (p >= 0.01) {
-                    pText = p.toFixed(2) + '%';
+                    pText = p.toFixed(4) + '%';
+                } else if (p < 0.0001 && p > 0) {
+                    pText = "< 0.0001%";
                 }
 
-                // อัพเดทข้อความ
                 document.getElementById('storagePercentage').innerText = pText;
                 document.getElementById('storageBarText').innerText = pText;
+                document.getElementById('storageBar').style.width = ((p > 0 && p < 1) ? 1 : p) + '%';
 
-                // 🔥 แก้ไข 2: จัดการ Progress Bar
-                const bar = document.getElementById('storageBar');
-                const barText = document.getElementById('storageBarText');
-
-                if (p <= 0 || isNaN(p)) {
-                    // ===== กรณีไม่มีข้อมูล (0%) =====
-                    bar.style.width = '0%';
-                    bar.style.background = 'transparent';
-                    bar.style.paddingLeft = '0';
-
-                    // แสดงข้อความกลางแถบ
-                    barText.style.position = 'absolute';
-                    barText.style.left = '50%';
-                    barText.style.transform = 'translateX(-50%)';
-                    barText.style.color = '#7f8c8d';
-                    barText.style.textShadow = 'none';
-
+                if (p > 90) {
+                    document.getElementById('storageBar').style.background = 'linear-gradient(90deg, #e74c3c, #c0392b)';
+                } else if (p > 80) {
+                    document.getElementById('storageBar').style.background = 'linear-gradient(90deg, #f39c12, #e67e22)';
                 } else {
-                    // ===== กรณีมีข้อมูล (>0%) =====
-                    // ถ้าน้อยกว่า 5% ให้ขยายขั้นต่ำเป็น 5% เพื่อให้เห็นตัวหนังสือ
-                    let visualWidth = p < 5 ? 5 : p;
-
-                    bar.style.width = visualWidth + '%';
-                    bar.style.paddingLeft = '12px';
-
-                    // เลือกสีตามระดับการใช้งาน
-                    if (p > 90) {
-                        bar.style.background = 'linear-gradient(90deg, #e74c3c, #c0392b)';
-                    } else if (p > 80) {
-                        bar.style.background = 'linear-gradient(90deg, #f39c12, #e67e22)';
-                    } else {
-                        bar.style.background = 'linear-gradient(90deg, #3498db, #9b59b6)';
-                    }
-
-                    // จัดตำแหน่งข้อความกลับมาปกติ
-                    barText.style.position = 'static';
-                    barText.style.transform = 'none';
-                    barText.style.color = '#fff';
-                    barText.style.textShadow = '0 1px 1px rgba(0,0,0,0.3)';
+                    document.getElementById('storageBar').style.background = 'linear-gradient(90deg, #3498db, #9b59b6)';
                 }
 
-                // 🔥 แก้ไข 3: ข้อมูลด้านล่าง (ป้องกัน undefined)
-                const usedReadable = data?.cloudinary?.used_readable || '0 MB';
-                const limitReadable = data?.cloudinary?.limit_readable || '25 GB';
+                document.getElementById('storageUsed').innerText = 'ใช้ไป: ' + data.cloudinary.used_readable;
+                document.getElementById('storageLimit').innerText = 'ลิมิต: ' + data.cloudinary.limit_readable;
+                document.getElementById('totalPhotosCount').innerText = data.database.active_photos;
+                document.getElementById('cloudinaryPlan').innerText = data.cloudinary.plan.toUpperCase();
 
-                document.getElementById('storageUsed').innerText = 'ใช้ไป: ' + usedReadable;
-                document.getElementById('storageLimit').innerText = 'ลิมิต: ' + limitReadable;
-                document.getElementById('totalPhotosCount').innerText = data?.database?.active_photos || 0;
-                document.getElementById('cloudinaryPlan').innerText = (data?.cloudinary?.plan || 'FREE').toUpperCase();
-
-                // 🔥 แก้ไข 4: รายการกิจกรรมล่าสุด
                 const list = document.getElementById('topCategoriesList');
-                if (!data?.latest_categories || data.latest_categories.length === 0) {
+                if (!data.latest_categories || !data.latest_categories.length) {
                     list.innerHTML = '<p style="text-align:center;color:#999;padding:20px;">ไม่มีข้อมูล</p>';
-                } else {
-                    list.innerHTML = '';
-                    data.latest_categories.forEach((c, index) => {
-                        const dateStr = new Date(c.last_update).toLocaleDateString('th-TH', {
-                            day: 'numeric',
-                            month: 'short',
-                            year: '2-digit'
-                        });
-                        const rank = index + 1;
-                        let rankColor = '#999';
-                        if (rank === 1) rankColor = '#f1c40f';
-                        if (rank === 2) rankColor = '#bdc3c7';
-                        if (rank === 3) rankColor = '#e67e22';
+                    return;
+                }
 
-                        list.innerHTML += `
-                <div style="margin-bottom:10px; padding:10px; background:white; border-radius:6px; border-left: 3px solid #3498db; box-shadow:0 1px 3px rgba(0,0,0,0.05); display: flex; gap: 10px; align-items: flex-start;">
-                    <div style="background:${rankColor}; color:white; width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:bold; flex-shrink:0; margin-top:2px;">${rank}</div>
-                    <div style="flex-grow:1;">
-                        <div style="display:flex; justify-content:space-between; align-items:center;">
-                            <span style="font-size:14px; color:#333; font-weight:bold;">${c.category_name}</span>
-                            <span style="font-size:12px; color:#999;">${dateStr}</span>
-                        </div>
-                        <div style="font-size:12px; color:#666; margin-top:3px;">
-                            📸 มีรูปทั้งหมด ${c.photo_count} รูป
-                        </div>
-                    </div>
-                </div>`;
+                list.innerHTML = '';
+
+                data.latest_categories.forEach((c, index) => {
+                    const dateStr = new Date(c.last_update).toLocaleDateString('th-TH', {
+                        day: 'numeric',
+                        month: 'short',
+                        year: '2-digit'
                     });
-                }
+                    const rank = index + 1;
+                    let rankColor = '#999';
+                    if (rank === 1) rankColor = '#f1c40f'; // ทอง
+                    if (rank === 2) rankColor = '#bdc3c7'; // เงิน
+                    if (rank === 3) rankColor = '#e67e22'; // ทองแดง
 
-                // 🔥 แก้ไข 5: ขนาดเฉลี่ย
-                try {
-                    const resAvg = await fetch('/storage/average?t=' + Date.now(), { headers: h });
-                    if (resAvg.ok) {
-                        const d = await resAvg.json();
-                        document.getElementById('avgPhotoSize').innerText = d.average_readable || '0 MB';
-                    }
-                } catch (e) {
-                    document.getElementById('avgPhotoSize').innerText = '0 MB';
-                }
+                    list.innerHTML += `
+                    <div style="margin-bottom:10px; padding:10px; background:white; border-radius:6px; border-left: 3px solid #3498db; box-shadow:0 1px 3px rgba(0,0,0,0.05); display: flex; gap: 10px; align-items: flex-start;">
+                        <div style="background:${rankColor}; color:white; width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:bold; flex-shrink:0; margin-top:2px;">${rank}</div>
+                        <div style="flex-grow:1;">
+                            <div style="display:flex; justify-content:space-between; align-items:center;">
+                                <span style="font-size:14px; color:#333; font-weight:bold;">${c.category_name}</span>
+                                <span style="font-size:12px; color:#999;">${dateStr}</span>
+                            </div>
+                            <div style="font-size:12px; color:#666; margin-top:3px;">
+                                📸 มีรูปทั้งหมด ${c.photo_count} รูป
+                            </div>
+                        </div>
+                    </div>`;
+                });
 
+                const resAvg = await fetch('/storage/average?t=' + Date.now(), {
+                    headers: h
+                });
+                if (resAvg.ok) {
+                    const d = await resAvg.json();
+                    document.getElementById('avgPhotoSize').innerText = d.average_readable;
+                }
             } catch (error) {
                 console.error('Storage Error:', error);
-
-                // แสดงข้อความ Error
-                document.getElementById('storagePercentage').innerText = 'Error';
-                document.getElementById('storageBarText').innerText = 'โหลดไม่สำเร็จ';
-                document.getElementById('storageBar').style.background = '#e74c3c';
-                document.getElementById('storageBar').style.width = '100%';
             }
         }
 
@@ -2951,6 +2861,166 @@
                         heightAuto: false
                     });
                 }
+            }
+        }
+
+        async function editDetails(id, oldCat, oldDate) {
+            let dateStr = oldDate ? new Date(oldDate).toISOString().slice(0, 16) : '';
+            const {
+                value: f
+            } = await Swal.fire({
+                customClass: {
+                    popup: 'small-modal-popup',
+                    title: 'small-modal-title',
+                    input: 'small-modal-input',
+                    confirmButton: 'swal-btn-confirm',
+                    cancelButton: 'swal-btn-cancel',
+                    actions: 'small-modal-actions'
+                },
+                buttonsStyling: false,
+                showCancelButton: true,
+                confirmButtonText: 'บันทึก',
+                cancelButtonText: 'ยกเลิก',
+                title: 'แก้ไขรายละเอียด',
+                html: `<input id="swal-cat" class="swal2-input small-modal-input" value="${oldCat}"><input id="swal-date" type="datetime-local" class="swal2-input small-modal-input" value="${dateStr}">`,
+                heightAuto: false,
+                preConfirm: () => [document.getElementById('swal-cat').value, document.getElementById('swal-date').value]
+            });
+
+            if (f) {
+                const h = getAuthHeaders();
+                if (!h) return;
+                const res = await fetch(`/photos/${id}/details`, {
+                    method: 'PUT',
+                    headers: h,
+                    body: JSON.stringify({
+                        category_name: f[0],
+                        custom_date: f[1]
+                    })
+                });
+                if (res.ok) {
+                    Swal.fire({
+                        text: 'แก้ไขข้อมูลแล้ว',
+                        icon: 'success',
+                        heightAuto: false
+                    });
+                    await reload();
+                } else {
+                    Swal.fire({
+                        text: 'แก้ไขไม่ได้',
+                        icon: 'error',
+                        heightAuto: false
+                    });
+                }
+            }
+        }
+
+        async function changeUsername(id, o) {
+            if (user.role !== 'admin') return;
+            const h = getAuthHeaders();
+            if (!h) return;
+            const {
+                value: n
+            } = await Swal.fire({
+                customClass: {
+                    popup: 'small-modal-popup',
+                    title: 'small-modal-title',
+                    input: 'small-modal-input',
+                    confirmButton: 'swal-btn-confirm',
+                    cancelButton: 'swal-btn-cancel',
+                    actions: 'small-modal-actions'
+                },
+                buttonsStyling: false,
+                showCancelButton: true,
+                confirmButtonText: 'บันทึก',
+                cancelButtonText: 'ยกเลิก',
+                title: 'เปลี่ยนชื่อ Username',
+                input: 'text',
+                inputValue: o,
+                heightAuto: false
+            });
+            if (n) {
+                await fetch(`/users/${id}/username`, {
+                    method: 'PUT',
+                    headers: h,
+                    body: JSON.stringify({
+                        newUsername: n
+                    })
+                });
+                loadUsers();
+            }
+        }
+
+        async function resetPass(id) {
+            if (user.role !== 'admin') return;
+            const h = getAuthHeaders();
+            if (!h) return;
+            const {
+                value: p
+            } = await Swal.fire({
+                customClass: {
+                    popup: 'small-modal-popup',
+                    title: 'small-modal-title',
+                    input: 'small-modal-input',
+                    confirmButton: 'swal-btn-confirm',
+                    cancelButton: 'swal-btn-cancel',
+                    actions: 'small-modal-actions'
+                },
+                buttonsStyling: false,
+                showCancelButton: true,
+                confirmButtonText: 'บันทึก',
+                cancelButtonText: 'ยกเลิก',
+                title: 'ตั้งรหัสผ่านใหม่',
+                input: 'text',
+                inputPlaceholder: 'พิมพ์รหัสใหม่...',
+                heightAuto: false
+            });
+            if (p) {
+                await fetch(`/users/${id}/reset`, {
+                    method: 'PUT',
+                    headers: h,
+                    body: JSON.stringify({
+                        newPassword: p
+                    })
+                });
+                Swal.fire({
+                    text: 'เปลี่ยนรหัสแล้ว',
+                    icon: 'success',
+                    heightAuto: false
+                });
+            }
+        }
+
+        async function renamePhoto(id, o) {
+            const {
+                value: n
+            } = await Swal.fire({
+                customClass: {
+                    popup: 'small-modal-popup',
+                    title: 'small-modal-title',
+                    input: 'small-modal-input',
+                    confirmButton: 'swal-btn-confirm',
+                    cancelButton: 'swal-btn-cancel',
+                    actions: 'small-modal-actions'
+                },
+                buttonsStyling: false,
+                showCancelButton: true,
+                confirmButtonText: 'บันทึก',
+                cancelButtonText: 'ยกเลิก',
+                title: 'เปลี่ยนชื่อไฟล์',
+                input: 'text',
+                inputValue: o,
+                heightAuto: false
+            });
+            if (n) {
+                await fetch(`/photos/${id}/rename`, {
+                    method: 'PUT',
+                    headers: getAuthHeaders(),
+                    body: JSON.stringify({
+                        new_name: n
+                    })
+                });
+                reload();
             }
         }
 
