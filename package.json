@@ -1,0 +1,43 @@
+{
+  "name": "army_photo_gallery",
+  "version": "1.0.0",
+  "description": "\"# army-gallery-project\" \r \"# army-gallery-project\" \r #\u0000 \u0000a\u0000r\u0000m\u0000y\u0000-\u0000g\u0000a\u0000l\u0000l\u0000e\u0000r\u0000y\u0000-\u0000p\u0000r\u0000o\u0000j\u0000e\u0000c\u0000t\u0000\r\u0000 \u0000#\u0000 \u0000a\u0000r\u0000m\u0000y\u0000-\u0000g\u0000a\u0000l\u0000l\u0000e\u0000r\u0000y\u0000-\u0000p\u0000r\u0000o\u0000j\u0000e\u0000c\u0000t\u0000\r\u0000 \u0000#\u0000 \u0000a\u0000r\u0000m\u0000y\u0000-\u0000g\u0000a\u0000l\u0000l\u0000e\u0000r\u0000y\u0000-\u0000p\u0000r\u0000o\u0000j\u0000e\u0000c\u0000t\u0000\r\u0000 \u0000",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@capacitor/android": "^8.0.0",
+    "@capacitor/cli": "^8.0.0",
+    "@capacitor/core": "^8.0.0",
+    "archiver": "^7.0.1",
+    "bcryptjs": "^3.0.3",
+    "cloudinary": "^1.41.3",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "express-rate-limit": "^8.2.1",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "moment": "^2.30.1",
+    "multer": "^2.0.2",
+    "multer-storage-cloudinary": "^4.0.0",
+    "mysql2": "^3.15.3",
+    "node-cron": "^4.2.1",
+    "nodemon": "^3.1.11",
+    "sharp": "^0.34.5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/honoka2345er-sudo/army-gallery-project.git"
+  },
+  "bugs": {
+    "url": "https://github.com/honoka2345er-sudo/army-gallery-project/issues"
+  },
+  "homepage": "https://github.com/honoka2345er-sudo/army-gallery-project#readme"
+}

@@ -1,0 +1,21 @@
+{
+  "name": "ข่าวประชาสัมพันธ์ ทภ.3",
+  "short_name": "PR Army3",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#c0392b",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "Royal_Thai_Army_3_Logo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "Royal_Thai_Army_3_Logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

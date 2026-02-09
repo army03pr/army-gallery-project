@@ -1,0 +1,233 @@
+/* style.css (Minimalist Edition) */
+
+/* --- 1. ตั้งค่าพื้นฐาน (Base) --- */
+:root {
+    --primary: #2c3e50;       /* สีกรมท่าเข้ม (ทหาร) */
+    --accent: #c0392b;        /* สีแดงเลือดหมู (จุดเด่น) */
+    --bg-body: #fafafa;       /* พื้นหลังเกือบขาว */
+    --bg-card: #ffffff;       /* พื้นหลังการ์ดขาวล้วน */
+    --text-main: #333333;     /* สีตัวหนังสือหลัก */
+    --text-light: #888888;    /* สีตัวหนังสือรอง */
+    --shadow-soft: 0 10px 30px -10px rgba(0,0,0,0.05); /* เงาฟุ้งๆ */
+    --shadow-hover: 0 20px 40px -10px rgba(0,0,0,0.1); /* เงาตอนชี้ */
+    --radius: 16px;           /* ความมนของขอบ */
+}
+
+body {
+    font-family: 'Sarabun', sans-serif;
+    background-color: var(--bg-body);
+    margin: 0;
+    padding: 0;
+    color: var(--text-main);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased; /* ทำให้ฟอนต์คมชัดบน Mac */
+}
+
+a { text-decoration: none; color: inherit; transition: 0.3s; }
+
+/* --- 2. ส่วนหัว (Header) - แบบคลีนๆ --- */
+.header-container {
+    background-color: var(--bg-card);
+    padding: 20px 5%; /* เว้นขอบซ้ายขวา 5% */
+    display: flex;
+    align-items: center;
+    justify-content: center; /* จัดโลโก้ไว้ตรงกลาง */
+    box-shadow: 0 1px 0 rgba(0,0,0,0.05); /* เส้นขอบล่างจางๆ */
+    position: sticky; top: 0; z-index: 1000;
+}
+
+.header-logo {
+    width: 40px;
+    height: auto;
+    margin-right: 15px;
+    opacity: 0.9;
+}
+
+.header-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--primary);
+    letter-spacing: 0.5px;
+    margin: 0;
+}
+
+/* --- 3. ช่องค้นหา (Search) - ลอยเด่น --- */
+.search-section {
+    padding: 40px 20px 20px 20px;
+    text-align: center;
+}
+
+.search-input {
+    padding: 15px 25px;
+    border: 1px solid transparent; /* ซ่อนขอบ */
+    background: white;
+    border-radius: 50px; /* ทรงแคปซูล */
+    width: 100%;
+    max-width: 500px;
+    font-family: 'Sarabun', sans-serif;
+    font-size: 15px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06); /* เงาลอยๆ */
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.search-input:focus {
+    box-shadow: 0 6px 25px rgba(0,0,0,0.1);
+    transform: translateY(-1px);
+}
+
+/* ปุ่มล้างค่า */
+button[onclick="resetFilter()"] {
+    margin-left: 10px;
+    background-color: #f1f2f6 !important;
+    color: #7f8c8d !important;
+    font-weight: 600;
+    box-shadow: none !important;
+}
+
+/* --- 4. ส่วนหัวข้อกิจกรรม --- */
+.activity-section {
+    padding: 0 5%; /* ขอบซ้ายขวาเท่า Header */
+    margin-bottom: 60px;
+}
+
+.activity-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 25px;
+    margin-top: 20px;
+    position: relative;
+    display: inline-block;
+}
+
+/* ขีดเส้นใต้หัวข้อเล็กๆ แทนขีดข้าง */
+.activity-title::after {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 4px;
+    background: var(--accent);
+    border-radius: 2px;
+    margin-top: 8px;
+}
+
+/* --- 5. ตารางรูปภาพ (Grid) --- */
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* การ์ดกว้างขึ้นนิดนึง */
+    gap: 30px;
+    padding: 0;
+}
+
+/* --- 6. การ์ดรูปภาพ (Card) - พระเอกของงาน --- */
+.news-card {
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow-soft);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
+    border: 1px solid rgba(0,0,0,0.02); /* เส้นขอบจางมาก */
+    display: flex;
+    flex-direction: column;
+}
+
+.news-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-hover);
+}
+
+.news-img-wrapper {
+    width: 100%;
+    height: 220px; /* สูงขึ้นหน่อยให้ดูแพง */
+    background-color: #eee;
+    position: relative;
+    overflow: hidden;
+}
+
+.news-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease; /* รูปขยายช้าๆ นุ่มๆ */
+}
+
+.news-card:hover img {
+    transform: scale(1.05);
+}
+
+.news-title {
+    padding: 20px;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text-main);
+    line-height: 1.6;
+    background: white;
+}
+
+/* วันที่ */
+.news-title span {
+    display: block;
+    margin-top: 8px;
+    font-size: 13px;
+    color: var(--text-light);
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* --- 7. ปุ่มต่างๆ (Buttons) --- */
+.btn-primary {
+    background: var(--primary);
+    color: white;
+    border-radius: 50px;
+    padding: 12px 30px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 15px rgba(44, 62, 80, 0.2);
+}
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(44, 62, 80, 0.3);
+}
+
+/* ปุ่มดาวน์โหลด ZIP ให้ดูมินิมอล */
+a[href*="download-zip"] {
+    background-color: transparent !important;
+    color: var(--primary) !important;
+    border: 1px solid var(--primary) !important;
+    border-radius: 50px !important;
+    padding: 6px 15px !important;
+    font-weight: 600 !important;
+    font-size: 12px !important;
+}
+a[href*="download-zip"]:hover {
+    background-color: var(--primary) !important;
+    color: white !important;
+}
+
+/* --- 8. Responsive --- */
+@media (max-width: 768px) {
+    .header-container { padding: 15px 20px; justify-content: space-between; }
+    .search-section { padding: 20px; }
+    .activity-section { padding: 0 20px; }
+    .gallery { gap: 20px; }
+    .news-img-wrapper { height: 200px; }
+}
+
+/* --- 9. Admin & Login Specific (ปรับให้เข้าธีม) --- */
+.login-body { background-color: #f4f6f8; }
+.login-card { border-radius: 24px; padding: 50px; box-shadow: var(--shadow-hover); }
+.sidebar { background-color: #fff; border-right: 1px solid #eee; color: var(--text-main); }
+.sidebar h2 { color: var(--primary); border-bottom: none; margin-bottom: 30px; }
+.sidebar p { color: var(--text-light); }
+.sidebar a { color: var(--text-main) !important; font-weight: 600; opacity: 0.7; }
+.sidebar a:hover { opacity: 1; color: var(--accent) !important; }
+.sidebar button { background-color: #fff !important; color: var(--accent) !important; border: 1px solid var(--accent) !important; }
+.sidebar button:hover { background-color: var(--accent) !important; color: white !important; }
+
+.card { border-radius: 20px; border: 1px solid #eee; box-shadow: var(--shadow-soft); }
+.stat-card { border: 1px solid #eee; border-left-width: 5px; box-shadow: none; }
+input, select { border-radius: 12px !important; border: 1px solid #eee !important; background: #f9f9f9; }
+input:focus, select:focus { background: #fff; border-color: var(--primary) !important; }
