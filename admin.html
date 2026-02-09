@@ -2505,47 +2505,73 @@
                 const data = await res.json();
                 let used = data.cloudinary.used_bytes || 0;
                 let limit = data.cloudinary.limit_bytes || 26843545600;
+                
+                // คำนวณเปอร์เซ็นต์
                 let p = (used / limit) * 100;
-                let pText = p.toFixed(2) + '%';
 
+                // จัดการข้อความเปอร์เซ็นต์
+                let pText = p.toFixed(2) + '%';
                 if (p > 0 && p < 0.01) {
                     pText = p.toFixed(4) + '%';
                 } else if (p < 0.0001 && p > 0) {
                     pText = "< 0.0001%";
+                } else if (p === 0) {
+                    pText = "0%";
                 }
 
+                // อัปเดตตัวเลขหัวข้อ
                 document.getElementById('storagePercentage').innerText = pText;
                 document.getElementById('storageBarText').innerText = pText;
-                document.getElementById('storageBar').style.width = ((p > 0 && p < 1) ? 1 : p) + '%';
 
-                if (p > 90) {
-                    document.getElementById('storageBar').style.background = 'linear-gradient(90deg, #e74c3c, #c0392b)';
-                } else if (p > 80) {
-                    document.getElementById('storageBar').style.background = 'linear-gradient(90deg, #f39c12, #e67e22)';
+                // 🔥🔥🔥 [แก้ตรงนี้] จัดการกราฟหลอด 🔥🔥🔥
+                const bar = document.getElementById('storageBar');
+                const barText = document.getElementById('storageBarText');
+
+                if (p <= 0) {
+                    // กรณี 0%: หุบหลอดให้สนิท
+                    bar.style.width = '0%';
+                    bar.style.paddingLeft = '0px'; // เอา padding ออก เพื่อไม่ให้หลอดโผล่
+                    barText.style.display = 'none'; // ซ่อนข้อความในหลอด (เพราะหลอดหุบอยู่)
                 } else {
-                    document.getElementById('storageBar').style.background = 'linear-gradient(90deg, #3498db, #9b59b6)';
+                    // กรณีมีการใช้งาน:
+                    // ถ้าใช้น้อยกว่า 5% ให้ดันกราฟขึ้นมา 5% เพื่อให้พอมีที่ยืนให้ตัวหนังสือสวยๆ
+                    let visualWidth = p < 5 ? 5 : p; 
+                    
+                    bar.style.width = visualWidth + '%';
+                    bar.style.paddingLeft = '12px'; // คืนค่า padding
+                    barText.style.display = 'block'; // โชว์ข้อความปกติ
                 }
 
+                // เปลี่ยนสีหลอดตามความหนาแน่น (เหมือนเดิม)
+                if (p > 90) {
+                    bar.style.background = 'linear-gradient(90deg, #e74c3c, #c0392b)';
+                } else if (p > 80) {
+                    bar.style.background = 'linear-gradient(90deg, #f39c12, #e67e22)';
+                } else {
+                    bar.style.background = 'linear-gradient(90deg, #3498db, #9b59b6)';
+                }
+
+                // ข้อมูลตัวอักษรด้านล่าง
                 document.getElementById('storageUsed').innerText = 'ใช้ไป: ' + data.cloudinary.used_readable;
                 document.getElementById('storageLimit').innerText = 'ลิมิต: ' + data.cloudinary.limit_readable;
                 document.getElementById('totalPhotosCount').innerText = data.database.active_photos;
                 document.getElementById('cloudinaryPlan').innerText = data.cloudinary.plan.toUpperCase();
 
+                // ... (ส่วนโหลดรายการล่าสุด เหมือนเดิม) ...
                 const list = document.getElementById('topCategoriesList');
                 if (!data.latest_categories || !data.latest_categories.length) {
                     list.innerHTML = '<p style="text-align:center;color:#999;padding:20px;">ไม่มีข้อมูล</p>';
                     return;
                 }
-
-                list.innerHTML = '';
                 
+                list.innerHTML = '';
                 data.latest_categories.forEach((c, index) => {
-                    const dateStr = new Date(c.last_update).toLocaleDateString('th-TH', { day: 'numeric', month: 'short', year: '2-digit' });
+                     const dateStr = new Date(c.last_update).toLocaleDateString('th-TH', { day: 'numeric', month: 'short', year: '2-digit' });
                     const rank = index + 1;
                     let rankColor = '#999';
-                    if (rank === 1) rankColor = '#f1c40f'; // ทอง
-                    if (rank === 2) rankColor = '#bdc3c7'; // เงิน
-                    if (rank === 3) rankColor = '#e67e22'; // ทองแดง
+                    if (rank === 1) rankColor = '#f1c40f'; 
+                    if (rank === 2) rankColor = '#bdc3c7'; 
+                    if (rank === 3) rankColor = '#e67e22'; 
 
                     list.innerHTML += `
                     <div style="margin-bottom:10px; padding:10px; background:white; border-radius:6px; border-left: 3px solid #3498db; box-shadow:0 1px 3px rgba(0,0,0,0.05); display: flex; gap: 10px; align-items: flex-start;">
