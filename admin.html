@@ -12,7 +12,9 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/1042/1042339.png">
 
-    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -156,8 +158,30 @@
             gap: 10px;
         }
 
-        .btn-profile,
+        .btn-profile {
+            background: var(--primary-color);
+            color: var(--white);
+            border: none;
+            padding: 12px;
+            cursor: pointer;
+            border-radius: 8px;
+            font-family: 'Sarabun', sans-serif;
+            font-weight: 600;
+            width: 100%;
+            transition: background 0.2s;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-profile:hover {
+            background: var(--primary-dark);
+        }
+
         .btn-logout {
+            background: var(--danger-color);
             color: var(--white);
             border: none;
             padding: 12px;
@@ -171,19 +195,6 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
-            margin-bottom: 10px;
-        }
-
-        .btn-profile {
-            background: var(--primary-color);
-        }
-
-        .btn-profile:hover {
-            background: var(--primary-dark);
-        }
-
-        .btn-logout {
-            background: var(--danger-color);
         }
 
         .btn-logout:hover {
@@ -251,9 +262,9 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
+            margin-bottom: 15px; 
         }
-
+        
         .card-header-title {
             margin: 0 !important;
             font-size: 20px !important;
@@ -610,6 +621,7 @@
             background: #c0392b;
         }
 
+        /* 🔥🔥🔥 แก้ไขเฉพาะส่วนนี้ สำหรับรูปในถังขยะเท่านั้น 🔥🔥🔥 */
         .approval-item.trash-item img {
             filter: grayscale(100%);
             opacity: 0.85;
@@ -1031,7 +1043,7 @@
             }
 
             .main-content {
-                padding: 80px 10px 30px 10px;
+                padding: 80px 10px 30px 10px; /* ลด padding ข้างนิดนึง */
                 width: 100%;
             }
 
@@ -1048,16 +1060,14 @@
                 gap: 10px;
                 margin-bottom: 5px !important;
             }
-
             .card-header-title {
                 margin: 0 !important;
-                font-size: 18px !important;
+                font-size: 18px !important; /* ลดขนาดฟอนต์หัวข้อหน่อย */
                 flex: 1;
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
             }
-
             .card-header-wrapper button {
                 width: auto !important;
                 padding: 6px 10px !important;
@@ -1068,19 +1078,19 @@
             /* --- 🔥 แก้ไข TOOLBAR ถังขยะ (ให้ปุ่มเรียงแถวเดียว) --- */
             .card .bulk-toolbar {
                 display: flex !important;
-                flex-direction: row !important;
-                flex-wrap: nowrap !important;
+                flex-direction: row !important; /* บังคับแนวนอน */
+                flex-wrap: nowrap !important;   /* ห้ามปัดบรรทัด */
                 align-items: center !important;
                 justify-content: space-between !important;
                 gap: 8px !important;
                 padding: 10px !important;
-                overflow-x: auto;
+                overflow-x: auto; /* กันล้นจอเล็กมากๆ */
             }
 
             /* ปุ่มเลือกทั้งหมด (ฝั่งซ้าย) */
             #btnSelectAllTrash {
                 width: auto !important;
-                flex: 1;
+                flex: 1; /* ให้ยืดกินพื้นที่ว่าง */
                 margin: 0 !important;
                 height: 38px !important;
                 font-size: 12px !important;
@@ -1096,7 +1106,7 @@
                 flex-direction: row !important;
                 gap: 5px !important;
                 margin: 0 !important;
-                flex-shrink: 0;
+                flex-shrink: 0; /* ห้ามหด */
             }
 
             /* ปุ่ม กู้คืน/ลบถาวร */
@@ -1184,67 +1194,72 @@
             }
 
             /* --- 🔥 IMPROVED MOBILE LOGS (FORCE STYLE) --- */
-            .log-table,
-            .log-table tbody,
-            .log-table tr,
-            .log-table td {
+            /* 1. ล้างค่าพื้นฐานของตารางออกให้หมด */
+            .log-table, .log-table tbody, .log-table tr, .log-table td {
                 display: block !important;
                 width: 100% !important;
                 box-sizing: border-box !important;
             }
 
+            /* 2. จัด Layout ของ Card (tr) */
             .log-table tr {
                 display: grid !important;
-                grid-template-columns: 1fr auto !important;
-                grid-template-areas:
+                /* ซ้าย: ชื่อ User, ขวา: Badge Action */
+                grid-template-columns: 1fr auto !important; 
+                grid-template-areas: 
                     "datetime datetime"
                     "user badge"
                     "details details";
                 gap: 5px 10px !important;
+                
                 background: white !important;
                 margin-bottom: 15px !important;
                 padding: 15px !important;
                 border-radius: 12px !important;
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08) !important;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.08) !important;
                 border: 1px solid #eee !important;
                 border-left: 5px solid var(--primary-color) !important;
             }
 
+            /* Cell 1: Date & Time -> พื้นที่ด้านบนสุด */
             .log-table td:nth-child(1) {
                 grid-area: datetime !important;
                 border-bottom: 1px solid #f0f0f0 !important;
                 margin-bottom: 8px !important;
                 padding-bottom: 8px !important;
             }
-
-            .log-table td:nth-child(1)>div {
+            /* จัดให้วันที่กับเวลาอยู่คนละฝั่ง */
+            .log-table td:nth-child(1) > div {
                 flex-direction: row !important;
                 justify-content: space-between !important;
                 width: 100% !important;
             }
-
+            
+            /* Cell 2: Username -> ซ้าย */
             .log-table td:nth-child(2) {
                 grid-area: user !important;
                 font-weight: bold;
                 font-size: 15px !important;
-                display: flex;
+                display: flex; 
                 align-items: center;
                 gap: 25px;
             }
-
+            /* Add User Icon */
             .log-table td:nth-child(2)::before {
-                content: '\f007';
-                font-family: "Font Awesome 6 Free";
+                content: '\f007'; 
+                font-family: "Font Awesome 6 Free"; 
                 font-weight: 900;
                 color: #bdc3c7;
             }
 
+            /* Cell 3: Action Badge -> ขวา */
             .log-table td:nth-child(3) {
                 grid-area: badge !important;
                 text-align: right !important;
                 justify-self: end !important;
             }
 
+            /* Cell 4: Details -> ล่างสุดเต็มจอ */
             .log-table td:nth-child(4) {
                 grid-area: details !important;
                 background-color: #f8f9fa !important;
@@ -1257,10 +1272,7 @@
             }
 
             /* --- 🔥 USER TABLE (Full Width Fix) --- */
-            .user-table,
-            .user-table tbody,
-            .user-table tr,
-            .user-table td {
+            .user-table, .user-table tbody, .user-table tr, .user-table td {
                 display: block !important;
                 width: 100% !important;
                 box-sizing: border-box !important;
@@ -1269,14 +1281,14 @@
             .user-table tr {
                 display: grid !important;
                 grid-template-columns: 1fr auto !important;
-                grid-template-areas:
+                grid-template-areas: 
                     "info role"
                     "actions actions";
                 background: white;
                 margin-bottom: 15px;
-                padding: 0 !important;
+                padding: 0 !important; /* 🔥 ลบ Padding เพื่อให้ขีดชนขอบ */
                 border-radius: 12px;
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+                box-shadow: 0 4px 8px rgba(0,0,0,0.05);
                 border: 1px solid #eee;
                 border-left: 5px solid #8e44ad !important;
                 overflow: hidden;
@@ -1288,7 +1300,7 @@
                 padding: 15px !important;
                 border-bottom: 1px solid #f0f0f0 !important;
             }
-
+            /* จัดระยะห่างใน Cell */
             .user-cell {
                 gap: 15px !important;
             }
@@ -1319,7 +1331,7 @@
                 width: 100%;
                 gap: 10px;
             }
-
+            
             .user-table .action-btn-group button {
                 flex: 1;
                 height: 38px;
@@ -1340,8 +1352,8 @@
                 justify-content: center;
                 height: 40px;
             }
-
-            /* ลดความสูงของการ์ดในถังขยะ */
+            
+             /* ลดความสูงของการ์ดในถังขยะ */
             #trashList .approval-item {
                 padding: 8px !important;
                 min-height: auto !important;
@@ -1443,8 +1455,7 @@
             <div style="margin-top: auto;">
                 <button onclick="openProfileSettings()" class="btn-profile"><i class="fas fa-cog"></i>
                     ตั้งค่าส่วนตัว</button>
-                <button onclick="logout()" class="btn-logout"><i class="fas fa-sign-out-alt"></i>
-                    ออกจากระบบ</button>
+                <button onclick="logout()" class="btn-logout"><i class="fas fa-sign-out-alt"></i> ออกจากระบบ</button>
             </div>
         </div>
     </div>
@@ -1470,6 +1481,7 @@
         </div>
 
         <div class="card" style="border-top: 5px solid #9b59b6;">
+
             <div class="card-header-wrapper header-color-storage">
                 <h3 class="card-header-title" style="color: #9b59b6;">
                     <i class="fas fa-hdd"></i> พื้นที่จัดเก็บข้อมูล
@@ -1479,23 +1491,31 @@
                 </button>
             </div>
 
-            <div style="background:#f8f9fa; padding:15px; border-radius:12px; margin-bottom:15px; border: 1px solid #d2b4de; box-shadow: 0 2px 5px rgba(0,0,0,0.03);">
+            <div
+                style="background:#f8f9fa; padding:15px; border-radius:12px; margin-bottom:15px; border: 1px solid #d2b4de; box-shadow: 0 2px 5px rgba(0,0,0,0.03);">
                 <div style="display:flex; justify-content:space-between; margin-bottom:5px;">
                     <span style="font-weight:600; color:#555; font-size: 14px;">เครดิตที่ใช้ไป (Usage)</span>
                     <span id="storagePercentage" style="font-weight:bold; color:#9b59b6; font-size:18px;">0%</span>
                 </div>
-                <div style="width:100%; height:26px; background:#ecf0f1; border-radius:15px; position:relative; overflow:hidden; box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);">
-                    <div id="storageBar" style="height:100%; background:linear-gradient(90deg, #3498db, #9b59b6); width:0%; transition:width 0.8s cubic-bezier(0.4, 0, 0.2, 1); display:flex; align-items:center; padding-left: 12px;">
-                        <span id="storageBarText" style="color:#fff; font-weight:bold; font-size:13px; text-shadow: 0 1px 1px rgba(0,0,0,0.3); line-height: 26px; white-space: nowrap;">0.00%</span>
+
+                <div
+                    style="width:100%; height:26px; background:#ecf0f1; border-radius:15px; position:relative; overflow:hidden; box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);">
+                    <div id="storageBar"
+                        style="height:100%; background:linear-gradient(90deg, #3498db, #9b59b6); width:0%; transition:width 0.8s cubic-bezier(0.4, 0, 0.2, 1); display:flex; align-items:center; padding-left: 12px;">
+                        <span id="storageBarText"
+                            style="color:#fff; font-weight:bold; font-size:13px; text-shadow: 0 1px 1px rgba(0,0,0,0.3); line-height: 26px; white-space: nowrap;">0.00%</span>
                     </div>
                 </div>
-                <div style="display:flex; justify-content:space-between; margin-top:5px; font-size:12px; color:#7f8c8d;">
+
+                <div
+                    style="display:flex; justify-content:space-between; margin-top:5px; font-size:12px; color:#7f8c8d;">
                     <span id="storageUsed">Bandwidth+Storage: 0 MB</span>
                     <span id="storageLimit">Plan Limit: ~25 GB</span>
                 </div>
             </div>
 
-            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); gap:10px; margin-bottom:15px;">
+            <div
+                style="display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); gap:10px; margin-bottom:15px;">
                 <div style="background:#e3f2fd; padding:12px; border-radius:12px; border-left:4px solid #2196f3;">
                     <div style="font-size:12px; color:#546e7a; margin-bottom:2px;">รูปทั้งหมด</div>
                     <div id="totalPhotosCount" style="font-size:22px; font-weight:bold; color:#2196f3;">0</div>
@@ -1506,24 +1526,29 @@
                 </div>
                 <div style="background:#f3e5f5; padding:12px; border-radius:12px; border-left:4px solid #9c27b0;">
                     <div style="font-size:12px; color:#4a148c; margin-bottom:2px;">แพลน</div>
-                    <div id="cloudinaryPlan" style="font-size:22px; font-weight:bold; color:#9c27b0; text-transform:uppercase;">FREE</div>
+                    <div id="cloudinaryPlan"
+                        style="font-size:22px; font-weight:bold; color:#9c27b0; text-transform:uppercase;">FREE</div>
                 </div>
             </div>
 
             <div>
-                <h4 style="color:#666; margin-bottom:5px; font-size:14px; font-weight:600;"><i class="fas fa-clock"></i> กิจกรรมที่อัปเดตล่าสุด (5 อันดับแรก)</h4>
+                <h4 style="color:#666; margin-bottom:5px; font-size:14px; font-weight:600;"><i class="fas fa-clock"></i>
+                    กิจกรรมที่อัปเดตล่าสุด (5 อันดับแรก)</h4>
+
                 <div id="topCategoriesList" style="margin-top: 15px;">
                     <p style="text-align:center; color:#999; padding:15px; font-size: 13px;">กำลังโหลด...</p>
                 </div>
             </div>
 
-            <div id="storageWarning" style="display:none; background:#fff3cd; border-left:5px solid #ffc107; padding:10px; margin-top:15px; border-radius:8px;">
+            <div id="storageWarning"
+                style="display:none; background:#fff3cd; border-left:5px solid #ffc107; padding:10px; margin-top:15px; border-radius:8px;">
                 <strong style="color:#856404; font-size:13px; display:block; margin-bottom:2px;">⚠️ คำเตือน:</strong>
                 <span style="color:#856404; font-size: 12px;">พื้นที่ใกล้เต็มแล้ว! กรุณาลบไฟล์ที่ไม่จำเป็นออก</span>
             </div>
         </div>
 
         <div class="card" style="border-top: 5px solid #3498db;">
+
             <div class="card-header-wrapper header-color-upload">
                 <h3 class="card-header-title" style="color: #3498db;">
                     <i class="fas fa-cloud-upload-alt"></i> อัปโหลดรูปภาพกิจกรรม
@@ -1532,19 +1557,27 @@
 
             <form id="uploadForm">
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+
                     <div style="display:flex; flex-direction:column;">
                         <label style="font-size:14px; color:#555; margin-bottom:5px;"><b>1. ชื่อกิจกรรม</b></label>
-                        <input type="text" id="categoryName" list="categoryList" placeholder="พิมพ์ชื่อกิจกรรม..." required style="margin-bottom: 0; font-size:14px; height: 42px; border-radius: 8px;">
+                        <input type="text" id="categoryName" list="categoryList" placeholder="พิมพ์ชื่อกิจกรรม..."
+                            required style="margin-bottom: 0; font-size:14px; height: 42px; border-radius: 8px;">
                         <datalist id="categoryList"></datalist>
                     </div>
 
                     <div style="display:flex; flex-direction:column;">
                         <label style="font-size:14px; color:#555; margin-bottom:5px;"><b>2. เลือกรูปภาพ</b></label>
-                        <div class="file-upload-wrapper" style="min-height: 120px; padding: 15px;">
+
+                        <div class="file-upload-wrapper"
+                            style="min-height: 120px; padding: 15px;">
                             <div id="uploadPlaceholder" style="text-align: center;">
-                                <span class="upload-icon" style="font-size: 32px; color: #3498db; margin-bottom: 5px;"><i class="fas fa-images"></i></span>
-                                <div class="upload-text" style="font-size: 14px; color: #3498db; font-weight: 600;">คลิกเพื่อเลือกรูป / ถ่ายภาพ</div>
-                                <span style="font-size:11px; color:#7f8c8d; display:block; margin-top:2px;">(สูงสุด 30 รูป)</span>
+                                <span class="upload-icon"
+                                    style="font-size: 32px; color: #3498db; margin-bottom: 5px;"><i
+                                        class="fas fa-images"></i></span>
+                                <div class="upload-text" style="font-size: 14px; color: #3498db; font-weight: 600;">
+                                    คลิกเพื่อเลือกรูป / ถ่ายภาพ</div>
+                                <span style="font-size:11px; color:#7f8c8d; display:block; margin-top:2px;">(สูงสุด 30
+                                    รูป)</span>
                             </div>
                             <div id="previewContainer" class="preview-grid" style="margin-top: 10px; gap: 10px;"></div>
                             <input type="file" id="fileInput" multiple accept="image/*" onchange="previewImages()">
@@ -1552,39 +1585,105 @@
                     </div>
                 </div>
 
-                <button type="submit" class="btn-primary" style="width:100%; margin-top:15px; padding:10px; font-size:15px; border-radius:30px; background-color: #3498db; font-weight:600; box-shadow: 0 3px 6px rgba(52, 152, 219, 0.3);">
+                <button type="submit" class="btn-primary"
+                    style="width:100%; margin-top:15px; padding:10px; font-size:15px; border-radius:30px; background-color: #3498db; font-weight:600; box-shadow: 0 3px 6px rgba(52, 152, 219, 0.3);">
                     <i class="fas fa-upload"></i> อัปโหลดทันที
                 </button>
             </form>
         </div>
 
         <div class="card" style="border-top: 5px solid #2ecc71;">
+
             <div class="card-header-wrapper header-color-gallery">
                 <h3 id="photoSectionTitle" class="card-header-title" style="color: #2ecc71;">
                     <i class="fas fa-images"></i> จัดการรูปภาพ (แก้ไข/ลบ)
                 </h3>
             </div>
 
-            <div class="search-toolbar" style="display: grid; grid-template-columns: 1fr auto auto; gap: 10px; padding: 10px; background: #f8f9fa; border: 1px solid #e0e0e0; border-radius: 12px; margin-bottom: 15px; align-items: center;">
+            <div class="search-toolbar" style="
+                display: grid; 
+                grid-template-columns: 1fr auto auto; 
+                gap: 10px; 
+                padding: 10px; 
+                background: #f8f9fa; 
+                border: 1px solid #e0e0e0; 
+                border-radius: 12px; 
+                margin-bottom: 15px;
+                align-items: center; 
+            ">
+
                 <div style="position: relative; height: 36px;">
-                    <input type="text" id="searchInput" class="search-input" placeholder="🔍 ค้นหาชื่อรูป..." style="width: 100%; height: 100%; border-radius: 30px; padding-left: 15px; margin: 0; border: 1px solid #ccc; font-size: 13px; box-sizing: border-box; outline: none; display: block;">
+                    <input type="text" id="searchInput" class="search-input" placeholder="🔍 ค้นหาชื่อรูป..." style="
+                            width: 100%; 
+                            height: 100%; 
+                            border-radius: 30px; 
+                            padding-left: 15px; 
+                            margin: 0; 
+                            border: 1px solid #ccc; 
+                            font-size: 13px; 
+                            box-sizing: border-box; 
+                            outline: none;
+                            display: block;
+                        ">
                 </div>
+
                 <div style="position: relative; height: 36px;">
-                    <select id="filterCategory" class="filter-select" style="width: 100%; min-width: 160px; height: 100%; border-radius: 30px; padding: 0 30px 0 15px; border: 1px solid #ccc; font-size: 13px; color: #333; background-color: #fff; cursor: pointer; box-sizing: border-box; outline: none; display: block; -webkit-appearance: none; -moz-appearance: none; appearance: none; background-image: url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%23555\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'%3e%3cpolyline points=\'6 9 12 15 18 9\'%3e%3c/polyline%3e%3c/svg%3e'); background-repeat: no-repeat; background-position: right 10px center; background-size: 12px;">
+                    <select id="filterCategory" class="filter-select" style="
+                            width: 100%; 
+                            min-width: 160px;
+                            height: 100%; 
+                            border-radius: 30px; 
+                            padding: 0 30px 0 15px; 
+                            border: 1px solid #ccc; 
+                            font-size: 13px; 
+                            color: #333;
+                            background-color: #fff; 
+                            cursor: pointer; 
+                            box-sizing: border-box; 
+                            outline: none;
+                            display: block;
+                            -webkit-appearance: none; 
+                            -moz-appearance: none; 
+                            appearance: none;
+                            background-image: url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%23555\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'%3e%3cpolyline points=\'6 9 12 15 18 9\'%3e%3c/polyline%3e%3c/svg%3e');
+                            background-repeat: no-repeat;
+                            background-position: right 10px center;
+                            background-size: 12px;
+                        ">
                         <option value="">📁 ทุกหมวดหมู่</option>
                     </select>
                 </div>
-                <button onclick="loadApprovedPhotos(1)" class="btn-search" style="height: 36px; padding: 0 20px; background: #2c3e50; font-size: 13px; border-radius: 30px; color: white; border: none; cursor: pointer; white-space: nowrap; display: flex; align-items: center; justify-content: center; box-shadow: none;">
+
+                <button onclick="loadApprovedPhotos(1)" class="btn-search" style="
+                        height: 36px; 
+                        padding: 0 20px; 
+                        background: #2c3e50; 
+                        font-size: 13px; 
+                        border-radius: 30px; 
+                        color: white; 
+                        border: none; 
+                        cursor: pointer; 
+                        white-space: nowrap; 
+                        display: flex; 
+                        align-items: center; 
+                        justify-content: center;
+                        box-shadow: none;
+                    ">
                     <i class="fas fa-search" style="margin-right: 5px;"></i> ค้นหา
                 </button>
             </div>
 
-            <div class="bulk-toolbar admin-only" id="approvedToolbar" style="display:none; justify-content:space-between; padding: 8px 12px; margin-bottom: 10px; background: #fff; border: 1px dashed #ccc; border-radius: 8px;">
-                <button type="button" id="btnSelectAllApproved" onclick="toggleSelectAllApproved()" style="font-size: 12px; padding: 6px 12px; border-radius: 6px; border: 1px solid #ddd; background: #fff; cursor: pointer; display: flex; align-items: center; gap: 5px; color: #333; transition:0.2s;">
+            <div class="bulk-toolbar admin-only" id="approvedToolbar"
+                style="display:none; justify-content:space-between; padding: 8px 12px; margin-bottom: 10px; background: #fff; border: 1px dashed #ccc; border-radius: 8px;">
+
+                <button type="button" id="btnSelectAllApproved" onclick="toggleSelectAllApproved()"
+                    style="font-size: 12px; padding: 6px 12px; border-radius: 6px; border: 1px solid #ddd; background: #fff; cursor: pointer; display: flex; align-items: center; gap: 5px; color: #333; transition:0.2s;">
                     <i class="far fa-square"></i> เลือกทั้งหมด
                 </button>
+
                 <div class="bulk-actions-right">
-                    <button onclick="bulkDelete()" class="btn-bulk-delete" style="font-size: 12px; padding: 6px 15px; background: #c0392b; color: white; border: none; border-radius: 6px; cursor: pointer;">
+                    <button onclick="bulkDelete()" class="btn-bulk-delete"
+                        style="font-size: 12px; padding: 6px 15px; background: #c0392b; color: white; border: none; border-radius: 6px; cursor: pointer;">
                         <i class="fas fa-trash"></i> ลบที่เลือก
                     </button>
                 </div>
@@ -1594,14 +1693,18 @@
                 <p style="grid-column: 1/-1; text-align: center; padding: 40px; color: #999;">กำลังโหลด...</p>
             </div>
 
-            <div class="pagination-container" id="paginationControls" style="display:none; margin-top: 20px; padding-top: 15px; border-top: 1px solid #eee; gap: 10px;">
-                <button onclick="changePage(-1)" class="btn-page" id="btnPrev" style="padding: 6px 15px; font-size: 13px;"><i class="fas fa-chevron-left"></i> ก่อนหน้า</button>
+            <div class="pagination-container" id="paginationControls"
+                style="display:none; margin-top: 20px; padding-top: 15px; border-top: 1px solid #eee; gap: 10px;">
+                <button onclick="changePage(-1)" class="btn-page" id="btnPrev"
+                    style="padding: 6px 15px; font-size: 13px;"><i class="fas fa-chevron-left"></i> ก่อนหน้า</button>
                 <span id="pageIndicator" style="font-size: 13px; color: #2c3e50; font-weight: 600;">หน้า 1</span>
-                <button onclick="changePage(1)" class="btn-page" id="btnNext" style="padding: 6px 15px; font-size: 13px;">ถัดไป <i class="fas fa-chevron-right"></i></button>
+                <button onclick="changePage(1)" class="btn-page" id="btnNext"
+                    style="padding: 6px 15px; font-size: 13px;">ถัดไป <i class="fas fa-chevron-right"></i></button>
             </div>
         </div>
 
         <div class="card admin-only" style="border-top: 5px solid #e74c3c; margin-top: 30px;">
+            
             <div class="card-header-wrapper header-color-trash">
                 <h3 class="card-header-title" style="color: #e74c3c;">
                     <i class="fas fa-trash-alt"></i> ถังขยะ (กู้คืนได้)
@@ -1611,15 +1714,52 @@
                 </button>
             </div>
 
-            <div class="bulk-toolbar" style="display:flex; justify-content:space-between; align-items:center; padding: 10px; margin-bottom: 10px; background: #fff; border: 1px dashed #ccc; border-radius: 8px; gap: 10px;">
-                <button type="button" id="btnSelectAllTrash" onclick="toggleSelectAllTrash()" style="padding: 8px 15px; border-radius: 6px; border: 1px solid #ddd; background: #fff; cursor: pointer; display: flex; align-items: center; gap: 8px; color: #333; font-size: 13px;">
+            <div class="bulk-toolbar"
+                style="display:flex; justify-content:space-between; align-items:center; padding: 10px; margin-bottom: 10px; background: #fff; border: 1px dashed #ccc; border-radius: 8px; gap: 10px;">
+
+                <button type="button" id="btnSelectAllTrash" onclick="toggleSelectAllTrash()"
+                    style="
+                        padding: 8px 15px; 
+                        border-radius: 6px; 
+                        border: 1px solid #ddd; 
+                        background: #fff; 
+                        cursor: pointer; 
+                        display: flex; 
+                        align-items: center; 
+                        gap: 8px; 
+                        color: #333; 
+                        font-size: 13px;
+                    ">
                     <i class="fas fa-check-square"></i> เลือกทั้งหมด
                 </button>
+
                 <div class="bulk-actions-right" style="display:flex; gap:10px;">
-                    <button onclick="restoreSelected()" style="padding: 8px 15px; background: #3498db; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; display: flex; align-items: center; gap: 5px; white-space: nowrap;">
+                    <button onclick="restoreSelected()"
+                        style="
+                            padding: 8px 15px; 
+                            background: #3498db; 
+                            color: white; 
+                            border: none; 
+                            border-radius: 6px; 
+                            cursor: pointer; 
+                            font-size: 13px; 
+                            display: flex; align-items: center; gap: 5px;
+                            white-space: nowrap;
+                        ">
                         <i class="fas fa-trash-restore"></i> กู้คืน
                     </button>
-                    <button onclick="deletePermanentSelected()" style="padding: 8px 15px; background: #c0392b; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; display: flex; align-items: center; gap: 5px; white-space: nowrap;">
+                    <button onclick="deletePermanentSelected()"
+                        style="
+                            padding: 8px 15px; 
+                            background: #c0392b; 
+                            color: white; 
+                            border: none; 
+                            border-radius: 6px; 
+                            cursor: pointer; 
+                            font-size: 13px; 
+                            display: flex; align-items: center; gap: 5px;
+                            white-space: nowrap;
+                        ">
                         <i class="fas fa-times"></i> ลบถาวร
                     </button>
                 </div>
@@ -1631,13 +1771,15 @@
         </div>
 
         <div class="card admin-only" style="border-top: 5px solid #f39c12;">
+
             <div class="card-header-wrapper header-color-logs">
                 <h3 class="card-header-title" style="color: #f39c12;">
                     <i class="fas fa-history"></i> ประวัติการใช้งาน (Logs)
                 </h3>
             </div>
+
             <div style="overflow-x: auto;">
-                <table class="log-table" style="margin-top: 0 !important;">
+                <table class="log-table"style="margin-top: 0 !important;">
                     <thead>
                         <tr>
                             <th>เวลา</th>
@@ -1654,25 +1796,31 @@
                 </table>
             </div>
             <div class="pagination-container" id="logPaginationControls" style="display:none; margin-top:20px;">
-                <button onclick="changeLogPage(-1)" class="btn-page" id="btnLogPrev" disabled><i class="fas fa-chevron-left"></i> ก่อนหน้า</button>
+                <button onclick="changeLogPage(-1)" class="btn-page" id="btnLogPrev" disabled><i
+                        class="fas fa-chevron-left"></i> ก่อนหน้า</button>
                 <span id="logPageIndicator" style="margin:0 15px;">หน้า 1</span>
-                <button onclick="changeLogPage(1)" class="btn-page" id="btnLogNext">ถัดไป <i class="fas fa-chevron-right"></i></button>
+                <button onclick="changeLogPage(1)" class="btn-page" id="btnLogNext">ถัดไป <i
+                        class="fas fa-chevron-right"></i></button>
             </div>
         </div>
 
         <div class="card admin-only" style="border-top: 5px solid #8e44ad;">
+
             <div class="card-header-wrapper header-color-users">
                 <h3 class="card-header-title" style="color: #8e44ad;">
                     <i class="fas fa-users-cog"></i> จัดการเจ้าหน้าที่
                 </h3>
-                <button onclick="openAddUserModal()" class="btn-primary" style="background:#8e44ad; width:auto; display:flex; align-items:center; gap:6px; padding: 6px 14px; border-radius: 30px; box-shadow: 0 4px 6px rgba(142, 68, 173, 0.2);">
+                <button onclick="openAddUserModal()" class="btn-primary"
+                    style="background:#8e44ad; width:auto; display:flex; align-items:center; gap:6px; padding: 6px 14px; border-radius: 30px; box-shadow: 0 4px 6px rgba(142, 68, 173, 0.2);">
                     <span style="font-size:13px; line-height: 1;"><i class="fas fa-user-plus"></i></span>
                     <span style="font-size:13px;">เพิ่มเจ้าหน้าที่</span>
                 </button>
             </div>
 
             <div style="margin-bottom: 5px;">
-                <input type="text" id="userSearch" class="search-input" style="width:100%; margin-top: 0; margin-bottom: 0 !important; padding-left: 15px; border-radius: 30px; background: #f8f9fa; height: 38px;" placeholder="🔍 ค้นหาชื่อเจ้าหน้าที่..." onkeyup="filterUsers()">
+                <input type="text" id="userSearch" class="search-input"
+                    style="width:100%; margin-top: 0; margin-bottom: 0 !important; padding-left: 15px; border-radius: 30px; background: #f8f9fa; height: 38px;"
+                    placeholder="🔍 ค้นหาชื่อเจ้าหน้าที่..." onkeyup="filterUsers()">
             </div>
 
             <div style="overflow-x: auto;">
@@ -1716,6 +1864,7 @@
             });
             document.getElementById('photoSectionTitle').innerText = '🖼️ ภาพที่อัปโหลดโดยคุณ';
             document.title = 'Uploader Dashboard';
+
             document.getElementById('sidebarTitle').innerText = 'Uploader Panel';
         } else {
             document.title = 'Admin Panel';
@@ -1731,8 +1880,6 @@
 
         let currentApprovedPhotos = [];
         let selectedApprovedIds = new Set();
-        let allTrashFiles = [];
-        let selectedTrashIds = new Set();
 
         function getAuthHeaders() {
             return {
@@ -1783,9 +1930,7 @@
         // --- Stats & Categories ---
         async function loadStats() {
             try {
-                const res = await fetch('/stats?t=' + Date.now(), {
-                    headers: getAuthHeaders()
-                });
+                const res = await fetch('/stats?t=' + Date.now(), { headers: getAuthHeaders() });
                 if (!res.ok) return;
                 const data = await res.json();
                 document.getElementById('statTotal').innerText = data.total_photos;
@@ -1798,9 +1943,7 @@
 
         async function loadCategories() {
             try {
-                const res = await fetch('/categories?t=' + Date.now(), {
-                    headers: getAuthHeaders()
-                });
+                const res = await fetch('/categories?t=' + Date.now(), { headers: getAuthHeaders() });
                 if (!res.ok) return;
                 const c = await res.json();
                 const dl = document.getElementById('categoryList');
@@ -1825,7 +1968,7 @@
                 document.getElementById('uploadPlaceholder').style.display = 'none';
                 Array.from(files).forEach(file => {
                     const reader = new FileReader();
-                    reader.onload = function(e) {
+                    reader.onload = function (e) {
                         const img = document.createElement('img');
                         img.src = e.target.result;
                         img.className = 'preview-img';
@@ -1843,18 +1986,10 @@
             const cat = document.getElementById('categoryName').value.trim();
             const files = document.getElementById('fileInput').files;
             if (!cat || !files.length) {
-                return Swal.fire({
-                    text: 'กรุณากรอกชื่อกิจกรรมและเลือกรูปภาพ',
-                    icon: 'warning',
-                    heightAuto: false
-                });
+                return Swal.fire({ text: 'กรุณากรอกชื่อกิจกรรมและเลือกรูปภาพ', icon: 'warning', heightAuto: false });
             }
             if (files.length > 30) {
-                return Swal.fire({
-                    text: 'อัปโหลดได้สูงสุด 30 รูปต่อครั้ง',
-                    icon: 'warning',
-                    heightAuto: false
-                });
+                return Swal.fire({ text: 'อัปโหลดได้สูงสุด 30 รูปต่อครั้ง', icon: 'warning', heightAuto: false });
             }
 
             const fd = new FormData();
@@ -1874,17 +2009,11 @@
             try {
                 const res = await fetch('/upload', {
                     method: 'POST',
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    },
+                    headers: { 'Authorization': `Bearer ${token}` },
                     body: fd
                 });
                 if (res.ok) {
-                    Swal.fire({
-                        text: 'อัปโหลดเรียบร้อยแล้ว',
-                        icon: 'success',
-                        heightAuto: false
-                    });
+                    Swal.fire({ text: 'อัปโหลดเรียบร้อยแล้ว', icon: 'success', heightAuto: false });
                     await reload();
                     document.getElementById('uploadForm').reset();
                     document.getElementById('previewContainer').innerHTML = '';
@@ -1893,11 +2022,7 @@
                     throw new Error('Upload failed');
                 }
             } catch (err) {
-                Swal.fire({
-                    text: 'เกิดข้อผิดพลาดในการอัปโหลด',
-                    icon: 'error',
-                    heightAuto: false
-                });
+                Swal.fire({ text: 'เกิดข้อผิดพลาดในการอัปโหลด', icon: 'error', heightAuto: false });
             }
         });
 
@@ -1911,10 +2036,7 @@
                     timer: 1500,
                     timerProgressBar: true
                 });
-                Toast.fire({
-                    icon: 'success',
-                    title: 'คัดลอกลิงก์แล้ว'
-                });
+                Toast.fire({ icon: 'success', title: 'คัดลอกลิงก์แล้ว' });
             });
         }
 
@@ -1928,9 +2050,7 @@
             const category = document.getElementById('filterCategory').value;
 
             try {
-                const res = await fetch(`/photos?page=${page}&limit=${itemsPerPage}&search=${search}&category=${category}&t=` + Date.now(), {
-                    headers: getAuthHeaders()
-                });
+                const res = await fetch(`/photos?page=${page}&limit=${itemsPerPage}&search=${search}&category=${category}&t=` + Date.now(), { headers: getAuthHeaders() });
                 const photos = await res.json();
 
                 currentApprovedPhotos = photos;
@@ -1942,9 +2062,7 @@
                 document.getElementById('pageIndicator').innerText = `หน้า ${currentPage}`;
                 document.getElementById('btnPrev').disabled = (currentPage <= 1);
                 document.getElementById('btnNext').disabled = (photos.length < itemsPerPage);
-            } catch (e) {
-                console.error(e);
-            }
+            } catch (e) { console.error(e); }
         }
 
         function changePage(step) {
@@ -2044,12 +2162,12 @@
         // ==========================================
         // 🗑️ 🔥 TRASH LOGIC (UPDATED UI)
         // ==========================================
+        let allTrashFiles = [];
+        let selectedTrashIds = new Set();
 
         async function loadTrash() {
             try {
-                const res = await fetch('/photos/trash?t=' + Date.now(), {
-                    headers: getAuthHeaders()
-                });
+                const res = await fetch('/photos/trash?t=' + Date.now(), { headers: getAuthHeaders() });
                 if (!res.ok) throw new Error('Load Trash Failed');
 
                 allTrashFiles = await res.json();
@@ -2074,7 +2192,7 @@
             allTrashFiles.forEach(photo => {
                 const isSelected = selectedTrashIds.has(photo.id);
                 const div = document.createElement('div');
-
+                
                 // 🔥 จุดที่แก้ไข: เติม 'trash-item' ลงไปใน className
                 // เพื่อให้ CSS filter: grayscale(100%) ทำงาน (รูปจะเป็นขาวดำ)
                 div.className = `approval-item trash-item ${isSelected ? 'selected' : ''}`;
@@ -2142,48 +2260,26 @@
         }
 
         async function restoreSelected() {
-            if (selectedTrashIds.size === 0) return Swal.fire({
-                text: 'กรุณาเลือกรูปที่จะกู้คืน',
-                icon: 'warning',
-                heightAuto: false
-            });
+            if (selectedTrashIds.size === 0) return Swal.fire({ text: 'กรุณาเลือกรูปที่จะกู้คืน', icon: 'warning', heightAuto: false });
             if (await cf(`กู้คืน ${selectedTrashIds.size} รูป?`)) {
                 await fetch('/photos/trash/restore', {
-                    method: 'POST',
-                    headers: getAuthHeaders(),
-                    body: JSON.stringify({
-                        photo_ids: Array.from(selectedTrashIds)
-                    })
+                    method: 'POST', headers: getAuthHeaders(),
+                    body: JSON.stringify({ photo_ids: Array.from(selectedTrashIds) })
                 });
-                Swal.fire({
-                    text: 'กู้คืนเรียบร้อย',
-                    icon: 'success',
-                    heightAuto: false
-                });
+                Swal.fire({ text: 'กู้คืนเรียบร้อย', icon: 'success', heightAuto: false });
                 loadTrash();
                 loadApprovedPhotos(currentPage);
             }
         }
 
         async function deletePermanentSelected() {
-            if (selectedTrashIds.size === 0) return Swal.fire({
-                text: 'กรุณาเลือกรูปที่จะลบ',
-                icon: 'warning',
-                heightAuto: false
-            });
+            if (selectedTrashIds.size === 0) return Swal.fire({ text: 'กรุณาเลือกรูปที่จะลบ', icon: 'warning', heightAuto: false });
             if (await cf(`ลบ ${selectedTrashIds.size} รูปถาวร? (กู้คืนไม่ได้)`)) {
                 await fetch('/photos/trash/empty', {
-                    method: 'DELETE',
-                    headers: getAuthHeaders(),
-                    body: JSON.stringify({
-                        photo_ids: Array.from(selectedTrashIds)
-                    })
+                    method: 'DELETE', headers: getAuthHeaders(),
+                    body: JSON.stringify({ photo_ids: Array.from(selectedTrashIds) })
                 });
-                Swal.fire({
-                    text: 'ลบถาวรเรียบร้อย',
-                    icon: 'success',
-                    heightAuto: false
-                });
+                Swal.fire({ text: 'ลบถาวรเรียบร้อย', icon: 'success', heightAuto: false });
                 loadTrash();
             }
         }
@@ -2207,7 +2303,7 @@
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'ยืนยัน',
                 cancelButtonText: 'ยกเลิก', // 🔥 เปลี่ยนเป็นภาษาไทย
-                heightAuto: false
+                heightAuto: false 
             });
             return result.isConfirmed;
         }
@@ -2224,10 +2320,7 @@
 
         async function softDelete(id) {
             if (await cf('ลบรูปนี้?')) {
-                await fetch(`/photos/${id}/soft-delete`, {
-                    method: 'DELETE',
-                    headers: getAuthHeaders()
-                });
+                await fetch(`/photos/${id}/soft-delete`, { method: 'DELETE', headers: getAuthHeaders() });
                 loadApprovedPhotos(currentPage);
                 loadTrash();
             }
@@ -2235,27 +2328,14 @@
 
         async function restorePhoto(id) {
             if (await cf('กู้คืนรูปนี้?')) {
-                await fetch('/photos/trash/restore', {
-                    method: 'POST',
-                    headers: getAuthHeaders(),
-                    body: JSON.stringify({
-                        photo_ids: [id]
-                    })
-                });
-                loadTrash();
-                loadApprovedPhotos(currentPage);
+                await fetch('/photos/trash/restore', { method: 'POST', headers: getAuthHeaders(), body: JSON.stringify({ photo_ids: [id] }) });
+                loadTrash(); loadApprovedPhotos(currentPage);
             }
         }
 
         async function permanentDelete(id) {
             if (await cf('ลบถาวร?')) {
-                await fetch('/photos/trash/empty', {
-                    method: 'DELETE',
-                    headers: getAuthHeaders(),
-                    body: JSON.stringify({
-                        photo_ids: [id]
-                    })
-                });
+                await fetch('/photos/trash/empty', { method: 'DELETE', headers: getAuthHeaders(), body: JSON.stringify({ photo_ids: [id] }) });
                 loadTrash();
             }
         }
@@ -2263,35 +2343,21 @@
         async function bulkDelete() {
             const ids = Array.from(selectedApprovedIds);
 
-            if (ids.length === 0) return Swal.fire({
-                text: 'กรุณาเลือกรูปที่จะลบ',
-                icon: 'warning',
-                heightAuto: false
-            });
+            if (ids.length === 0) return Swal.fire({ text: 'กรุณาเลือกรูปที่จะลบ', icon: 'warning', heightAuto: false });
 
             if (await cf(`คุณต้องการลบ ${ids.length} รูปย้ายไปถังขยะ?`)) {
                 try {
                     await fetch('/photos/bulk-delete', {
                         method: 'POST',
                         headers: getAuthHeaders(),
-                        body: JSON.stringify({
-                            photo_ids: ids
-                        })
+                        body: JSON.stringify({ photo_ids: ids })
                     });
 
-                    Swal.fire({
-                        text: 'ย้ายไปถังขยะแล้ว',
-                        icon: 'success',
-                        heightAuto: false
-                    });
+                    Swal.fire({ text: 'ย้ายไปถังขยะแล้ว', icon: 'success', heightAuto: false });
                     loadApprovedPhotos(currentPage);
                     loadTrash();
                 } catch (e) {
-                    Swal.fire({
-                        text: 'ลบไม่สำเร็จ',
-                        icon: 'error',
-                        heightAuto: false
-                    });
+                    Swal.fire({ text: 'ลบไม่สำเร็จ', icon: 'error', heightAuto: false });
                 }
             }
         }
@@ -2299,24 +2365,22 @@
         // ==========================================
         // 🔥 LOGS SECTION (Server-Side Pagination)
         // ==========================================
-
+        
         async function loadLogs(page = 1) {
             if (user.role !== 'admin') return;
-
+            
             currentLogPage = page;
-
+            
             try {
-                const res = await fetch(`/logs?page=${page}&limit=10&t=` + Date.now(), {
-                    headers: getAuthHeaders()
-                });
+                const res = await fetch(`/logs?page=${page}&limit=10&t=` + Date.now(), { headers: getAuthHeaders() });
                 if (!res.ok) throw new Error();
-
+                
                 const responseData = await res.json();
                 const logs = responseData.data;
                 totalLogPages = responseData.totalPages;
 
                 renderLogs(logs);
-                updateLogPagination();
+                updateLogPagination(); 
             } catch (e) {
                 console.error(e);
                 document.getElementById('logTableBody').innerHTML = '<tr><td colspan="4" style="grid-column: 1/-1; text-align: center; padding: 40px; color: #999;">โหลดประวัติไม่ได้</td></tr>';
@@ -2341,30 +2405,14 @@
 
                 const act = l.action.toLowerCase();
 
-                if (act.includes('login')) {
-                    badgeClass = 'bg-login';
-                    icon = '<i class="fas fa-key"></i>';
-                } else if (act.includes('upload')) {
-                    badgeClass = 'bg-upload';
-                    icon = '<i class="fas fa-cloud-upload-alt"></i>';
-                } else if (act.includes('delete')) {
-                    badgeClass = 'bg-delete';
-                    icon = '<i class="fas fa-trash"></i>';
-                } else if (act.includes('edit') || act.includes('update')) {
-                    badgeClass = 'bg-edit';
-                    icon = '<i class="fas fa-pen"></i>';
-                }
+                if (act.includes('login')) { badgeClass = 'bg-login'; icon = '<i class="fas fa-key"></i>'; }
+                else if (act.includes('upload')) { badgeClass = 'bg-upload'; icon = '<i class="fas fa-cloud-upload-alt"></i>'; }
+                else if (act.includes('delete')) { badgeClass = 'bg-delete'; icon = '<i class="fas fa-trash"></i>'; }
+                else if (act.includes('edit') || act.includes('update')) { badgeClass = 'bg-edit'; icon = '<i class="fas fa-pen"></i>'; }
 
                 const dateObj = new Date(l.created_at);
-                const dateStr = dateObj.toLocaleDateString('th-TH', {
-                    day: '2-digit',
-                    month: 'short',
-                    year: '2-digit'
-                });
-                const timeStr = dateObj.toLocaleTimeString('th-TH', {
-                    hour: '2-digit',
-                    minute: '2-digit'
-                });
+                const dateStr = dateObj.toLocaleDateString('th-TH', { day: '2-digit', month: 'short', year: '2-digit' });
+                const timeStr = dateObj.toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' });
 
                 tb.innerHTML += `
                 <tr class="log-row">
@@ -2390,7 +2438,7 @@
         function changeLogPage(step) {
             const nextPage = currentLogPage + step;
             if (nextPage < 1 || nextPage > totalLogPages) return;
-            loadLogs(nextPage);
+            loadLogs(nextPage); 
         }
 
         // --- User Management ---
@@ -2399,9 +2447,7 @@
             const h = getAuthHeaders();
             if (!h) return;
 
-            const res = await fetch('/users?t=' + Date.now(), {
-                headers: h
-            });
+            const res = await fetch('/users?t=' + Date.now(), { headers: h });
             allUsersData = await res.json();
             renderUserTable(allUsersData);
         }
@@ -2448,124 +2494,87 @@
         }
 
         // --- Storage & Settings ---
-        // --- แก้ไขฟังก์ชันนี้ในส่วน <script> ---
+        async function loadStorageStats() {
+            try {
+                const h = getAuthHeaders();
+                if (!h) return;
 
-async function loadStorageStats() {
-    try {
-        const h = getAuthHeaders();
-        if (!h) return;
+                const res = await fetch('/storage/usage?t=' + Date.now(), { headers: h });
+                if (!res.ok) return;
 
-        const res = await fetch('/storage/usage?t=' + Date.now(), {
-            headers: h
-        });
-        if (!res.ok) return;
+                const data = await res.json();
+                let used = data.cloudinary.used_bytes || 0;
+                let limit = data.cloudinary.limit_bytes || 26843545600;
+                let p = (used / limit) * 100;
+                let pText = p.toFixed(2) + '%';
 
-        const data = await res.json();
+                if (p > 0 && p < 0.01) {
+                    pText = p.toFixed(4) + '%';
+                } else if (p < 0.0001 && p > 0) {
+                    pText = "< 0.0001%";
+                }
 
-        // 1. ดึงค่ามาและตรวจสอบว่าเป็นตัวเลขหรือไม่ ถ้าไม่มีให้เป็น 0
-        let used = Number(data.cloudinary.used_bytes);
-        if (isNaN(used) || used < 0) used = 0; // 🔥 ป้องกันค่าติดลบ หรือ NaN
+                document.getElementById('storagePercentage').innerText = pText;
+                document.getElementById('storageBarText').innerText = pText;
+                document.getElementById('storageBar').style.width = ((p > 0 && p < 1) ? 1 : p) + '%';
 
-        let limit = Number(data.cloudinary.limit_bytes) || 26843545600; // ~25GB
+                if (p > 90) {
+                    document.getElementById('storageBar').style.background = 'linear-gradient(90deg, #e74c3c, #c0392b)';
+                } else if (p > 80) {
+                    document.getElementById('storageBar').style.background = 'linear-gradient(90deg, #f39c12, #e67e22)';
+                } else {
+                    document.getElementById('storageBar').style.background = 'linear-gradient(90deg, #3498db, #9b59b6)';
+                }
 
-        // 2. คำนวณเปอร์เซ็นต์
-        let p = (used / limit) * 100;
-        
-        // 🔥 ป้องกันเปอร์เซ็นต์เพี้ยน
-        if (isNaN(p) || p < 0) p = 0;
-        if (p > 100) p = 100;
+                document.getElementById('storageUsed').innerText = 'ใช้ไป: ' + data.cloudinary.used_readable;
+                document.getElementById('storageLimit').innerText = 'ลิมิต: ' + data.cloudinary.limit_readable;
+                document.getElementById('totalPhotosCount').innerText = data.database.active_photos;
+                document.getElementById('cloudinaryPlan').innerText = data.cloudinary.plan.toUpperCase();
 
-        let pText = p.toFixed(2) + '%';
-        if (p > 0 && p < 0.01) {
-            pText = "< 0.01%";
-        }
+                const list = document.getElementById('topCategoriesList');
+                if (!data.latest_categories || !data.latest_categories.length) {
+                    list.innerHTML = '<p style="text-align:center;color:#999;padding:20px;">ไม่มีข้อมูล</p>';
+                    return;
+                }
 
-        // 3. แสดงผลเปอร์เซ็นต์
-        document.getElementById('storagePercentage').innerText = pText;
-        document.getElementById('storageBarText').innerText = pText;
-        document.getElementById('storageBar').style.width = ((p > 0 && p < 1) ? 1 : p) + '%';
+                list.innerHTML = '';
+                
+                data.latest_categories.forEach((c, index) => {
+                    const dateStr = new Date(c.last_update).toLocaleDateString('th-TH', { day: 'numeric', month: 'short', year: '2-digit' });
+                    const rank = index + 1;
+                    let rankColor = '#999';
+                    if (rank === 1) rankColor = '#f1c40f'; // ทอง
+                    if (rank === 2) rankColor = '#bdc3c7'; // เงิน
+                    if (rank === 3) rankColor = '#e67e22'; // ทองแดง
 
-        // จัดการสี Bar
-        const bar = document.getElementById('storageBar');
-        if (p > 90) {
-            bar.style.background = 'linear-gradient(90deg, #e74c3c, #c0392b)';
-        } else if (p > 80) {
-            bar.style.background = 'linear-gradient(90deg, #f39c12, #e67e22)';
-        } else {
-            bar.style.background = 'linear-gradient(90deg, #3498db, #9b59b6)';
-        }
-
-        // 4. แก้ไขข้อความ "ใช้ไป: ..." (NaN undefined)
-        // ถ้า backend ส่ง text มาพัง ให้เราคำนวณเองที่หน้าบ้าน
-        let readableText = data.cloudinary.used_readable;
-        
-        // เช็คว่า text ที่ส่งมามันพังไหม หรือไม่มีค่า
-        if (!readableText || readableText.includes('NaN') || readableText.includes('undefined')) {
-            // ฟังก์ชันแปลงหน่วยเองง่ายๆ
-            if (used === 0) readableText = "0 Bytes";
-            else if (used < 1024 * 1024) readableText = (used / 1024).toFixed(2) + " KB";
-            else readableText = (used / (1024 * 1024)).toFixed(2) + " MB";
-        }
-
-        document.getElementById('storageUsed').innerText = 'ใช้ไป: ' + readableText;
-        
-        // ส่วนอื่นๆ คงเดิม
-        document.getElementById('storageLimit').innerText = 'ลิมิต: ' + (data.cloudinary.limit_readable || "25 GB");
-        document.getElementById('totalPhotosCount').innerText = data.database.active_photos || 0;
-        document.getElementById('cloudinaryPlan').innerText = (data.cloudinary.plan || "FREE").toUpperCase();
-
-        // (ส่วน Code แสดงรายการ topCategoriesList คงเดิม...)
-        const list = document.getElementById('topCategoriesList');
-        if (!data.latest_categories || !data.latest_categories.length) {
-            list.innerHTML = '<p style="text-align:center;color:#999;padding:20px;">ไม่มีข้อมูล</p>';
-        } else {
-            list.innerHTML = '';
-            data.latest_categories.forEach((c, index) => {
-                // ... (Code แสดงรายการเดิม) ...
-                const dateStr = new Date(c.last_update).toLocaleDateString('th-TH', { day: 'numeric', month: 'short', year: '2-digit' });
-                const rank = index + 1;
-                let rankColor = '#999';
-                if (rank === 1) rankColor = '#f1c40f';
-                if (rank === 2) rankColor = '#bdc3c7';
-                if (rank === 3) rankColor = '#e67e22';
-
-                list.innerHTML += `
-                <div style="margin-bottom:10px; padding:10px; background:white; border-radius:6px; border-left: 3px solid #3498db; box-shadow:0 1px 3px rgba(0,0,0,0.05); display: flex; gap: 10px; align-items: flex-start;">
-                    <div style="background:${rankColor}; color:white; width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:bold; flex-shrink:0; margin-top:2px;">${rank}</div>
-                    <div style="flex-grow:1;">
-                        <div style="display:flex; justify-content:space-between; align-items:center;">
-                            <span style="font-size:14px; color:#333; font-weight:bold;">${c.category_name}</span>
-                            <span style="font-size:12px; color:#999;">${dateStr}</span>
+                    list.innerHTML += `
+                    <div style="margin-bottom:10px; padding:10px; background:white; border-radius:6px; border-left: 3px solid #3498db; box-shadow:0 1px 3px rgba(0,0,0,0.05); display: flex; gap: 10px; align-items: flex-start;">
+                        <div style="background:${rankColor}; color:white; width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:bold; flex-shrink:0; margin-top:2px;">${rank}</div>
+                        <div style="flex-grow:1;">
+                            <div style="display:flex; justify-content:space-between; align-items:center;">
+                                <span style="font-size:14px; color:#333; font-weight:bold;">${c.category_name}</span>
+                                <span style="font-size:12px; color:#999;">${dateStr}</span>
+                            </div>
+                            <div style="font-size:12px; color:#666; margin-top:3px;">
+                                📸 มีรูปทั้งหมด ${c.photo_count} รูป
+                            </div>
                         </div>
-                        <div style="font-size:12px; color:#666; margin-top:3px;">
-                            📸 มีรูปทั้งหมด ${c.photo_count} รูป
-                        </div>
-                    </div>
-                </div>`;
-            });
-        }
+                    </div>`;
+                });
 
-        // Avg size logic
-        const resAvg = await fetch('/storage/average?t=' + Date.now(), { headers: h });
-        if (resAvg.ok) {
-            const d = await resAvg.json();
-            // เช็คค่าเฉลี่ยด้วยเผื่อพังเหมือนกัน
-            let avgText = d.average_readable;
-            if(!avgText || avgText.includes('NaN')) avgText = "0 MB";
-            document.getElementById('avgPhotoSize').innerText = avgText;
+                const resAvg = await fetch('/storage/average?t=' + Date.now(), { headers: h });
+                if (resAvg.ok) {
+                    const d = await resAvg.json();
+                    document.getElementById('avgPhotoSize').innerText = d.average_readable;
+                }
+            } catch (error) {
+                console.error('Storage Error:', error);
+            }
         }
-
-    } catch (error) {
-        console.error('Storage Error:', error);
-    }
-}
 
         async function openProfileSettings() {
             autoCloseSidebar();
-            const {
-                isConfirmed,
-                isDenied
-            } = await Swal.fire({
+            const { isConfirmed, isDenied } = await Swal.fire({
                 title: 'ตั้งค่าข้อมูลส่วนตัว',
                 showDenyButton: true,
                 showCancelButton: true,
@@ -2574,15 +2583,13 @@ async function loadStorageStats() {
                 cancelButtonText: 'ยกเลิก',
                 confirmButtonColor: '#f39c12',
                 denyButtonColor: '#3498db',
-                heightAuto: false
+                heightAuto: false 
             });
 
             const h = getAuthHeaders();
 
             if (isConfirmed) {
-                const {
-                    value: f
-                } = await Swal.fire({
+                const { value: f } = await Swal.fire({
                     customClass: {
                         popup: 'small-modal-popup',
                         title: 'small-modal-title',
@@ -2598,44 +2605,27 @@ async function loadStorageStats() {
                     title: 'เปลี่ยนรหัสผ่าน',
                     html: '<input id="swal-old-pass" class="swal2-input small-modal-input" type="password" placeholder="รหัสผ่านเดิม"><input id="swal-new-pass" class="swal2-input small-modal-input" type="password" placeholder="รหัสผ่านใหม่ (ขั้นต่ำ 8 ตัว)">',
                     focusConfirm: false,
-                    heightAuto: false,
+                    heightAuto: false, 
                     preConfirm: () => [document.getElementById('swal-old-pass').value, document.getElementById('swal-new-pass').value]
                 });
 
                 if (f) {
                     if (!f[0] || !f[1] || f[1].length < 8) {
-                        return Swal.fire({
-                            text: 'กรอกให้ครบและรหัสต้อง 8 ตัวขึ้นไป',
-                            icon: 'warning',
-                            heightAuto: false
-                        });
+                        return Swal.fire({ text: 'กรอกให้ครบและรหัสต้อง 8 ตัวขึ้นไป', icon: 'warning', heightAuto: false });
                     }
                     const res = await fetch('/profile/password', {
                         method: 'PUT',
                         headers: h,
-                        body: JSON.stringify({
-                            oldPassword: f[0],
-                            newPassword: f[1]
-                        })
+                        body: JSON.stringify({ oldPassword: f[0], newPassword: f[1] })
                     });
                     if (res.ok) {
-                        Swal.fire({
-                            text: 'เปลี่ยนรหัสแล้ว',
-                            icon: 'success',
-                            heightAuto: false
-                        });
+                        Swal.fire({ text: 'เปลี่ยนรหัสแล้ว', icon: 'success', heightAuto: false });
                     } else {
-                        Swal.fire({
-                            text: 'เปลี่ยนไม่ได้',
-                            icon: 'error',
-                            heightAuto: false
-                        });
+                        Swal.fire({ text: 'เปลี่ยนไม่ได้', icon: 'error', heightAuto: false });
                     }
                 }
             } else if (isDenied) {
-                const {
-                    value: n
-                } = await Swal.fire({
+                const { value: n } = await Swal.fire({
                     customClass: {
                         popup: 'small-modal-popup',
                         title: 'small-modal-title',
@@ -2652,29 +2642,19 @@ async function loadStorageStats() {
                     input: 'text',
                     inputValue: user.username,
                     showCancelButton: true,
-                    heightAuto: false
+                    heightAuto: false 
                 });
 
                 if (n) {
                     const res = await fetch('/profile/username', {
                         method: 'PUT',
                         headers: h,
-                        body: JSON.stringify({
-                            newUsername: n
-                        })
+                        body: JSON.stringify({ newUsername: n })
                     });
                     if (res.ok) {
-                        Swal.fire({
-                            text: 'เปลี่ยนชื่อแล้ว กรุณาล็อกอินใหม่',
-                            icon: 'success',
-                            heightAuto: false
-                        }).then(() => logout());
+                        Swal.fire({ text: 'เปลี่ยนชื่อแล้ว กรุณาล็อกอินใหม่', icon: 'success', heightAuto: false }).then(() => logout());
                     } else {
-                        Swal.fire({
-                            text: 'ชื่อนี้มีคนใช้แล้ว',
-                            icon: 'error',
-                            heightAuto: false
-                        });
+                        Swal.fire({ text: 'ชื่อนี้มีคนใช้แล้ว', icon: 'error', heightAuto: false });
                     }
                 }
             }
@@ -2682,16 +2662,10 @@ async function loadStorageStats() {
 
         async function openAddUserModal() {
             if (user.role !== 'admin') {
-                return Swal.fire({
-                    text: 'Error: Admin Only',
-                    icon: 'error',
-                    heightAuto: false
-                });
+                return Swal.fire({ text: 'Error: Admin Only', icon: 'error', heightAuto: false });
             }
 
-            const {
-                value: formValues
-            } = await Swal.fire({
+            const { value: formValues } = await Swal.fire({
                 customClass: {
                     popup: 'small-modal-popup',
                     title: 'small-modal-title',
@@ -2707,7 +2681,7 @@ async function loadStorageStats() {
                 title: 'เพิ่มเจ้าหน้าที่ใหม่',
                 html: '<input id="swal-user" class="swal2-input small-modal-input" placeholder="Username"><input id="swal-pass" type="password" class="swal2-input small-modal-input" placeholder="Password"><select id="swal-role" class="swal2-input small-modal-input"><option value="uploader">Uploader</option><option value="admin">Admin</option></select>',
                 focusConfirm: false,
-                heightAuto: false,
+                heightAuto: false, 
                 preConfirm: () => [
                     document.getElementById('swal-user').value,
                     document.getElementById('swal-pass').value,
@@ -2718,46 +2692,28 @@ async function loadStorageStats() {
             if (formValues) {
                 const [u, p, r] = formValues;
                 if (!u || !p) {
-                    return Swal.fire({
-                        text: 'กรอกให้ครบ',
-                        icon: 'warning',
-                        heightAuto: false
-                    });
+                    return Swal.fire({ text: 'กรอกให้ครบ', icon: 'warning', heightAuto: false });
                 }
 
                 const h = getAuthHeaders();
                 const res = await fetch('/users', {
                     method: 'POST',
                     headers: h,
-                    body: JSON.stringify({
-                        username: u,
-                        password: p,
-                        role: r
-                    })
+                    body: JSON.stringify({ username: u, password: p, role: r })
                 });
 
                 if (res.ok) {
-                    Swal.fire({
-                        text: 'เพิ่มผู้ใช้แล้ว',
-                        icon: 'success',
-                        heightAuto: false
-                    });
+                    Swal.fire({ text: 'เพิ่มผู้ใช้แล้ว', icon: 'success', heightAuto: false });
                     loadUsers();
                 } else {
-                    Swal.fire({
-                        text: 'เพิ่มไม่ได้ (ชื่ออาจซ้ำ)',
-                        icon: 'error',
-                        heightAuto: false
-                    });
+                    Swal.fire({ text: 'เพิ่มไม่ได้ (ชื่ออาจซ้ำ)', icon: 'error', heightAuto: false });
                 }
             }
         }
 
         async function editDetails(id, oldCat, oldDate) {
             let dateStr = oldDate ? new Date(oldDate).toISOString().slice(0, 16) : '';
-            const {
-                value: f
-            } = await Swal.fire({
+            const { value: f } = await Swal.fire({
                 customClass: {
                     popup: 'small-modal-popup',
                     title: 'small-modal-title',
@@ -2772,7 +2728,7 @@ async function loadStorageStats() {
                 cancelButtonText: 'ยกเลิก',
                 title: 'แก้ไขรายละเอียด',
                 html: `<input id="swal-cat" class="swal2-input small-modal-input" value="${oldCat}"><input id="swal-date" type="datetime-local" class="swal2-input small-modal-input" value="${dateStr}">`,
-                heightAuto: false,
+                heightAuto: false, 
                 preConfirm: () => [document.getElementById('swal-cat').value, document.getElementById('swal-date').value]
             });
 
@@ -2782,24 +2738,13 @@ async function loadStorageStats() {
                 const res = await fetch(`/photos/${id}/details`, {
                     method: 'PUT',
                     headers: h,
-                    body: JSON.stringify({
-                        category_name: f[0],
-                        custom_date: f[1]
-                    })
+                    body: JSON.stringify({ category_name: f[0], custom_date: f[1] })
                 });
                 if (res.ok) {
-                    Swal.fire({
-                        text: 'แก้ไขข้อมูลแล้ว',
-                        icon: 'success',
-                        heightAuto: false
-                    });
+                    Swal.fire({ text: 'แก้ไขข้อมูลแล้ว', icon: 'success', heightAuto: false });
                     await reload();
                 } else {
-                    Swal.fire({
-                        text: 'แก้ไขไม่ได้',
-                        icon: 'error',
-                        heightAuto: false
-                    });
+                    Swal.fire({ text: 'แก้ไขไม่ได้', icon: 'error', heightAuto: false });
                 }
             }
         }
@@ -2808,9 +2753,7 @@ async function loadStorageStats() {
             if (user.role !== 'admin') return;
             const h = getAuthHeaders();
             if (!h) return;
-            const {
-                value: n
-            } = await Swal.fire({
+            const { value: n } = await Swal.fire({
                 customClass: {
                     popup: 'small-modal-popup',
                     title: 'small-modal-title',
@@ -2826,16 +2769,10 @@ async function loadStorageStats() {
                 title: 'เปลี่ยนชื่อ Username',
                 input: 'text',
                 inputValue: o,
-                heightAuto: false
+                heightAuto: false 
             });
             if (n) {
-                await fetch(`/users/${id}/username`, {
-                    method: 'PUT',
-                    headers: h,
-                    body: JSON.stringify({
-                        newUsername: n
-                    })
-                });
+                await fetch(`/users/${id}/username`, { method: 'PUT', headers: h, body: JSON.stringify({ newUsername: n }) });
                 loadUsers();
             }
         }
@@ -2844,9 +2781,7 @@ async function loadStorageStats() {
             if (user.role !== 'admin') return;
             const h = getAuthHeaders();
             if (!h) return;
-            const {
-                value: p
-            } = await Swal.fire({
+            const { value: p } = await Swal.fire({
                 customClass: {
                     popup: 'small-modal-popup',
                     title: 'small-modal-title',
@@ -2862,28 +2797,16 @@ async function loadStorageStats() {
                 title: 'ตั้งรหัสผ่านใหม่',
                 input: 'text',
                 inputPlaceholder: 'พิมพ์รหัสใหม่...',
-                heightAuto: false
+                heightAuto: false 
             });
             if (p) {
-                await fetch(`/users/${id}/reset`, {
-                    method: 'PUT',
-                    headers: h,
-                    body: JSON.stringify({
-                        newPassword: p
-                    })
-                });
-                Swal.fire({
-                    text: 'เปลี่ยนรหัสแล้ว',
-                    icon: 'success',
-                    heightAuto: false
-                });
+                await fetch(`/users/${id}/reset`, { method: 'PUT', headers: h, body: JSON.stringify({ newPassword: p }) });
+                Swal.fire({ text: 'เปลี่ยนรหัสแล้ว', icon: 'success', heightAuto: false });
             }
         }
 
         async function renamePhoto(id, o) {
-            const {
-                value: n
-            } = await Swal.fire({
+            const { value: n } = await Swal.fire({
                 customClass: {
                     popup: 'small-modal-popup',
                     title: 'small-modal-title',
@@ -2899,26 +2822,17 @@ async function loadStorageStats() {
                 title: 'เปลี่ยนชื่อไฟล์',
                 input: 'text',
                 inputValue: o,
-                heightAuto: false
+                heightAuto: false 
             });
             if (n) {
-                await fetch(`/photos/${id}/rename`, {
-                    method: 'PUT',
-                    headers: getAuthHeaders(),
-                    body: JSON.stringify({
-                        new_name: n
-                    })
-                });
+                await fetch(`/photos/${id}/rename`, { method: 'PUT', headers: getAuthHeaders(), body: JSON.stringify({ new_name: n }) });
                 reload();
             }
         }
 
         async function deleteUser(id) {
             if (await cf('ต้องการลบผู้ใช้นี้ใช่หรือไม่?')) {
-                await fetch(`/users/${id}`, {
-                    method: 'DELETE',
-                    headers: getAuthHeaders()
-                });
+                await fetch(`/users/${id}`, { method: 'DELETE', headers: getAuthHeaders() });
                 loadUsers();
             }
         }
