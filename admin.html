@@ -2448,91 +2448,117 @@
         }
 
         // --- Storage & Settings ---
-        async function loadStorageStats() {
-            try {
-                const h = getAuthHeaders();
-                if (!h) return;
+        // --- แก้ไขฟังก์ชันนี้ในส่วน <script> ---
 
-                const res = await fetch('/storage/usage?t=' + Date.now(), {
-                    headers: h
-                });
-                if (!res.ok) return;
+async function loadStorageStats() {
+    try {
+        const h = getAuthHeaders();
+        if (!h) return;
 
-                const data = await res.json();
-                let used = data.cloudinary.used_bytes || 0;
-                let limit = data.cloudinary.limit_bytes || 26843545600;
-                let p = (used / limit) * 100;
-                let pText = p.toFixed(2) + '%';
+        const res = await fetch('/storage/usage?t=' + Date.now(), {
+            headers: h
+        });
+        if (!res.ok) return;
 
-                if (p > 0 && p < 0.01) {
-                    pText = p.toFixed(4) + '%';
-                } else if (p < 0.0001 && p > 0) {
-                    pText = "< 0.0001%";
-                }
+        const data = await res.json();
 
-                document.getElementById('storagePercentage').innerText = pText;
-                document.getElementById('storageBarText').innerText = pText;
-                document.getElementById('storageBar').style.width = ((p > 0 && p < 1) ? 1 : p) + '%';
+        // 1. ดึงค่ามาและตรวจสอบว่าเป็นตัวเลขหรือไม่ ถ้าไม่มีให้เป็น 0
+        let used = Number(data.cloudinary.used_bytes);
+        if (isNaN(used) || used < 0) used = 0; // 🔥 ป้องกันค่าติดลบ หรือ NaN
 
-                if (p > 90) {
-                    document.getElementById('storageBar').style.background = 'linear-gradient(90deg, #e74c3c, #c0392b)';
-                } else if (p > 80) {
-                    document.getElementById('storageBar').style.background = 'linear-gradient(90deg, #f39c12, #e67e22)';
-                } else {
-                    document.getElementById('storageBar').style.background = 'linear-gradient(90deg, #3498db, #9b59b6)';
-                }
+        let limit = Number(data.cloudinary.limit_bytes) || 26843545600; // ~25GB
 
-                document.getElementById('storageUsed').innerText = 'ใช้ไป: ' + data.cloudinary.used_readable;
-                document.getElementById('storageLimit').innerText = 'ลิมิต: ' + data.cloudinary.limit_readable;
-                document.getElementById('totalPhotosCount').innerText = data.database.active_photos;
-                document.getElementById('cloudinaryPlan').innerText = data.cloudinary.plan.toUpperCase();
+        // 2. คำนวณเปอร์เซ็นต์
+        let p = (used / limit) * 100;
+        
+        // 🔥 ป้องกันเปอร์เซ็นต์เพี้ยน
+        if (isNaN(p) || p < 0) p = 0;
+        if (p > 100) p = 100;
 
-                const list = document.getElementById('topCategoriesList');
-                if (!data.latest_categories || !data.latest_categories.length) {
-                    list.innerHTML = '<p style="text-align:center;color:#999;padding:20px;">ไม่มีข้อมูล</p>';
-                    return;
-                }
-
-                list.innerHTML = '';
-
-                data.latest_categories.forEach((c, index) => {
-                    const dateStr = new Date(c.last_update).toLocaleDateString('th-TH', {
-                        day: 'numeric',
-                        month: 'short',
-                        year: '2-digit'
-                    });
-                    const rank = index + 1;
-                    let rankColor = '#999';
-                    if (rank === 1) rankColor = '#f1c40f'; // ทอง
-                    if (rank === 2) rankColor = '#bdc3c7'; // เงิน
-                    if (rank === 3) rankColor = '#e67e22'; // ทองแดง
-
-                    list.innerHTML += `
-                    <div style="margin-bottom:10px; padding:10px; background:white; border-radius:6px; border-left: 3px solid #3498db; box-shadow:0 1px 3px rgba(0,0,0,0.05); display: flex; gap: 10px; align-items: flex-start;">
-                        <div style="background:${rankColor}; color:white; width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:bold; flex-shrink:0; margin-top:2px;">${rank}</div>
-                        <div style="flex-grow:1;">
-                            <div style="display:flex; justify-content:space-between; align-items:center;">
-                                <span style="font-size:14px; color:#333; font-weight:bold;">${c.category_name}</span>
-                                <span style="font-size:12px; color:#999;">${dateStr}</span>
-                            </div>
-                            <div style="font-size:12px; color:#666; margin-top:3px;">
-                                📸 มีรูปทั้งหมด ${c.photo_count} รูป
-                            </div>
-                        </div>
-                    </div>`;
-                });
-
-                const resAvg = await fetch('/storage/average?t=' + Date.now(), {
-                    headers: h
-                });
-                if (resAvg.ok) {
-                    const d = await resAvg.json();
-                    document.getElementById('avgPhotoSize').innerText = d.average_readable;
-                }
-            } catch (error) {
-                console.error('Storage Error:', error);
-            }
+        let pText = p.toFixed(2) + '%';
+        if (p > 0 && p < 0.01) {
+            pText = "< 0.01%";
         }
+
+        // 3. แสดงผลเปอร์เซ็นต์
+        document.getElementById('storagePercentage').innerText = pText;
+        document.getElementById('storageBarText').innerText = pText;
+        document.getElementById('storageBar').style.width = ((p > 0 && p < 1) ? 1 : p) + '%';
+
+        // จัดการสี Bar
+        const bar = document.getElementById('storageBar');
+        if (p > 90) {
+            bar.style.background = 'linear-gradient(90deg, #e74c3c, #c0392b)';
+        } else if (p > 80) {
+            bar.style.background = 'linear-gradient(90deg, #f39c12, #e67e22)';
+        } else {
+            bar.style.background = 'linear-gradient(90deg, #3498db, #9b59b6)';
+        }
+
+        // 4. แก้ไขข้อความ "ใช้ไป: ..." (NaN undefined)
+        // ถ้า backend ส่ง text มาพัง ให้เราคำนวณเองที่หน้าบ้าน
+        let readableText = data.cloudinary.used_readable;
+        
+        // เช็คว่า text ที่ส่งมามันพังไหม หรือไม่มีค่า
+        if (!readableText || readableText.includes('NaN') || readableText.includes('undefined')) {
+            // ฟังก์ชันแปลงหน่วยเองง่ายๆ
+            if (used === 0) readableText = "0 Bytes";
+            else if (used < 1024 * 1024) readableText = (used / 1024).toFixed(2) + " KB";
+            else readableText = (used / (1024 * 1024)).toFixed(2) + " MB";
+        }
+
+        document.getElementById('storageUsed').innerText = 'ใช้ไป: ' + readableText;
+        
+        // ส่วนอื่นๆ คงเดิม
+        document.getElementById('storageLimit').innerText = 'ลิมิต: ' + (data.cloudinary.limit_readable || "25 GB");
+        document.getElementById('totalPhotosCount').innerText = data.database.active_photos || 0;
+        document.getElementById('cloudinaryPlan').innerText = (data.cloudinary.plan || "FREE").toUpperCase();
+
+        // (ส่วน Code แสดงรายการ topCategoriesList คงเดิม...)
+        const list = document.getElementById('topCategoriesList');
+        if (!data.latest_categories || !data.latest_categories.length) {
+            list.innerHTML = '<p style="text-align:center;color:#999;padding:20px;">ไม่มีข้อมูล</p>';
+        } else {
+            list.innerHTML = '';
+            data.latest_categories.forEach((c, index) => {
+                // ... (Code แสดงรายการเดิม) ...
+                const dateStr = new Date(c.last_update).toLocaleDateString('th-TH', { day: 'numeric', month: 'short', year: '2-digit' });
+                const rank = index + 1;
+                let rankColor = '#999';
+                if (rank === 1) rankColor = '#f1c40f';
+                if (rank === 2) rankColor = '#bdc3c7';
+                if (rank === 3) rankColor = '#e67e22';
+
+                list.innerHTML += `
+                <div style="margin-bottom:10px; padding:10px; background:white; border-radius:6px; border-left: 3px solid #3498db; box-shadow:0 1px 3px rgba(0,0,0,0.05); display: flex; gap: 10px; align-items: flex-start;">
+                    <div style="background:${rankColor}; color:white; width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:bold; flex-shrink:0; margin-top:2px;">${rank}</div>
+                    <div style="flex-grow:1;">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <span style="font-size:14px; color:#333; font-weight:bold;">${c.category_name}</span>
+                            <span style="font-size:12px; color:#999;">${dateStr}</span>
+                        </div>
+                        <div style="font-size:12px; color:#666; margin-top:3px;">
+                            📸 มีรูปทั้งหมด ${c.photo_count} รูป
+                        </div>
+                    </div>
+                </div>`;
+            });
+        }
+
+        // Avg size logic
+        const resAvg = await fetch('/storage/average?t=' + Date.now(), { headers: h });
+        if (resAvg.ok) {
+            const d = await resAvg.json();
+            // เช็คค่าเฉลี่ยด้วยเผื่อพังเหมือนกัน
+            let avgText = d.average_readable;
+            if(!avgText || avgText.includes('NaN')) avgText = "0 MB";
+            document.getElementById('avgPhotoSize').innerText = avgText;
+        }
+
+    } catch (error) {
+        console.error('Storage Error:', error);
+    }
+}
 
         async function openProfileSettings() {
             autoCloseSidebar();
