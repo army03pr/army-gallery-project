@@ -2585,6 +2585,18 @@
         }
 
         // --- Storage & Settings ---
+        // ✅ เพิ่มฟังก์ชันนี้สำหรับแปลงหน่วย (เผื่อ Server ส่งมาพัง)
+        function formatBytes(bytes, decimals = 2) {
+            if (!+bytes) return '0 Bytes';
+            if (bytes < 0) return '0 Bytes'; // ถ้าติดลบ ให้เป็น 0
+            const k = 1024;
+            const dm = decimals < 0 ? 0 : decimals;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
+        }
+
+        // ✅ แก้ไขฟังก์ชัน loadStorageStats ให้รองรับค่าผิดพลาด
         async function loadStorageStats() {
             try {
                 const h = getAuthHeaders();
@@ -2596,43 +2608,59 @@
                 if (!res.ok) return;
 
                 const data = await res.json();
-                let used = data.cloudinary.used_bytes || 0;
-                let limit = data.cloudinary.limit_bytes || 26843545600;
-                let p = (used / limit) * 100;
-                let pText = p.toFixed(2) + '%';
 
-                if (p > 0 && p < 0.01) {
-                    pText = p.toFixed(4) + '%';
-                } else if (p < 0.0001 && p > 0) {
-                    pText = "< 0.0001%";
+                // 1. ดึงค่าและป้องกันค่าผิดพลาด (ติดลบ หรือ ไม่ใช่ตัวเลข)
+                let used = Number(data.cloudinary.used_bytes);
+                let limit = Number(data.cloudinary.limit_bytes) || 26843545600; // Default ~25GB
+
+                if (isNaN(used) || used < 0) {
+                    console.warn("Storage usage data invalid:", used);
+                    used = 0; // บังคับเป็น 0 ถ้าค่ามาผิด
                 }
 
+                // 2. คำนวณเปอร์เซ็นต์
+                let p = (used / limit) * 100;
+                if (p > 100) p = 100;
+
+                let pText = p.toFixed(2) + '%';
+                if (p > 0 && p < 0.01) pText = "< 0.01%";
+                if (used === 0) pText = "0%";
+
+                // 3. แสดงผล Progress Bar
                 document.getElementById('storagePercentage').innerText = pText;
                 document.getElementById('storageBarText').innerText = pText;
-                document.getElementById('storageBar').style.width = ((p > 0 && p < 1) ? 1 : p) + '%';
+                document.getElementById('storageBar').style.width = (p === 0 ? 0 : Math.max(1, p)) + '%';
 
-                if (p > 90) {
-                    document.getElementById('storageBar').style.background = 'linear-gradient(90deg, #e74c3c, #c0392b)';
-                } else if (p > 80) {
-                    document.getElementById('storageBar').style.background = 'linear-gradient(90deg, #f39c12, #e67e22)';
-                } else {
-                    document.getElementById('storageBar').style.background = 'linear-gradient(90deg, #3498db, #9b59b6)';
+                // เปลี่ยนสีหลอดตามความหนาแน่น
+                const bar = document.getElementById('storageBar');
+                if (p > 90) bar.style.background = 'linear-gradient(90deg, #e74c3c, #c0392b)';
+                else if (p > 80) bar.style.background = 'linear-gradient(90deg, #f39c12, #e67e22)';
+                else bar.style.background = 'linear-gradient(90deg, #3498db, #9b59b6)';
+
+                // 4. แสดงผลข้อความ (ใช้ formatBytes ของเรา ถ้า Server ส่งมาพัง)
+                let readableUsed = data.cloudinary.used_readable;
+                if (!readableUsed || readableUsed.includes('NaN') || readableUsed.includes('undefined')) {
+                    readableUsed = formatBytes(used);
                 }
 
-                document.getElementById('storageUsed').innerText = 'ใช้ไป: ' + data.cloudinary.used_readable;
-                document.getElementById('storageLimit').innerText = 'ลิมิต: ' + data.cloudinary.limit_readable;
-                document.getElementById('totalPhotosCount').innerText = data.database.active_photos;
-                document.getElementById('cloudinaryPlan').innerText = data.cloudinary.plan.toUpperCase();
+                let readableLimit = data.cloudinary.limit_readable || formatBytes(limit);
 
+                document.getElementById('storageUsed').innerText = 'ใช้ไป: ' + readableUsed;
+                document.getElementById('storageLimit').innerText = 'ลิมิต: ' + readableLimit;
+
+                // อัปเดต Stats อื่นๆ
+                document.getElementById('totalPhotosCount').innerText = data.database.active_photos || 0;
+                document.getElementById('cloudinaryPlan').innerText = (data.cloudinary.plan || 'FREE').toUpperCase();
+
+                // ... ส่วนแสดงรายการล่าสุด (code เดิม) ...
                 const list = document.getElementById('topCategoriesList');
                 if (!data.latest_categories || !data.latest_categories.length) {
                     list.innerHTML = '<p style="text-align:center;color:#999;padding:20px;">ไม่มีข้อมูล</p>';
                     return;
                 }
-
                 list.innerHTML = '';
-
                 data.latest_categories.forEach((c, index) => {
+                    // ... (ใช้โค้ดเดิมในส่วน render list ได้เลย) ...
                     const dateStr = new Date(c.last_update).toLocaleDateString('th-TH', {
                         day: 'numeric',
                         month: 'short',
@@ -2640,9 +2668,9 @@
                     });
                     const rank = index + 1;
                     let rankColor = '#999';
-                    if (rank === 1) rankColor = '#f1c40f'; // ทอง
-                    if (rank === 2) rankColor = '#bdc3c7'; // เงิน
-                    if (rank === 3) rankColor = '#e67e22'; // ทองแดง
+                    if (rank === 1) rankColor = '#f1c40f';
+                    if (rank === 2) rankColor = '#bdc3c7';
+                    if (rank === 3) rankColor = '#e67e22';
 
                     list.innerHTML += `
                     <div style="margin-bottom:10px; padding:10px; background:white; border-radius:6px; border-left: 3px solid #3498db; box-shadow:0 1px 3px rgba(0,0,0,0.05); display: flex; gap: 10px; align-items: flex-start;">
@@ -2659,13 +2687,15 @@
                     </div>`;
                 });
 
+                // ... ส่วน Average (code เดิม) ...
                 const resAvg = await fetch('/storage/average?t=' + Date.now(), {
                     headers: h
                 });
                 if (resAvg.ok) {
                     const d = await resAvg.json();
-                    document.getElementById('avgPhotoSize').innerText = d.average_readable;
+                    document.getElementById('avgPhotoSize').innerText = d.average_readable || '0 MB';
                 }
+
             } catch (error) {
                 console.error('Storage Error:', error);
             }
