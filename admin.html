@@ -2508,90 +2508,136 @@
             renderUserTable(filtered);
         }
 
-        // --- Storage & Settings ---
+        // 🔥 แทนที่ฟังก์ชัน loadStorageStats() ใน admin.html (บรรทัด 2497-2573)
+
         async function loadStorageStats() {
             try {
                 const h = getAuthHeaders();
                 if (!h) return;
 
                 const res = await fetch('/storage/usage?t=' + Date.now(), { headers: h });
-                if (!res.ok) return;
+                if (!res.ok) {
+                    throw new Error('Failed to fetch storage data');
+                }
 
                 const data = await res.json();
+                console.log('📦 Storage Data:', data); // Debug
 
-                // 🔥 เพิ่มการตรวจสอบ
+                // 🔥 FIX 1: ตรวจสอบว่า data.cloudinary มีอยู่จริง
                 if (!data || !data.cloudinary) {
-                    console.error('Invalid data format');
-                    return;
+                    throw new Error('Invalid response format');
                 }
 
+                // 🔥 FIX 2: ใช้ Optional Chaining อย่างถูกต้อง
                 let used = parseFloat(data.cloudinary.used_bytes) || 0;
                 let limit = parseFloat(data.cloudinary.limit_bytes) || 26843545600;
-                let p = (used / limit) * 100;
-                let pText = p.toFixed(2) + '%';
 
-                if (p > 0 && p < 0.01) {
-                    pText = p.toFixed(4) + '%';
-                } else if (p < 0.0001 && p > 0) {
-                    pText = "< 0.0001%";
+                console.log('📊 Used:', used, 'Limit:', limit); // Debug
+
+                // 🔥 FIX 3: คำนวณเปอร์เซ็นต์
+                let p = 0;
+                if (limit > 0) {
+                    p = (used / limit) * 100;
                 }
 
+                // จัดรูปแบบข้อความ
+                let pText = '0%';
+                if (p >= 0.01) {
+                    pText = p.toFixed(2) + '%';
+                } else if (p > 0 && p < 0.01) {
+                    pText = '< 0.01%';
+                }
+
+                console.log('📈 Percentage:', p, 'Text:', pText); // Debug
+
+                // อัพเดท UI
                 document.getElementById('storagePercentage').innerText = pText;
                 document.getElementById('storageBarText').innerText = pText;
-                document.getElementById('storageBar').style.width = ((p > 0 && p < 1) ? 1 : p) + '%';
 
+                // แสดง Progress Bar
+                let barWidth = p;
+                if (p > 0 && p < 1) barWidth = 1; // ขั้นต่ำ 1%
+                document.getElementById('storageBar').style.width = barWidth + '%';
+
+                // เปลี่ยนสีตามระดับ
+                const bar = document.getElementById('storageBar');
                 if (p > 90) {
-                    document.getElementById('storageBar').style.background = 'linear-gradient(90deg, #e74c3c, #c0392b)';
+                    bar.style.background = 'linear-gradient(90deg, #e74c3c, #c0392b)';
                 } else if (p > 80) {
-                    document.getElementById('storageBar').style.background = 'linear-gradient(90deg, #f39c12, #e67e22)';
+                    bar.style.background = 'linear-gradient(90deg, #f39c12, #e67e22)';
                 } else {
-                    document.getElementById('storageBar').style.background = 'linear-gradient(90deg, #3498db, #9b59b6)';
+                    bar.style.background = 'linear-gradient(90deg, #3498db, #9b59b6)';
                 }
 
-                // 🔥 เพิ่ม || fallback
-                document.getElementById('storageUsed').innerText = 'ใช้ไป: ' + (data.cloudinary.used_readable || '0 B');
-                document.getElementById('storageLimit').innerText = 'ลิมิต: ' + (data.cloudinary.limit_readable || '25 GB');
-                document.getElementById('totalPhotosCount').innerText = data.database?.active_photos || 0;
-                document.getElementById('cloudinaryPlan').innerText = (data.cloudinary.plan || 'Free').toUpperCase();
+                // 🔥 FIX 4: ป้องกัน undefined
+                document.getElementById('storageUsed').innerText =
+                    'ใช้ไป: ' + (data.cloudinary.used_readable || '0 B');
+                document.getElementById('storageLimit').innerText =
+                    'ลิมิต: ' + (data.cloudinary.limit_readable || '25 GB');
+                document.getElementById('totalPhotosCount').innerText =
+                    data?.database?.active_photos || 0;
+                document.getElementById('cloudinaryPlan').innerText =
+                    (data.cloudinary.plan || 'Free').toUpperCase();
 
+                // รายการกิจกรรม
                 const list = document.getElementById('topCategoriesList');
                 if (!data.latest_categories || !data.latest_categories.length) {
                     list.innerHTML = '<p style="text-align:center;color:#999;padding:20px;">ไม่มีข้อมูล</p>';
-                    return;
+                } else {
+                    list.innerHTML = '';
+
+                    data.latest_categories.forEach((c, index) => {
+                        const dateStr = new Date(c.last_update).toLocaleDateString('th-TH', {
+                            day: 'numeric',
+                            month: 'short',
+                            year: '2-digit'
+                        });
+                        const rank = index + 1;
+                        let rankColor = '#999';
+                        if (rank === 1) rankColor = '#f1c40f';
+                        if (rank === 2) rankColor = '#bdc3c7';
+                        if (rank === 3) rankColor = '#e67e22';
+
+                        list.innerHTML += `
+                <div style="margin-bottom:10px; padding:10px; background:white; border-radius:6px; border-left: 3px solid #3498db; box-shadow:0 1px 3px rgba(0,0,0,0.05); display: flex; gap: 10px; align-items: flex-start;">
+                    <div style="background:${rankColor}; color:white; width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:bold; flex-shrink:0; margin-top:2px;">${rank}</div>
+                    <div style="flex-grow:1;">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <span style="font-size:14px; color:#333; font-weight:bold;">${c.category_name}</span>
+                            <span style="font-size:12px; color:#999;">${dateStr}</span>
+                        </div>
+                        <div style="font-size:12px; color:#666; margin-top:3px;">
+                            📸 มีรูปทั้งหมด ${c.photo_count} รูป
+                        </div>
+                    </div>
+                </div>`;
+                    });
                 }
 
-                list.innerHTML = '';
-
-                data.latest_categories.forEach((c, index) => {
-                    const dateStr = new Date(c.last_update).toLocaleDateString('th-TH', { day: 'numeric', month: 'short', year: '2-digit' });
-                    const rank = index + 1;
-                    let rankColor = '#999';
-                    if (rank === 1) rankColor = '#f1c40f';
-                    if (rank === 2) rankColor = '#bdc3c7';
-                    if (rank === 3) rankColor = '#e67e22';
-
-                    list.innerHTML += `
-            <div style="margin-bottom:10px; padding:10px; background:white; border-radius:6px; border-left: 3px solid #3498db; box-shadow:0 1px 3px rgba(0,0,0,0.05); display: flex; gap: 10px; align-items: flex-start;">
-                <div style="background:${rankColor}; color:white; width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:bold; flex-shrink:0; margin-top:2px;">${rank}</div>
-                <div style="flex-grow:1;">
-                    <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <span style="font-size:14px; color:#333; font-weight:bold;">${c.category_name}</span>
-                        <span style="font-size:12px; color:#999;">${dateStr}</span>
-                    </div>
-                    <div style="font-size:12px; color:#666; margin-top:3px;">
-                        📸 มีรูปทั้งหมด ${c.photo_count} รูป
-                    </div>
-                </div>
-            </div>`;
-                });
-
-                const resAvg = await fetch('/storage/average?t=' + Date.now(), { headers: h });
-                if (resAvg.ok) {
-                    const d = await resAvg.json();
-                    document.getElementById('avgPhotoSize').innerText = d.average_readable || '0 B';
+                // ขนาดเฉลี่ย
+                try {
+                    const resAvg = await fetch('/storage/average?t=' + Date.now(), { headers: h });
+                    if (resAvg.ok) {
+                        const d = await resAvg.json();
+                        document.getElementById('avgPhotoSize').innerText = d.average_readable || '0 B';
+                    }
+                } catch (e) {
+                    console.error('Avg size error:', e);
+                    document.getElementById('avgPhotoSize').innerText = '0 B';
                 }
+
             } catch (error) {
-                console.error('Storage Error:', error);
+                console.error('❌ Storage Error:', error);
+
+                // แสดง Error State
+                document.getElementById('storagePercentage').innerText = 'Error';
+                document.getElementById('storageBarText').innerText = 'โหลดไม่สำเร็จ';
+                document.getElementById('storageBar').style.background = '#e74c3c';
+                document.getElementById('storageBar').style.width = '100%';
+                document.getElementById('storageUsed').innerText = 'ไม่สามารถโหลดข้อมูลได้';
+                document.getElementById('storageLimit').innerText = 'กรุณาลองใหม่';
+                document.getElementById('topCategoriesList').innerHTML =
+                    '<p style="text-align:center;color:#e74c3c;padding:20px;">โหลดข้อมูลล้มเหลว</p>';
             }
         }
 
