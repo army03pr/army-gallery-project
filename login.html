@@ -1,90 +1,179 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>เข้าสู่ระบบ - ระบบจัดการคลังภาพ</title>
+    
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/1042/1042339.png">
+
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600&display=swap" rel="stylesheet">
     
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Sarabun', sans-serif;
             background-color: #f0f2f5;
+            background-image: radial-gradient(#e6e9f0 1px, transparent 1px);
+            background-size: 20px 20px;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
         }
+
         .login-card {
             background: white;
             padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
             width: 100%;
-            max-width: 400px;
+            max-width: 380px;
             text-align: center;
+            transition: transform 0.3s;
         }
-        .login-header img { width: 80px; margin-bottom: 20px; }
-        .login-header h2 { margin: 0 0 20px; color: #333; }
+
+        .login-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        .login-header img {
+            width: 90px;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+        }
+
+        .login-header h2 {
+            margin: 0 0 30px;
+            color: #2c3e50;
+            font-weight: 600;
+            font-size: 24px;
+        }
         
-        .form-group { margin-bottom: 15px; text-align: left; }
-        .form-group label { display: block; margin-bottom: 5px; color: #666; }
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
         .form-group input {
             width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: 'Sarabun', sans-serif;
+            font-size: 15px;
+            transition: all 0.3s;
+            outline: none;
+            background: #f9f9f9;
+        }
+
+        .form-group input:focus {
+            border-color: #3498db;
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
         }
         
         .btn-login {
             width: 100%;
             padding: 12px;
-            background-color: #2c3e50;
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             cursor: pointer;
             font-size: 16px;
-            font-weight: bold;
+            font-weight: 600;
+            font-family: 'Sarabun', sans-serif;
+            transition: all 0.3s;
+            margin-top: 10px;
+            box-shadow: 0 4px 6px rgba(44, 62, 80, 0.2);
         }
-        .btn-login:hover { background-color: #1a252f; }
+
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(44, 62, 80, 0.3);
+        }
+
+        .btn-login:active {
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .login-card {
+                box-shadow: none;
+                background: transparent;
+            }
+            .form-group input {
+                background: #fff;
+            }
+        }
     </style>
 </head>
 <body>
 
     <div class="login-card">
         <div class="login-header">
-            <img src="Royal_Thai_Army_3_Logo.png" alt="Logo">
+            <img src="https://cdn-icons-png.flaticon.com/512/1042/1042339.png" alt="Logo" id="logoImg">
             <h2>ระบบจัดการคลังภาพ</h2>
         </div>
         
         <form id="loginForm">
             <div class="form-group">
-                <label>ชื่อผู้ใช้ (Username)</label>
-                <input type="text" id="username" required placeholder="กรอกชื่อผู้ใช้">
+                <label for="username">ชื่อผู้ใช้ (Username)</label>
+                <input type="text" id="username" required placeholder="กรอกชื่อผู้ใช้..." autocomplete="username">
             </div>
             <div class="form-group">
-                <label>รหัสผ่าน (Password)</label>
-                <input type="password" id="password" required placeholder="กรอกรหัสผ่าน">
+                <label for="password">รหัสผ่าน (Password)</label>
+                <input type="password" id="password" required placeholder="กรอกรหัสผ่าน..." autocomplete="current-password">
             </div>
             <button type="submit" class="btn-login">เข้าสู่ระบบ</button>
         </form>
     </div>
 
     <script>
+        // 1. Check Login Status (ถ้าล็อกอินอยู่แล้ว ให้เด้งไป admin เลย)
+        if (localStorage.getItem('token')) {
+            window.location.href = 'admin.html';
+        }
+
+        // 2. Handle Logo (Optional: ถ้ามีรูป logo ในเครื่อง ให้ใช้โค้ดนี้เปลี่ยน src)
+        // document.getElementById('logoImg').src = 'Royal_Thai_Army_3_Logo.png'; 
+
         document.getElementById('loginForm').addEventListener('submit', async (e) => {
             e.preventDefault(); 
             
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
 
+            // Show Loading
+            Swal.fire({
+                title: 'กำลังตรวจสอบ...',
+                text: 'กรุณารอสักครู่',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+
             try {
-                // 🔥 แก้ไข: ใช้ /login (Relative Path) แทน http://localhost:3001/login
-                // เพื่อให้ทำงานได้ถูกต้องเมื่ออยู่บน Server จริง
+                // เรียก API Login
                 const response = await fetch('/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -94,13 +183,14 @@
                 const data = await response.json();
 
                 if (response.ok) {
+                    // บันทึก Token
                     localStorage.setItem('token', data.token);
                     localStorage.setItem('user', JSON.stringify(data.user));
                     
                     Swal.fire({
                         icon: 'success',
-                        title: 'เข้าสู่ระบบสำเร็จ!',
-                        text: 'กำลังพาท่านไปหน้าจัดการ...',
+                        title: 'ยินดีต้อนรับ!',
+                        text: `สวัสดีคุณ ${data.user.username}`,
                         timer: 1500,
                         showConfirmButton: false
                     }).then(() => {
@@ -111,11 +201,18 @@
                     Swal.fire({
                         icon: 'error',
                         title: 'เข้าสู่ระบบไม่สำเร็จ',
-                        text: data.message
+                        text: data.message || 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง',
+                        confirmButtonColor: '#2c3e50'
                     });
                 }
             } catch (err) {
-                Swal.fire('Error', 'ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้', 'error');
+                console.error(err);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'เกิดข้อผิดพลาด',
+                    text: 'ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้ กรุณาลองใหม่',
+                    confirmButtonColor: '#c0392b'
+                });
             }
         });
     </script>
