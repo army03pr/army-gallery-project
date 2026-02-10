@@ -262,9 +262,9 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
+            margin-bottom: 15px; 
         }
-
+        
         .card-header-title {
             margin: 0 !important;
             font-size: 20px !important;
@@ -1043,8 +1043,7 @@
             }
 
             .main-content {
-                padding: 80px 10px 30px 10px;
-                /* ลด padding ข้างนิดนึง */
+                padding: 80px 10px 30px 10px; /* ลด padding ข้างนิดนึง */
                 width: 100%;
             }
 
@@ -1061,17 +1060,14 @@
                 gap: 10px;
                 margin-bottom: 5px !important;
             }
-
             .card-header-title {
                 margin: 0 !important;
-                font-size: 18px !important;
-                /* ลดขนาดฟอนต์หัวข้อหน่อย */
+                font-size: 18px !important; /* ลดขนาดฟอนต์หัวข้อหน่อย */
                 flex: 1;
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
             }
-
             .card-header-wrapper button {
                 width: auto !important;
                 padding: 6px 10px !important;
@@ -1082,23 +1078,19 @@
             /* --- 🔥 แก้ไข TOOLBAR ถังขยะ (ให้ปุ่มเรียงแถวเดียว) --- */
             .card .bulk-toolbar {
                 display: flex !important;
-                flex-direction: row !important;
-                /* บังคับแนวนอน */
-                flex-wrap: nowrap !important;
-                /* ห้ามปัดบรรทัด */
+                flex-direction: row !important; /* บังคับแนวนอน */
+                flex-wrap: nowrap !important;   /* ห้ามปัดบรรทัด */
                 align-items: center !important;
                 justify-content: space-between !important;
                 gap: 8px !important;
                 padding: 10px !important;
-                overflow-x: auto;
-                /* กันล้นจอเล็กมากๆ */
+                overflow-x: auto; /* กันล้นจอเล็กมากๆ */
             }
 
             /* ปุ่มเลือกทั้งหมด (ฝั่งซ้าย) */
             #btnSelectAllTrash {
                 width: auto !important;
-                flex: 1;
-                /* ให้ยืดกินพื้นที่ว่าง */
+                flex: 1; /* ให้ยืดกินพื้นที่ว่าง */
                 margin: 0 !important;
                 height: 38px !important;
                 font-size: 12px !important;
@@ -1114,8 +1106,7 @@
                 flex-direction: row !important;
                 gap: 5px !important;
                 margin: 0 !important;
-                flex-shrink: 0;
-                /* ห้ามหด */
+                flex-shrink: 0; /* ห้ามหด */
             }
 
             /* ปุ่ม กู้คืน/ลบถาวร */
@@ -1204,10 +1195,7 @@
 
             /* --- 🔥 IMPROVED MOBILE LOGS (FORCE STYLE) --- */
             /* 1. ล้างค่าพื้นฐานของตารางออกให้หมด */
-            .log-table,
-            .log-table tbody,
-            .log-table tr,
-            .log-table td {
+            .log-table, .log-table tbody, .log-table tr, .log-table td {
                 display: block !important;
                 width: 100% !important;
                 box-sizing: border-box !important;
@@ -1217,18 +1205,18 @@
             .log-table tr {
                 display: grid !important;
                 /* ซ้าย: ชื่อ User, ขวา: Badge Action */
-                grid-template-columns: 1fr auto !important;
-                grid-template-areas:
+                grid-template-columns: 1fr auto !important; 
+                grid-template-areas: 
                     "datetime datetime"
                     "user badge"
                     "details details";
                 gap: 5px 10px !important;
-
+                
                 background: white !important;
                 margin-bottom: 15px !important;
                 padding: 15px !important;
                 border-radius: 12px !important;
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08) !important;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.08) !important;
                 border: 1px solid #eee !important;
                 border-left: 5px solid var(--primary-color) !important;
             }
@@ -1240,28 +1228,26 @@
                 margin-bottom: 8px !important;
                 padding-bottom: 8px !important;
             }
-
             /* จัดให้วันที่กับเวลาอยู่คนละฝั่ง */
-            .log-table td:nth-child(1)>div {
+            .log-table td:nth-child(1) > div {
                 flex-direction: row !important;
                 justify-content: space-between !important;
                 width: 100% !important;
             }
-
+            
             /* Cell 2: Username -> ซ้าย */
             .log-table td:nth-child(2) {
                 grid-area: user !important;
                 font-weight: bold;
                 font-size: 15px !important;
-                display: flex;
+                display: flex; 
                 align-items: center;
                 gap: 25px;
             }
-
             /* Add User Icon */
             .log-table td:nth-child(2)::before {
-                content: '\f007';
-                font-family: "Font Awesome 6 Free";
+                content: '\f007'; 
+                font-family: "Font Awesome 6 Free"; 
                 font-weight: 900;
                 color: #bdc3c7;
             }
@@ -1286,10 +1272,7 @@
             }
 
             /* --- 🔥 USER TABLE (Full Width Fix) --- */
-            .user-table,
-            .user-table tbody,
-            .user-table tr,
-            .user-table td {
+            .user-table, .user-table tbody, .user-table tr, .user-table td {
                 display: block !important;
                 width: 100% !important;
                 box-sizing: border-box !important;
@@ -1298,15 +1281,14 @@
             .user-table tr {
                 display: grid !important;
                 grid-template-columns: 1fr auto !important;
-                grid-template-areas:
+                grid-template-areas: 
                     "info role"
                     "actions actions";
                 background: white;
                 margin-bottom: 15px;
-                padding: 0 !important;
-                /* 🔥 ลบ Padding เพื่อให้ขีดชนขอบ */
+                padding: 0 !important; /* 🔥 ลบ Padding เพื่อให้ขีดชนขอบ */
                 border-radius: 12px;
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+                box-shadow: 0 4px 8px rgba(0,0,0,0.05);
                 border: 1px solid #eee;
                 border-left: 5px solid #8e44ad !important;
                 overflow: hidden;
@@ -1318,7 +1300,6 @@
                 padding: 15px !important;
                 border-bottom: 1px solid #f0f0f0 !important;
             }
-
             /* จัดระยะห่างใน Cell */
             .user-cell {
                 gap: 15px !important;
@@ -1350,7 +1331,7 @@
                 width: 100%;
                 gap: 10px;
             }
-
+            
             .user-table .action-btn-group button {
                 flex: 1;
                 height: 38px;
@@ -1371,8 +1352,8 @@
                 justify-content: center;
                 height: 40px;
             }
-
-            /* ลดความสูงของการ์ดในถังขยะ */
+            
+             /* ลดความสูงของการ์ดในถังขยะ */
             #trashList .approval-item {
                 padding: 8px !important;
                 min-height: auto !important;
@@ -1587,7 +1568,8 @@
                     <div style="display:flex; flex-direction:column;">
                         <label style="font-size:14px; color:#555; margin-bottom:5px;"><b>2. เลือกรูปภาพ</b></label>
 
-                        <div class="file-upload-wrapper" style="min-height: 120px; padding: 15px;">
+                        <div class="file-upload-wrapper"
+                            style="min-height: 120px; padding: 15px;">
                             <div id="uploadPlaceholder" style="text-align: center;">
                                 <span class="upload-icon"
                                     style="font-size: 32px; color: #3498db; margin-bottom: 5px;"><i
@@ -1722,7 +1704,7 @@
         </div>
 
         <div class="card admin-only" style="border-top: 5px solid #e74c3c; margin-top: 30px;">
-
+            
             <div class="card-header-wrapper header-color-trash">
                 <h3 class="card-header-title" style="color: #e74c3c;">
                     <i class="fas fa-trash-alt"></i> ถังขยะ (กู้คืนได้)
@@ -1735,7 +1717,8 @@
             <div class="bulk-toolbar"
                 style="display:flex; justify-content:space-between; align-items:center; padding: 10px; margin-bottom: 10px; background: #fff; border: 1px dashed #ccc; border-radius: 8px; gap: 10px;">
 
-                <button type="button" id="btnSelectAllTrash" onclick="toggleSelectAllTrash()" style="
+                <button type="button" id="btnSelectAllTrash" onclick="toggleSelectAllTrash()"
+                    style="
                         padding: 8px 15px; 
                         border-radius: 6px; 
                         border: 1px solid #ddd; 
@@ -1751,7 +1734,8 @@
                 </button>
 
                 <div class="bulk-actions-right" style="display:flex; gap:10px;">
-                    <button onclick="restoreSelected()" style="
+                    <button onclick="restoreSelected()"
+                        style="
                             padding: 8px 15px; 
                             background: #3498db; 
                             color: white; 
@@ -1764,7 +1748,8 @@
                         ">
                         <i class="fas fa-trash-restore"></i> กู้คืน
                     </button>
-                    <button onclick="deletePermanentSelected()" style="
+                    <button onclick="deletePermanentSelected()"
+                        style="
                             padding: 8px 15px; 
                             background: #c0392b; 
                             color: white; 
@@ -1794,7 +1779,7 @@
             </div>
 
             <div style="overflow-x: auto;">
-                <table class="log-table" style="margin-top: 0 !important;">
+                <table class="log-table"style="margin-top: 0 !important;">
                     <thead>
                         <tr>
                             <th>เวลา</th>
@@ -1839,7 +1824,7 @@
             </div>
 
             <div style="overflow-x: auto;">
-                <table class="user-table" style="margin-top: 5px !important;">
+                <table class="user-table" style="margin-top: 5 !important;">
                     <thead>
                         <tr>
                             <th style="width: 40%;">ชื่อผู้ใช้งาน</th>
@@ -2207,7 +2192,7 @@
             allTrashFiles.forEach(photo => {
                 const isSelected = selectedTrashIds.has(photo.id);
                 const div = document.createElement('div');
-
+                
                 // 🔥 จุดที่แก้ไข: เติม 'trash-item' ลงไปใน className
                 // เพื่อให้ CSS filter: grayscale(100%) ทำงาน (รูปจะเป็นขาวดำ)
                 div.className = `approval-item trash-item ${isSelected ? 'selected' : ''}`;
@@ -2318,7 +2303,7 @@
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'ยืนยัน',
                 cancelButtonText: 'ยกเลิก', // 🔥 เปลี่ยนเป็นภาษาไทย
-                heightAuto: false
+                heightAuto: false 
             });
             return result.isConfirmed;
         }
@@ -2380,22 +2365,22 @@
         // ==========================================
         // 🔥 LOGS SECTION (Server-Side Pagination)
         // ==========================================
-
+        
         async function loadLogs(page = 1) {
             if (user.role !== 'admin') return;
-
+            
             currentLogPage = page;
-
+            
             try {
                 const res = await fetch(`/logs?page=${page}&limit=10&t=` + Date.now(), { headers: getAuthHeaders() });
                 if (!res.ok) throw new Error();
-
+                
                 const responseData = await res.json();
                 const logs = responseData.data;
                 totalLogPages = responseData.totalPages;
 
                 renderLogs(logs);
-                updateLogPagination();
+                updateLogPagination(); 
             } catch (e) {
                 console.error(e);
                 document.getElementById('logTableBody').innerHTML = '<tr><td colspan="4" style="grid-column: 1/-1; text-align: center; padding: 40px; color: #999;">โหลดประวัติไม่ได้</td></tr>';
@@ -2453,7 +2438,7 @@
         function changeLogPage(step) {
             const nextPage = currentLogPage + step;
             if (nextPage < 1 || nextPage > totalLogPages) return;
-            loadLogs(nextPage);
+            loadLogs(nextPage); 
         }
 
         // --- User Management ---
@@ -2508,138 +2493,92 @@
             renderUserTable(filtered);
         }
 
-        // 🔥 แทนที่ฟังก์ชัน loadStorageStats() ใน admin.html (บรรทัด 2497-2573)
-
+        // --- Storage & Settings ---
         async function loadStorageStats() {
-            try {
-                const h = getAuthHeaders();
-                if (!h) return;
+    try {
+        const h = getAuthHeaders();
+        if (!h) return;
 
-                const res = await fetch('/storage/usage?t=' + Date.now(), { headers: h });
-                if (!res.ok) {
-                    throw new Error('Failed to fetch storage data');
-                }
+        const res = await fetch('/storage/usage?t=' + Date.now(), { headers: h });
+        if (!res.ok) return;
 
-                const data = await res.json();
-                console.log('📦 Storage Data:', data); // Debug
-
-                // 🔥 FIX 1: ตรวจสอบว่า data.cloudinary มีอยู่จริง
-                if (!data || !data.cloudinary) {
-                    throw new Error('Invalid response format');
-                }
-
-                // 🔥 FIX 2: ใช้ Optional Chaining อย่างถูกต้อง
-                let used = parseFloat(data.cloudinary.used_bytes) || 0;
-                let limit = parseFloat(data.cloudinary.limit_bytes) || 26843545600;
-
-                console.log('📊 Used:', used, 'Limit:', limit); // Debug
-
-                // 🔥 FIX 3: คำนวณเปอร์เซ็นต์
-                let p = 0;
-                if (limit > 0) {
-                    p = (used / limit) * 100;
-                }
-
-                // จัดรูปแบบข้อความ
-                let pText = '0%';
-                if (p >= 0.01) {
-                    pText = p.toFixed(2) + '%';
-                } else if (p > 0 && p < 0.01) {
-                    pText = '< 0.01%';
-                }
-
-                console.log('📈 Percentage:', p, 'Text:', pText); // Debug
-
-                // อัพเดท UI
-                document.getElementById('storagePercentage').innerText = pText;
-                document.getElementById('storageBarText').innerText = pText;
-
-                // แสดง Progress Bar
-                let barWidth = p;
-                if (p > 0 && p < 1) barWidth = 1; // ขั้นต่ำ 1%
-                document.getElementById('storageBar').style.width = barWidth + '%';
-
-                // เปลี่ยนสีตามระดับ
-                const bar = document.getElementById('storageBar');
-                if (p > 90) {
-                    bar.style.background = 'linear-gradient(90deg, #e74c3c, #c0392b)';
-                } else if (p > 80) {
-                    bar.style.background = 'linear-gradient(90deg, #f39c12, #e67e22)';
-                } else {
-                    bar.style.background = 'linear-gradient(90deg, #3498db, #9b59b6)';
-                }
-
-                // 🔥 FIX 4: ป้องกัน undefined
-                document.getElementById('storageUsed').innerText =
-                    'ใช้ไป: ' + (data.cloudinary.used_readable || '0 B');
-                document.getElementById('storageLimit').innerText =
-                    'ลิมิต: ' + (data.cloudinary.limit_readable || '25 GB');
-                document.getElementById('totalPhotosCount').innerText =
-                    data?.database?.active_photos || 0;
-                document.getElementById('cloudinaryPlan').innerText =
-                    (data.cloudinary.plan || 'Free').toUpperCase();
-
-                // รายการกิจกรรม
-                const list = document.getElementById('topCategoriesList');
-                if (!data.latest_categories || !data.latest_categories.length) {
-                    list.innerHTML = '<p style="text-align:center;color:#999;padding:20px;">ไม่มีข้อมูล</p>';
-                } else {
-                    list.innerHTML = '';
-
-                    data.latest_categories.forEach((c, index) => {
-                        const dateStr = new Date(c.last_update).toLocaleDateString('th-TH', {
-                            day: 'numeric',
-                            month: 'short',
-                            year: '2-digit'
-                        });
-                        const rank = index + 1;
-                        let rankColor = '#999';
-                        if (rank === 1) rankColor = '#f1c40f';
-                        if (rank === 2) rankColor = '#bdc3c7';
-                        if (rank === 3) rankColor = '#e67e22';
-
-                        list.innerHTML += `
-                <div style="margin-bottom:10px; padding:10px; background:white; border-radius:6px; border-left: 3px solid #3498db; box-shadow:0 1px 3px rgba(0,0,0,0.05); display: flex; gap: 10px; align-items: flex-start;">
-                    <div style="background:${rankColor}; color:white; width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:bold; flex-shrink:0; margin-top:2px;">${rank}</div>
-                    <div style="flex-grow:1;">
-                        <div style="display:flex; justify-content:space-between; align-items:center;">
-                            <span style="font-size:14px; color:#333; font-weight:bold;">${c.category_name}</span>
-                            <span style="font-size:12px; color:#999;">${dateStr}</span>
-                        </div>
-                        <div style="font-size:12px; color:#666; margin-top:3px;">
-                            📸 มีรูปทั้งหมด ${c.photo_count} รูป
-                        </div>
-                    </div>
-                </div>`;
-                    });
-                }
-
-                // ขนาดเฉลี่ย
-                try {
-                    const resAvg = await fetch('/storage/average?t=' + Date.now(), { headers: h });
-                    if (resAvg.ok) {
-                        const d = await resAvg.json();
-                        document.getElementById('avgPhotoSize').innerText = d.average_readable || '0 B';
-                    }
-                } catch (e) {
-                    console.error('Avg size error:', e);
-                    document.getElementById('avgPhotoSize').innerText = '0 B';
-                }
-
-            } catch (error) {
-                console.error('❌ Storage Error:', error);
-
-                // แสดง Error State
-                document.getElementById('storagePercentage').innerText = 'Error';
-                document.getElementById('storageBarText').innerText = 'โหลดไม่สำเร็จ';
-                document.getElementById('storageBar').style.background = '#e74c3c';
-                document.getElementById('storageBar').style.width = '100%';
-                document.getElementById('storageUsed').innerText = 'ไม่สามารถโหลดข้อมูลได้';
-                document.getElementById('storageLimit').innerText = 'กรุณาลองใหม่';
-                document.getElementById('topCategoriesList').innerHTML =
-                    '<p style="text-align:center;color:#e74c3c;padding:20px;">โหลดข้อมูลล้มเหลว</p>';
-            }
+        const data = await res.json();
+        
+        // 🔥 เพิ่มการตรวจสอบ
+        if (!data || !data.cloudinary) {
+            console.error('Invalid data format');
+            return;
         }
+        
+        let used = parseFloat(data.cloudinary.used_bytes) || 0;
+        let limit = parseFloat(data.cloudinary.limit_bytes) || 26843545600;
+        let p = (used / limit) * 100;
+        let pText = p.toFixed(2) + '%';
+
+        if (p > 0 && p < 0.01) {
+            pText = p.toFixed(4) + '%';
+        } else if (p < 0.0001 && p > 0) {
+            pText = "< 0.0001%";
+        }
+
+        document.getElementById('storagePercentage').innerText = pText;
+        document.getElementById('storageBarText').innerText = pText;
+        document.getElementById('storageBar').style.width = ((p > 0 && p < 1) ? 1 : p) + '%';
+
+        if (p > 90) {
+            document.getElementById('storageBar').style.background = 'linear-gradient(90deg, #e74c3c, #c0392b)';
+        } else if (p > 80) {
+            document.getElementById('storageBar').style.background = 'linear-gradient(90deg, #f39c12, #e67e22)';
+        } else {
+            document.getElementById('storageBar').style.background = 'linear-gradient(90deg, #3498db, #9b59b6)';
+        }
+
+        // 🔥 เพิ่ม || fallback
+        document.getElementById('storageUsed').innerText = 'ใช้ไป: ' + (data.cloudinary.used_readable || '0 B');
+        document.getElementById('storageLimit').innerText = 'ลิมิต: ' + (data.cloudinary.limit_readable || '25 GB');
+        document.getElementById('totalPhotosCount').innerText = data.database?.active_photos || 0;
+        document.getElementById('cloudinaryPlan').innerText = (data.cloudinary.plan || 'Free').toUpperCase();
+
+        const list = document.getElementById('topCategoriesList');
+        if (!data.latest_categories || !data.latest_categories.length) {
+            list.innerHTML = '<p style="text-align:center;color:#999;padding:20px;">ไม่มีข้อมูล</p>';
+            return;
+        }
+
+        list.innerHTML = '';
+        
+        data.latest_categories.forEach((c, index) => {
+            const dateStr = new Date(c.last_update).toLocaleDateString('th-TH', { day: 'numeric', month: 'short', year: '2-digit' });
+            const rank = index + 1;
+            let rankColor = '#999';
+            if (rank === 1) rankColor = '#f1c40f';
+            if (rank === 2) rankColor = '#bdc3c7';
+            if (rank === 3) rankColor = '#e67e22';
+
+            list.innerHTML += `
+            <div style="margin-bottom:10px; padding:10px; background:white; border-radius:6px; border-left: 3px solid #3498db; box-shadow:0 1px 3px rgba(0,0,0,0.05); display: flex; gap: 10px; align-items: flex-start;">
+                <div style="background:${rankColor}; color:white; width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:bold; flex-shrink:0; margin-top:2px;">${rank}</div>
+                <div style="flex-grow:1;">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span style="font-size:14px; color:#333; font-weight:bold;">${c.category_name}</span>
+                        <span style="font-size:12px; color:#999;">${dateStr}</span>
+                    </div>
+                    <div style="font-size:12px; color:#666; margin-top:3px;">
+                        📸 มีรูปทั้งหมด ${c.photo_count} รูป
+                    </div>
+                </div>
+            </div>`;
+        });
+
+        const resAvg = await fetch('/storage/average?t=' + Date.now(), { headers: h });
+        if (resAvg.ok) {
+            const d = await resAvg.json();
+            document.getElementById('avgPhotoSize').innerText = d.average_readable || '0 B';
+        }
+    } catch (error) {
+        console.error('Storage Error:', error);
+    }
+}
 
         async function openProfileSettings() {
             autoCloseSidebar();
@@ -2652,7 +2591,7 @@
                 cancelButtonText: 'ยกเลิก',
                 confirmButtonColor: '#f39c12',
                 denyButtonColor: '#3498db',
-                heightAuto: false
+                heightAuto: false 
             });
 
             const h = getAuthHeaders();
@@ -2674,7 +2613,7 @@
                     title: 'เปลี่ยนรหัสผ่าน',
                     html: '<input id="swal-old-pass" class="swal2-input small-modal-input" type="password" placeholder="รหัสผ่านเดิม"><input id="swal-new-pass" class="swal2-input small-modal-input" type="password" placeholder="รหัสผ่านใหม่ (ขั้นต่ำ 8 ตัว)">',
                     focusConfirm: false,
-                    heightAuto: false,
+                    heightAuto: false, 
                     preConfirm: () => [document.getElementById('swal-old-pass').value, document.getElementById('swal-new-pass').value]
                 });
 
@@ -2711,7 +2650,7 @@
                     input: 'text',
                     inputValue: user.username,
                     showCancelButton: true,
-                    heightAuto: false
+                    heightAuto: false 
                 });
 
                 if (n) {
@@ -2750,7 +2689,7 @@
                 title: 'เพิ่มเจ้าหน้าที่ใหม่',
                 html: '<input id="swal-user" class="swal2-input small-modal-input" placeholder="Username"><input id="swal-pass" type="password" class="swal2-input small-modal-input" placeholder="Password"><select id="swal-role" class="swal2-input small-modal-input"><option value="uploader">Uploader</option><option value="admin">Admin</option></select>',
                 focusConfirm: false,
-                heightAuto: false,
+                heightAuto: false, 
                 preConfirm: () => [
                     document.getElementById('swal-user').value,
                     document.getElementById('swal-pass').value,
@@ -2797,7 +2736,7 @@
                 cancelButtonText: 'ยกเลิก',
                 title: 'แก้ไขรายละเอียด',
                 html: `<input id="swal-cat" class="swal2-input small-modal-input" value="${oldCat}"><input id="swal-date" type="datetime-local" class="swal2-input small-modal-input" value="${dateStr}">`,
-                heightAuto: false,
+                heightAuto: false, 
                 preConfirm: () => [document.getElementById('swal-cat').value, document.getElementById('swal-date').value]
             });
 
@@ -2838,7 +2777,7 @@
                 title: 'เปลี่ยนชื่อ Username',
                 input: 'text',
                 inputValue: o,
-                heightAuto: false
+                heightAuto: false 
             });
             if (n) {
                 await fetch(`/users/${id}/username`, { method: 'PUT', headers: h, body: JSON.stringify({ newUsername: n }) });
@@ -2866,7 +2805,7 @@
                 title: 'ตั้งรหัสผ่านใหม่',
                 input: 'text',
                 inputPlaceholder: 'พิมพ์รหัสใหม่...',
-                heightAuto: false
+                heightAuto: false 
             });
             if (p) {
                 await fetch(`/users/${id}/reset`, { method: 'PUT', headers: h, body: JSON.stringify({ newPassword: p }) });
@@ -2891,7 +2830,7 @@
                 title: 'เปลี่ยนชื่อไฟล์',
                 input: 'text',
                 inputValue: o,
-                heightAuto: false
+                heightAuto: false 
             });
             if (n) {
                 await fetch(`/photos/${id}/rename`, { method: 'PUT', headers: getAuthHeaders(), body: JSON.stringify({ new_name: n }) });
