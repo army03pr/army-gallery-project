@@ -60,9 +60,15 @@
         body {
             font-family: 'Sarabun', sans-serif;
             margin: 0;
-            background-color: var(--bg-body);
-            color: var(--text-main);
-            overflow-y: scroll;
+            /* พื้นหลังสีเทาอ่อน ผสมลายจุดจางๆ */
+            background-color: #f0f2f5;
+            background-image: radial-gradient(#cbd5e0 1px, transparent 1px);
+            background-size: 20px 20px;
+
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+            color: var(--text-dark);
         }
 
         /* --- HEADER --- */
@@ -427,7 +433,7 @@
             position: fixed;
             bottom: 20px;
             right: 20px;
-            z-index: 2147483647 !important; 
+            z-index: 2147483647 !important;
             background: var(--primary);
             color: white;
             text-decoration: none;
@@ -578,44 +584,57 @@
                 gap: 15px;
                 padding: 25px 20px;
             }
+
             .header-title {
                 font-size: 24px;
             }
+
             .header-logo {
                 width: 65px;
             }
+
             .search-section {
                 padding: 15px;
                 position: static;
             }
+
             .search-container {
                 flex-direction: column;
                 align-items: stretch;
                 gap: 10px;
             }
-            .search-input, .date-input, .btn-clear {
+
+            .search-input,
+            .date-input,
+            .btn-clear {
                 width: 100% !important;
                 min-width: 0;
                 margin: 0;
             }
+
             .sub-gallery {
                 grid-template-columns: 1fr 1fr;
                 gap: 12px;
             }
+
             .news-img-wrapper {
                 height: 130px;
             }
+
             .skeleton-card {
                 height: 200px;
             }
+
             .skeleton-img {
                 height: 130px;
             }
+
             .flatpickr-calendar {
                 left: 50% !important;
                 transform: translateX(-50%) !important;
                 max-width: 90vw;
             }
+
             #btnBackToTop {
                 bottom: 20px;
                 right: 20px;
@@ -623,6 +642,7 @@
                 height: 45px;
                 font-size: 20px;
             }
+
             #btnThemeToggle {
                 top: 20px;
                 right: 20px;
@@ -632,15 +652,15 @@
 
             /* 🔥 Mobile Override: ปุ่ม Download อยู่ล่างกลาง */
             .sl-download-btn {
-                right: auto !important; 
+                right: auto !important;
                 top: auto !important;
                 position: fixed !important;
-                bottom: 80px !important; 
+                bottom: 80px !important;
                 left: 0 !important;
                 right: 0 !important;
                 margin-left: auto !important;
                 margin-right: auto !important;
-                width: fit-content !important; 
+                width: fit-content !important;
                 min-width: 140px;
                 justify-content: center;
                 padding: 10px 25px !important;
@@ -649,6 +669,7 @@
                 border: 2px solid rgba(255, 255, 255, 0.9) !important;
                 box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6) !important;
             }
+
             .sl-download-btn:hover {
                 transform: scale(1.05) !important;
             }
@@ -658,9 +679,11 @@
                 align-items: flex-start;
                 gap: 15px;
             }
+
             .activity-title {
                 line-height: 1.4;
             }
+
             .btn-download-zip {
                 width: 100%;
                 justify-content: center;
@@ -820,7 +843,7 @@
         // 🔥 ฟังก์ชันโหลด ZIP แบบฉลาด (Smart Download)
         function downloadZip(activityName) {
             let url = `/download-zip/${encodeURIComponent(activityName)}`;
-            
+
             // 1. ตรวจจับ LINE User Agent (เติม ?openExternalBrowser=1 เพื่อบังคับเปิด Chrome)
             const userAgent = navigator.userAgent || navigator.vendor || window.opera;
             if (/Line/i.test(userAgent)) {
@@ -870,7 +893,7 @@
                         section = document.createElement('div');
                         section.className = 'activity-section';
                         section.id = `sec-${activityName}`;
-                        
+
                         // 🔥 เรียกใช้ downloadZip() แบบ JS
                         section.innerHTML = `
                             <div class="activity-header">
@@ -926,10 +949,10 @@
                         const updateDownloadButton = () => {
                             setTimeout(() => {
                                 const img = document.querySelector('.sl-image img');
-                                if (!img) return; 
+                                if (!img) return;
 
                                 let btn = document.querySelector('.sl-download-btn');
-                                
+
                                 if (!btn) {
                                     btn = document.createElement('button');
                                     btn.className = 'sl-download-btn';
@@ -941,12 +964,12 @@
                                         </svg>
                                         Download
                                     `;
-                                    btn.onclick = async function(e) {
+                                    btn.onclick = async function (e) {
                                         e.preventDefault();
                                         e.stopPropagation();
                                         const imageUrl = img.src;
                                         const fileName = imageUrl.split('/').pop().split('?')[0] || 'photo.jpg';
-                                        
+
                                         try {
                                             // Show loading
                                             const originalHTML = btn.innerHTML;
@@ -960,11 +983,11 @@
                                                 กำลังโหลด...
                                             `;
                                             btn.disabled = true;
-                                            
+
                                             const response = await fetch(imageUrl);
                                             const blob = await response.blob();
                                             const blobUrl = window.URL.createObjectURL(blob);
-                                            
+
                                             const a = document.createElement('a');
                                             a.href = blobUrl;
                                             a.download = fileName;
@@ -972,7 +995,7 @@
                                             a.click();
                                             document.body.removeChild(a);
                                             window.URL.revokeObjectURL(blobUrl);
-                                            
+
                                             // Restore button
                                             btn.innerHTML = originalHTML;
                                             btn.disabled = false;
@@ -992,8 +1015,8 @@
                                     };
                                     document.body.appendChild(btn);
                                 }
-                                btn.style.display = 'flex'; 
-                            }, 100); 
+                                btn.style.display = 'flex';
+                            }, 100);
                         };
 
                         gallery.myLightbox.on('shown.simplelightbox', updateDownloadButton);
