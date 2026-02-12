@@ -18,47 +18,49 @@
     <script src="https://npmcdn.com/flatpickr/dist/l10n/th.js"></script>
 
     <style>
-        /* --- 1. SETUP & VARIABLES --- */
+        /* --- GLOBAL SETUP --- */
         * {
             box-sizing: border-box;
             outline: none;
             -webkit-tap-highlight-color: transparent;
-            transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s, border-color 0.3s, box-shadow 0.3s;
+            transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s, border-color 0.3s;
         }
 
         :root {
-            /* 🪖 Military Minimal Palette */
-            --primary: #2F3E46;       /* เขียวเข้มเกือบดำ */
-            --primary-light: #52796F; /* เขียวทหาร */
-            --accent: #D4AF37;        /* สีทอง (ยศทหาร) */
-            --bg-body: #F5F7F8;       /* พื้นหลังเทาอ่อน */
+            /* ☀️ Light Mode - Army PR Theme */
+            --pr-green: #2E4033;
+            --pr-green-light: #4A6350;
+            --pr-gold: #C5A059;
+            --primary: #c0392b;
+            --bg-body: #FAFAFA;
             --bg-card: #FFFFFF;
             --bg-header: #FFFFFF;
-            --bg-search: #FFFFFF;
+            --bg-search: #f8f9fa;
             --text-main: #2D3436;
             --text-muted: #636E72;
-            --border-color: #DAE1E7;
-            --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
-            --shadow-md: 0 4px 12px rgba(47, 62, 70, 0.08);
-            --input-bg: #F8F9FA;
-            --theme-icon-color: #2F3E46;
+            --border-color: #E0E0E0;
+            --shadow-card: 0 4px 20px rgba(0,0,0,0.06);
+            --input-bg: #F9FAFB;
+            --input-border: #E0E0E0;
+            --theme-icon-color: #333;
         }
 
+        /* 🌙 Dark Mode */
         [data-theme="dark"] {
-            --primary: #84A98C;
-            --primary-light: #CAD2C5;
-            --accent: #D4AF37;
-            --bg-body: #1E1E1E;
-            --bg-card: #2C2C2C;
-            --bg-header: #242424;
-            --bg-search: #242424;
-            --text-main: #E0E0E0;
-            --text-muted: #A0A0A0;
-            --border-color: #3D3D3D;
-            --input-bg: #333333;
-            --theme-icon-color: #FBBF24;
-            --shadow-sm: 0 2px 4px rgba(0,0,0,0.3);
-            --shadow-md: 0 4px 15px rgba(0,0,0,0.5);
+            --pr-green: #4A6350;
+            --pr-gold: #D4B574;
+            --primary: #ff6b6b;
+            --bg-body: #111827;
+            --bg-card: #1f2937;
+            --bg-header: #1f2937;
+            --bg-search: #0f172a;
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --border-color: #374151;
+            --shadow-card: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+            --input-bg: #374151;
+            --input-border: #4b5563;
+            --theme-icon-color: #fbbf24;
         }
 
         body {
@@ -66,283 +68,292 @@
             margin: 0;
             background-color: var(--bg-body);
             color: var(--text-main);
-            display: flex;
-            flex-direction: column;
+            overflow-y: scroll;
             min-height: 100vh;
-            background-image: 
-                linear-gradient(var(--bg-body), var(--bg-body)),
-                url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
-            background-blend-mode: overlay;
         }
 
-        /* --- 2. HEADER --- */
-        .header-container {
-            background-color: var(--bg-header);
-            padding: 15px 40px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 3px solid var(--primary-light);
+        /* --- NAVBAR --- */
+        .navbar {
+            background: var(--bg-header);
+            padding: 15px 0;
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: var(--shadow-sm);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border-top: 4px solid var(--pr-green);
+            border-bottom: 1px solid var(--border-color);
         }
 
-        .brand-wrapper {
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
             display: flex;
             align-items: center;
             gap: 15px;
             text-decoration: none;
+            color: var(--text-main);
+            transition: opacity 0.2s;
             cursor: pointer;
         }
 
-        .header-logo {
-            width: 50px;
-            height: auto;
+        .logo:hover {
+            opacity: 0.85;
+        }
+
+        .logo img {
+            height: 60px;
             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
         }
 
-        .header-text {
-            display: flex;
-            flex-direction: column;
+        .logo-text h1 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--pr-green);
+            line-height: 1.1;
         }
 
-        .header-title {
-            font-size: 20px;
-            font-weight: 700;
-            color: var(--primary);
+        .logo-text p {
+            margin: 3px 0 0;
+            font-size: 14px;
+            color: var(--pr-gold);
+            font-weight: 500;
             letter-spacing: 0.5px;
-            text-transform: uppercase;
-            margin: 0;
-            line-height: 1.2;
         }
 
-        .header-subtitle {
-            font-size: 13px;
-            color: var(--text-muted);
-            font-weight: 400;
-        }
-
-        #btnThemeToggle {
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            color: var(--theme-icon-color);
-            padding: 8px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s;
-        }
-        #btnThemeToggle:hover { background: rgba(0,0,0,0.05); transform: scale(1.1); }
-        #btnThemeToggle svg { width: 22px; height: 22px; fill: currentColor; }
-
-        /* --- 3. HERO & SEARCH --- */
+        /* --- HERO SECTION --- */
         .hero-section {
-            background: var(--primary);
-            color: var(--bg-body);
-            text-align: center;
+            background: linear-gradient(135deg, var(--pr-green) 0%, #1e2b22 100%);
+            color: #fff;
             padding: 50px 20px 80px;
-            margin-bottom: 0;
+            text-align: center;
             position: relative;
-            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+            overflow: hidden;
+            border-bottom-left-radius: 30px;
+            border-bottom-right-radius: 30px;
+            box-shadow: 0 10px 30px rgba(46, 64, 51, 0.2);
         }
-        
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
         .hero-title {
-            font-size: 32px;
+            font-size: 34px;
             font-weight: 700;
             margin: 0;
-            letter-spacing: 1px;
-            text-transform: uppercase;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            position: relative;
+            z-index: 1;
         }
 
+        /* --- SEARCH SECTION --- */
         .search-wrapper {
-            padding: 0 20px;
-            margin-top: -50px;
+            margin-top: -40px;
             position: relative;
-            z-index: 10;
-            display: flex;
-            justify-content: center;
+            z-index: 100;
+            padding: 0 20px;
         }
 
         .search-box {
+            background: var(--bg-card);
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
             display: flex;
-            gap: 10px;
-            width: 100%;
+            gap: 12px;
             max-width: 900px;
-            background: var(--bg-search);
-            padding: 10px;
+            margin: 0 auto;
             border: 1px solid var(--border-color);
-            border-radius: 6px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            flex-wrap: wrap;
         }
 
-        .input-group { position: relative; flex: 1; }
+        .input-group {
+            position: relative;
+            flex: 1;
+            min-width: 200px;
+        }
+
         .input-group i {
-            position: absolute; left: 15px; top: 50%; transform: translateY(-50%);
-            color: var(--primary-light);
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--pr-gold);
             font-size: 16px;
         }
 
-        .search-input {
-            padding: 12px 15px 12px 40px;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            font-size: 15px;
-            font-family: 'Sarabun';
-            outline: none;
-            background: var(--input-bg);
-            color: var(--text-main);
+        .form-input {
             width: 100%;
-            height: 48px;
+            padding: 14px 15px 14px 45px;
+            border: 1px solid var(--input-border);
+            border-radius: 8px;
+            font-family: 'Sarabun';
+            font-size: 15px;
+            color: var(--text-main);
+            background: var(--input-bg);
         }
 
-        .search-input:focus {
-            border-color: var(--primary-light);
-            box-shadow: 0 0 0 2px rgba(82, 121, 111, 0.2);
+        .form-input:focus {
             background: var(--bg-card);
+            border-color: var(--pr-gold);
+            box-shadow: 0 0 0 3px rgba(197, 160, 89, 0.15);
         }
 
         .date-input {
-            text-align: center;
             cursor: pointer;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%23636E72' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='18' rx='2' ry='2'%3E%3C/rect%3E%3Cline x1='16' y1='2' x2='16' y2='6'%3E%3C/line%3E%3Cline x1='8' y1='2' x2='8' y2='6'%3E%3C/line%3E%3Cline x1='3' y1='10' x2='21' y2='10'%3E%3C/line%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: 15px center;
-            padding-left: 45px;
-            min-width: 180px;
+            text-align: left;
         }
 
-        [data-theme="dark"] .date-input {
-             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%23A0A0A0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='18' rx='2' ry='2'%3E%3C/rect%3E%3Cline x1='16' y1='2' x2='16' y2='6'%3E%3C/line%3E%3Cline x1='8' y1='2' x2='8' y2='6'%3E%3C/line%3E%3Cline x1='3' y1='10' x2='21' y2='10'%3E%3C/line%3E%3C/svg%3E");
-        }
-
-        .btn-clear {
-            padding: 0 25px;
-            height: 48px;
+        .btn-reset {
+            background: #FFF0F0;
             border: 1px solid var(--border-color);
-            background: transparent;
-            color: var(--text-muted);
-            border-radius: 4px;
+            color: var(--primary);
+            padding: 0 20px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 14px;
+            font-weight: 600;
             font-family: 'Sarabun';
-            font-weight: 600;
             white-space: nowrap;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .btn-clear:hover {
-            background: rgba(192, 57, 43, 0.1);
-            color: #c0392b;
-            border-color: #c0392b;
-        }
-
-        /* --- 4. GALLERY --- */
-        .gallery-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 40px 20px;
-            width: 100%;
-        }
-
-        .activity-section {
-            margin-bottom: 50px;
-            animation: fadeIn 0.5s ease-up;
-        }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        .activity-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid var(--border-color);
-        }
-
-        .activity-title {
-            font-size: 20px;
-            font-weight: 700;
-            color: var(--primary);
-            border-left: 5px solid var(--accent);
-            padding-left: 12px;
-            margin: 0;
-            line-height: 1.2;
-        }
-
-        .btn-download-zip {
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--primary);
-            background: transparent;
-            border: 1px solid var(--primary);
-            padding: 6px 16px;
-            border-radius: 4px;
-            text-decoration: none;
+            font-size: 14px;
             display: flex;
             align-items: center;
             gap: 6px;
-            cursor: pointer;
-            transition: all 0.2s;
         }
 
-        .btn-download-zip:hover {
-            background: var(--primary);
-            color: var(--bg-body);
-            transform: translateY(-2px);
+        .btn-reset:hover {
+            background: #FFDCDC;
+            transform: translateY(-1px);
         }
-        
-        [data-theme="dark"] .btn-download-zip:hover { color: #1E1E1E; }
+
+        /* --- GALLERY --- */
+        .content-area {
+            padding: 50px 0;
+            min-height: 50vh;
+        }
+
+        .activity-section {
+            margin-bottom: 60px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--pr-green);
+            position: relative;
+            padding-left: 15px;
+            margin: 0;
+        }
+
+        .section-title::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 4px;
+            bottom: 4px;
+            width: 5px;
+            background: var(--pr-gold);
+            border-radius: 4px;
+        }
+
+        .btn-zip {
+            background: var(--bg-card);
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            white-space: nowrap;
+            font-family: 'Sarabun';
+        }
+
+        .btn-zip:hover {
+            border-color: var(--pr-green);
+            color: var(--pr-green);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
 
         .photo-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
         }
 
         .photo-card {
             background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
+            border-radius: 12px;
             overflow: hidden;
             display: block;
             text-decoration: none;
-            transition: all 0.3s;
-            position: relative;
+            box-shadow: var(--shadow-card);
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
         }
 
         .photo-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-md);
-            border-color: var(--primary-light);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            border-color: var(--pr-gold);
         }
 
         .img-box {
             position: relative;
-            padding-top: 60%;
-            background: var(--input-bg);
+            width: 100%;
+            height: 200px;
+            background: var(--bg-search);
             overflow: hidden;
         }
 
         .img-box img {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
+            width: 100%;
+            height: 100%;
             object-fit: cover;
             transition: transform 0.6s ease, opacity 0.5s ease;
             opacity: 0;
         }
 
-        .img-box img.loaded { opacity: 1; }
-        .photo-card:hover .img-box img { transform: scale(1.05); }
+        .img-box img.loaded {
+            opacity: 1;
+        }
+
+        .photo-card:hover .img-box img {
+            transform: scale(1.08);
+        }
 
         .card-body {
-            padding: 12px 15px;
+            padding: 15px;
             border-top: 1px solid var(--border-color);
         }
 
@@ -355,124 +366,288 @@
             font-weight: 500;
         }
 
-        /* --- 5. UTILITIES --- */
-        .loader-spinner {
-            border: 3px solid var(--border-color);
-            border-top: 3px solid var(--primary);
-            border-radius: 50%;
-            width: 30px; height: 30px;
-            animation: spin 1s linear infinite;
-            margin: 20px auto;
+        .card-date i {
+            color: var(--pr-gold);
+        }
+
+        /* --- UTILITIES --- */
+        .loading-spinner {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-muted);
             display: none;
         }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        .loading-spinner i {
+            font-size: 30px;
+            color: var(--pr-green);
+            margin-bottom: 10px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
 
         .empty-state {
             text-align: center;
             padding: 60px 20px;
             color: var(--text-muted);
-            grid-column: 1 / -1;
             background: var(--bg-card);
-            border-radius: 8px;
+            border-radius: 12px;
             border: 1px dashed var(--border-color);
         }
-        .empty-state i { font-size: 40px; margin-bottom: 10px; opacity: 0.5; }
 
+        .empty-state i {
+            font-size: 48px;
+            color: #ccc;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        #scroll-sentinel {
+            height: 20px;
+            width: 100%;
+        }
+
+        /* --- BACK TO TOP --- */
         #btnBackToTop {
             position: fixed;
-            bottom: 30px; right: 30px;
-            width: 45px; height: 45px;
-            background: var(--primary);
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--pr-green);
             color: #fff;
             border: none;
-            border-radius: 4px;
+            border-radius: 50%;
             cursor: pointer;
             display: none;
             align-items: center;
             justify-content: center;
-            font-size: 20px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 15px rgba(46, 64, 51, 0.4);
             z-index: 999;
-            transition: transform 0.2s;
+            font-size: 20px;
         }
-        #btnBackToTop:hover { transform: scale(1.1); background: var(--primary-light); }
 
-        #scroll-sentinel { height: 20px; width: 100%; }
+        #btnBackToTop:hover {
+            transform: scale(1.1) translateY(-3px);
+            background: var(--pr-gold);
+        }
 
-        /* 🔥 Flatpickr Dark Mode Fixes */
-        [data-theme="dark"] .flatpickr-calendar { background: #1f2937; border: 1px solid #374151; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); }
-        [data-theme="dark"] .flatpickr-months, [data-theme="dark"] .flatpickr-month, [data-theme="dark"] .flatpickr-current-month, [data-theme="dark"] .flatpickr-current-month .flatpickr-monthDropdown-months, [data-theme="dark"] .flatpickr-current-month .numInputWrapper, [data-theme="dark"] .flatpickr-current-month input.cur-year, [data-theme="dark"] .flatpickr-monthDropdown-months, [data-theme="dark"] .flatpickr-monthDropdown-month, [data-theme="dark"] select.flatpickr-monthDropdown-months, [data-theme="dark"] .flatpickr-monthDropdown-months option, [data-theme="dark"] .flatpickr-weekdays, [data-theme="dark"] .flatpickr-weekday, [data-theme="dark"] .flatpickr-days { background: #1f2937 !important; color: #f3f4f6 !important; border-color: #4b5563; }
-        [data-theme="dark"] .flatpickr-day { color: #f3f4f6; }
-        [data-theme="dark"] .flatpickr-day:hover { background: #374151 !important; border-color: #4b5563 !important; }
-        [data-theme="dark"] .flatpickr-day.selected, [data-theme="dark"] .flatpickr-day.selected:hover { background: var(--primary) !important; border-color: var(--primary) !important; color: white !important; }
-        .flatpickr-day.selected { background: var(--primary) !important; border-color: var(--primary) !important; }
+        /* --- THEME TOGGLE --- */
+        #btnThemeToggle {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            color: var(--text-muted);
+            padding: 8px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+        }
 
-        /* 🔥 Download Button (Lightbox) */
+        #btnThemeToggle:hover {
+            background: rgba(0,0,0,0.05);
+            color: var(--pr-green);
+        }
+
+        [data-theme="dark"] #btnThemeToggle:hover {
+            background: rgba(255,255,255,0.1);
+            color: var(--pr-gold);
+        }
+
+        /* --- LIGHTBOX DOWNLOAD BUTTON --- */
         .sl-download-btn {
-            position: fixed; bottom: 20px; right: 20px;
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
             z-index: 2147483647 !important;
-            background: var(--primary);
+            background: var(--pr-green);
             color: white;
-            padding: 10px 24px;
-            border-radius: 4px;
-            font-family: 'Sarabun'; font-weight: 600; font-size: 14px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-            display: flex; align-items: center; gap: 8px;
-            border: 1px solid rgba(255,255,255,0.2);
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-family: 'Sarabun';
+            font-weight: 700;
+            font-size: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border: none;
             cursor: pointer;
             transition: all 0.2s;
         }
-        .sl-download-btn:hover { transform: translateY(-2px); background: var(--primary-light); }
-        .sl-download-btn:disabled { opacity: 0.7; cursor: not-allowed; }
-        .sl-download-btn svg { width: 18px; height: 18px; }
 
-        /* 📱 Mobile Responsive */
+        .sl-download-btn:hover {
+            background: var(--pr-gold);
+            transform: scale(1.05) translateY(-2px);
+        }
+
+        .sl-download-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        /* --- FLATPICKR STYLING --- */
+        .flatpickr-day.selected {
+            background: var(--pr-green) !important;
+            border-color: var(--pr-green) !important;
+        }
+
+        .flatpickr-day:hover {
+            background: var(--pr-gold) !important;
+            border-color: var(--pr-gold) !important;
+        }
+
+        /* Dark Mode Flatpickr */
+        [data-theme="dark"] .flatpickr-calendar {
+            background: #1f2937;
+            border: 1px solid #374151;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        [data-theme="dark"] .flatpickr-months,
+        [data-theme="dark"] .flatpickr-month,
+        [data-theme="dark"] .flatpickr-current-month,
+        [data-theme="dark"] .flatpickr-weekdays,
+        [data-theme="dark"] .flatpickr-days {
+            background: #1f2937 !important;
+        }
+
+        [data-theme="dark"] .flatpickr-day {
+            color: #f3f4f6;
+        }
+
+        [data-theme="dark"] .flatpickr-current-month input.cur-year,
+        [data-theme="dark"] .flatpickr-monthDropdown-months {
+            background: #1f2937 !important;
+            color: #f3f4f6 !important;
+        }
+
+        /* --- MOBILE RESPONSIVE --- */
         @media (max-width: 768px) {
-            .header-container { padding: 15px 20px; flex-direction: column; align-items: stretch; gap: 15px; text-align: center; }
-            .brand-wrapper { justify-content: center; }
-            .header-text { text-align: center; }
-            .header-logo { width: 45px; }
-            .header-title { font-size: 18px; }
-            .header-subtitle { display: none; }
-            
-            .hero-section { padding: 30px 20px 60px; }
-            .hero-title { font-size: 24px; }
-            
-            .search-box { flex-direction: column; padding: 15px; gap: 10px; margin: 0 10px; }
-            .btn-reset { width: 100%; padding: 12px; }
-            
-            .photo-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-            .activity-header { flex-direction: column; align-items: flex-start; gap: 10px; border-bottom: none; }
-            .activity-title { font-size: 18px; border-bottom: 2px solid var(--border-color); width: 100%; padding-bottom: 5px; }
-            .btn-download-zip { width: 100%; justify-content: center; background: var(--primary); color: white; margin-top: 0; }
-            
+            .navbar {
+                padding: 12px 0;
+            }
+
+            .logo img {
+                height: 50px;
+            }
+
+            .logo-text h1 {
+                font-size: 20px;
+            }
+
+            .logo-text p {
+                font-size: 12px;
+            }
+
+            .hero-section {
+                padding: 40px 20px 70px;
+                border-radius: 0 0 20px 20px;
+            }
+
+            .hero-title {
+                font-size: 26px;
+            }
+
+            .search-wrapper {
+                margin-top: -35px;
+            }
+
+            .search-box {
+                flex-direction: column;
+                gap: 10px;
+                padding: 12px;
+            }
+
+            .input-group {
+                width: 100%;
+                min-width: 0;
+            }
+
+            .btn-reset {
+                width: 100%;
+                justify-content: center;
+                padding: 12px;
+            }
+
+            .photo-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+
+            .img-box {
+                height: 140px;
+            }
+
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+            .btn-zip {
+                width: 100%;
+                justify-content: center;
+            }
+
+            #btnBackToTop {
+                bottom: 20px;
+                right: 20px;
+                width: 45px;
+                height: 45px;
+                font-size: 18px;
+            }
+
             .sl-download-btn {
-                right: auto !important; top: auto !important; position: fixed !important; bottom: 80px !important;
-                left: 0 !important; right: 0 !important; margin-left: auto !important; margin-right: auto !important;
-                width: fit-content !important; min-width: 140px; justify-content: center;
+                bottom: 80px !important;
+                left: 50% !important;
+                right: auto !important;
+                transform: translateX(-50%) !important;
+                padding: 10px 25px !important;
+            }
+
+            .sl-download-btn:hover {
+                transform: translateX(-50%) scale(1.05) !important;
             }
         }
+
         @media (max-width: 480px) {
-            .photo-grid { grid-template-columns: 1fr; }
+            .photo-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .logo-text p {
+                display: none;
+            }
         }
     </style>
 </head>
 
 <body>
 
-    <header class="header-container">
-        <a href="login.html" class="brand-wrapper" title="เข้าสู่ระบบเจ้าหน้าที่">
-            <img src="Royal_Thai_Army_3_Logo.png" alt="ทภ.3" class="header-logo" onerror="this.style.display='none'">
-            <div class="header-text">
-                <span class="header-title">ข่าวประชาสัมพันธ์ ทภ.3</span>
-                <span class="header-subtitle">กองทัพภาคที่ 3 (Third Army Area)</span>
-            </div>
-        </a>
-        <div class="header-actions">
-            <button id="btnThemeToggle" onclick="toggleTheme()" title="เปลี่ยนธีม">
+    <nav class="navbar">
+        <div class="container nav-content">
+            <a href="login.html" class="logo" title="เข้าสู่ระบบเจ้าหน้าที่">
+                <img src="Royal_Thai_Army_3_Logo.png" alt="Logo ทภ.3" onerror="this.style.display='none'">
+                <div class="logo-text">
+                    <h1>ศูนย์ประชาสัมพันธ์</h1>
+                    <p>กองทัพภาคที่ 3</p>
+                </div>
+            </a>
+            <div class="header-actions">
+                <button id="btnThemeToggle" onclick="toggleTheme()" title="เปลี่ยนธีม">
+                    <i class="fas fa-moon"></i>
                 </button>
+            </div>
         </div>
-    </header>
+    </nav>
 
     <section class="hero-section">
         <div class="container">
@@ -484,29 +659,36 @@
         <div class="search-box">
             <div class="input-group">
                 <i class="fas fa-search"></i>
-                <input type="text" id="searchInput" class="search-input" placeholder="ค้นหาชื่อกิจกรรม..." onkeyup="debouncedSearch()">
+                <input type="text" id="searchInput" class="form-input" placeholder="ค้นหาข่าวกิจกรรม..." onkeyup="debouncedSearch()">
             </div>
             <div class="input-group">
                 <i class="far fa-calendar-alt"></i>
-                <input type="text" id="dateRange" class="search-input date-input" placeholder="เลือกช่วงเวลา...">
+                <input type="text" id="dateRange" class="form-input date-input" placeholder="ช่วงเวลา...">
             </div>
-            <button onclick="resetFilter()" class="btn-clear">
+            <button onclick="resetFilter()" class="btn-reset">
                 <i class="fas fa-eraser"></i> ล้างค่า
             </button>
         </div>
     </div>
 
-    <div id="gallery" class="gallery-container"></div>
-    <div id="scroll-sentinel"></div>
-    <div id="loader" class="loader-spinner"></div>
+    <div class="container content-area">
+        <div id="gallery-container"></div>
 
-    <button id="btnBackToTop" onclick="scrollToTop()" title="กลับขึ้นข้างบน">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
+        <div id="loading" class="loading-spinner">
+            <i class="fas fa-spinner"></i>
+            <p>กำลังโหลดข้อมูล...</p>
+        </div>
+
+        <div id="scroll-sentinel"></div>
+    </div>
+
+    <button id="btnBackToTop" onclick="scrollToTop()">
+        <i class="fas fa-arrow-up"></i>
     </button>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/simplelightbox/2.14.2/simple-lightbox.min.js"></script>
     <script>
-        // --- 1. CONFIG & STATE ---
+        // --- CONFIG & STATE ---
         let allPhotos = [];
         let filteredPhotos = [];
         let currentDisplayCount = 0;
@@ -515,27 +697,34 @@
         let isLoading = false;
         let searchTimeout;
 
-        // --- 2. HELPERS ---
+        // --- HELPERS ---
         function escapeHtml(text) {
             if (!text) return "";
-            return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
         }
+
         function safeStr(str) {
             if (!str) return "";
             return str.replace(/'/g, "\\'").replace(/"/g, '&quot;');
         }
+
         function getThumbnailUrl(url) {
             if (!url) return '';
-            if (url.includes('cloudinary.com')) return url.replace('/upload/', '/upload/w_500,c_scale,q_auto,f_auto/');
+            if (url.includes('cloudinary.com')) {
+                return url.replace('/upload/', '/upload/w_500,c_scale,q_auto,f_auto/');
+            }
             return url;
         }
 
-        // --- 3. THEME ---
+        // --- THEME TOGGLE ---
         function initTheme() {
             const savedTheme = localStorage.getItem('theme') || 'light';
             document.documentElement.setAttribute('data-theme', savedTheme);
             updateThemeIcon(savedTheme);
         }
+
         function toggleTheme() {
             const current = document.documentElement.getAttribute('data-theme');
             const target = current === 'light' ? 'dark' : 'light';
@@ -543,24 +732,52 @@
             localStorage.setItem('theme', target);
             updateThemeIcon(target);
         }
+
         function updateThemeIcon(theme) {
             const btn = document.getElementById('btnThemeToggle');
-            btn.innerHTML = theme === 'light' 
-                ? '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>'
-                : '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>';
+            const icon = theme === 'light' 
+                ? '<i class="fas fa-moon"></i>'
+                : '<i class="fas fa-sun"></i>';
+            btn.innerHTML = icon;
         }
+
         initTheme();
 
-        // --- 4. PICKER ---
+        // --- DATE PICKER ---
         const datePicker = flatpickr("#dateRange", {
-            mode: "range", dateFormat: "d/m/Y", locale: "th", disableMobile: "true",
-            onChange: function (dates) { selectedDates = dates; resetAndFetch(); }
+            mode: "range",
+            dateFormat: "d/m/Y",
+            locale: "th",
+            disableMobile: "true",
+            monthSelectorType: "dropdown",
+            formatDate: (date, format, locale) => {
+                const buddhistYear = date.getFullYear() + 543;
+                return flatpickr.formatDate(date, format, locale).replace(date.getFullYear(), buddhistYear);
+            },
+            onChange: function (dates) {
+                selectedDates = dates;
+                resetAndFetch();
+            }
         });
 
-        // --- 5. FETCH ---
+        // --- SCROLL HANDLER ---
+        window.onscroll = function () {
+            const btn = document.getElementById("btnBackToTop");
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                btn.style.display = "flex";
+            } else {
+                btn.style.display = "none";
+            }
+        };
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // --- FETCH DATA ---
         async function fetchPhotos() {
             try {
-                document.getElementById('loader').style.display = 'block';
+                document.getElementById('loading').style.display = 'block';
                 const response = await fetch('/public/photos?limit=500&t=' + Date.now());
                 if (!response.ok) throw new Error('Network Error');
                 allPhotos = await response.json();
@@ -568,16 +785,16 @@
                 resetGallery();
             } catch (error) {
                 console.error("Fetch Error:", error);
-                document.getElementById('gallery').innerHTML = `
+                document.getElementById('gallery-container').innerHTML = `
                     <div class="empty-state">
                         <i class="fas fa-wifi"></i>
                         <p>ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้</p>
                     </div>`;
-                document.getElementById('loader').style.display = 'none';
+                document.getElementById('loading').style.display = 'none';
             }
         }
 
-        // --- 6. LOGIC ---
+        // --- SEARCH & FILTER ---
         function debouncedSearch() {
             clearTimeout(searchTimeout);
             searchTimeout = setTimeout(() => { resetAndFetch(); }, 400);
@@ -586,12 +803,14 @@
         function resetAndFetch() {
             const keyword = document.getElementById('searchInput').value.toLowerCase();
             filteredPhotos = allPhotos.filter(photo => {
-                const matchName = (photo.filename || '').toLowerCase().includes(keyword) || (photo.activity || '').toLowerCase().includes(keyword);
+                const matchName = (photo.filename || '').toLowerCase().includes(keyword) || 
+                                  (photo.activity || '').toLowerCase().includes(keyword);
                 let matchDate = true;
                 if (selectedDates.length > 0) {
                     const photoDate = new Date(photo.date).setHours(0, 0, 0, 0);
                     const startDate = new Date(selectedDates[0]).setHours(0, 0, 0, 0);
-                    const endDate = (selectedDates.length > 1) ? new Date(selectedDates[1]).setHours(23, 59, 59, 999) : startDate;
+                    const endDate = (selectedDates.length > 1) ? 
+                                    new Date(selectedDates[1]).setHours(23, 59, 59, 999) : startDate;
                     matchDate = (photoDate >= startDate && photoDate <= endDate);
                 }
                 return matchName && matchDate;
@@ -606,16 +825,18 @@
             resetAndFetch();
         }
 
+        // --- RENDER GALLERY ---
         function resetGallery() {
-            document.getElementById('gallery').innerHTML = '';
+            document.getElementById('gallery-container').innerHTML = '';
             currentDisplayCount = 0;
+            document.getElementById('loading').style.display = 'none';
+            
             if (filteredPhotos.length === 0) {
-                document.getElementById('gallery').innerHTML = `
+                document.getElementById('gallery-container').innerHTML = `
                     <div class="empty-state">
                         <i class="fas fa-search"></i>
                         <p>ไม่พบข้อมูลที่ค้นหา</p>
                     </div>`;
-                document.getElementById('loader').style.display = 'none';
             } else {
                 loadMore();
             }
@@ -624,19 +845,19 @@
         function loadMore() {
             if (isLoading) return;
             isLoading = true;
-            document.getElementById('loader').style.display = 'block';
+            document.getElementById('loading').style.display = 'block';
 
             setTimeout(() => {
-                const container = document.getElementById('gallery');
+                const container = document.getElementById('gallery-container');
                 const nextPhotos = filteredPhotos.slice(currentDisplayCount, currentDisplayCount + ITEMS_PER_PAGE);
 
                 if (nextPhotos.length === 0) {
-                    document.getElementById('loader').style.display = 'none';
+                    document.getElementById('loading').style.display = 'none';
                     isLoading = false;
                     return;
                 }
 
-                // Group
+                // Group by Activity
                 const groupedPhotos = {};
                 nextPhotos.forEach(photo => {
                     const activityName = photo.activity || 'กิจกรรมทั่วไป';
@@ -644,9 +865,9 @@
                     groupedPhotos[activityName].push(photo);
                 });
 
-                // Render
+                // Create Sections
                 for (const [activityName, activityPhotos] of Object.entries(groupedPhotos)) {
-                    const safeId = 'sec-' + btoa(unescape(encodeURIComponent(activityName))).replace(/[^a-zA-Z0-9]/g, ''); 
+                    const safeId = 'sec-' + btoa(unescape(encodeURIComponent(activityName))).replace(/[^a-zA-Z0-9]/g, '');
                     let section = document.getElementById(safeId);
                     let grid;
 
@@ -656,11 +877,10 @@
                         section.id = safeId;
                         
                         section.innerHTML = `
-                            <div class="activity-header">
-                                <h2 class="activity-title">${escapeHtml(activityName)}</h2>
-                                <button onclick="downloadZip('${safeStr(activityName)}')" class="btn-download-zip">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                                    ดาวน์โหลด ZIP
+                            <div class="section-header">
+                                <div class="section-title">${escapeHtml(activityName)}</div>
+                                <button onclick="downloadZip('${safeStr(activityName)}')" class="btn-zip">
+                                    <i class="fas fa-download"></i> โหลด ZIP
                                 </button>
                             </div>
                             <div class="photo-grid"></div>
@@ -671,7 +891,9 @@
 
                     activityPhotos.forEach(photo => {
                         const rawName = photo.filename || "";
-                        const dateStr = new Date(photo.date).toLocaleDateString('th-TH', { day: 'numeric', month: 'short', year: '2-digit' });
+                        const dateStr = new Date(photo.date).toLocaleDateString('th-TH', { 
+                            day: 'numeric', month: 'short', year: '2-digit' 
+                        });
                         const thumbUrl = getThumbnailUrl(photo.url);
                         const originalUrl = photo.original_url || photo.url;
 
@@ -681,14 +903,13 @@
 
                         card.innerHTML = `
                             <div class="img-box">
-                                <img src="${thumbUrl}" alt="${escapeHtml(rawName)}" loading="lazy" 
+                                <img src="${thumbUrl}" alt="${escapeHtml(rawName)}" loading="lazy"
                                      onload="this.classList.add('loaded')"
-                                     onerror="this.src='https://via.placeholder.com/500x300?text=No+Image'">
+                                     onerror="this.src='https://via.placeholder.com/500x300/2E4033/ffffff?text=No+Image'">
                             </div>
                             <div class="card-body">
                                 <div class="card-date">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                                    ${dateStr}
+                                    <i class="far fa-calendar"></i> ${dateStr}
                                 </div>
                             </div>
                         `;
@@ -697,91 +918,119 @@
                 }
 
                 currentDisplayCount += nextPhotos.length;
-                document.getElementById('loader').style.display = 'none';
+                document.getElementById('loading').style.display = 'none';
                 isLoading = false;
 
-                // Refresh Lightbox
-                document.querySelectorAll('.photo-grid').forEach(g => {
-                    if (g.lightboxInstance) {
-                        g.lightboxInstance.refresh();
-                    } else {
-                        g.lightboxInstance = new SimpleLightbox(g.querySelectorAll('a'), {
-                            captionsData: 'alt', captionDelay: 250, animationSpeed: 200,
-                            close: true, showCounter: true,
-                        });
-                        
-                        g.lightboxInstance.on('shown.simplelightbox', function() {
+                // Init Lightbox
+                initLightboxes();
+
+            }, 300);
+        }
+
+        function initLightboxes() {
+            const grids = document.querySelectorAll('.photo-grid');
+            grids.forEach(grid => {
+                if (grid.lightboxInstance) {
+                    grid.lightboxInstance.refresh();
+                } else {
+                    grid.lightboxInstance = new SimpleLightbox(grid.querySelectorAll('a'), {
+                        captionsData: 'alt',
+                        captionDelay: 250,
+                        animationSpeed: 200,
+                        showCounter: true,
+                    });
+
+                    // Download Button
+                    const updateDownloadButton = () => {
+                        setTimeout(() => {
                             const img = document.querySelector('.sl-image img');
-                            if(!img) return;
-                            
+                            if (!img) return;
+
                             let btn = document.querySelector('.sl-download-btn');
-                            if(!btn) {
+                            if (!btn) {
                                 btn = document.createElement('button');
                                 btn.className = 'sl-download-btn';
-                                btn.innerHTML = `
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                                    Download
-                                `;
+                                btn.innerHTML = '<i class="fas fa-download"></i> ดาวน์โหลดรูปนี้';
                                 btn.onclick = async function(e) {
+                                    e.preventDefault();
                                     e.stopPropagation();
-                                    const a = document.createElement('a');
-                                    a.href = img.src;
-                                    a.download = 'photo.jpg';
-                                    document.body.appendChild(a);
-                                    a.click();
-                                    document.body.removeChild(a);
+                                    
+                                    const imageUrl = img.src;
+                                    const fileName = imageUrl.split('/').pop().split('?')[0] || 'photo.jpg';
+                                    
+                                    try {
+                                        const originalHTML = btn.innerHTML;
+                                        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> กำลังโหลด...';
+                                        btn.disabled = true;
+                                        
+                                        const response = await fetch(imageUrl);
+                                        const blob = await response.blob();
+                                        const blobUrl = window.URL.createObjectURL(blob);
+                                        
+                                        const a = document.createElement('a');
+                                        a.href = blobUrl;
+                                        a.download = fileName;
+                                        document.body.appendChild(a);
+                                        a.click();
+                                        document.body.removeChild(a);
+                                        window.URL.revokeObjectURL(blobUrl);
+                                        
+                                        btn.innerHTML = originalHTML;
+                                        btn.disabled = false;
+                                    } catch (error) {
+                                        console.error('Download failed:', error);
+                                        alert('ไม่สามารถดาวน์โหลดได้ กรุณาลองใหม่อีกครั้ง');
+                                        btn.innerHTML = '<i class="fas fa-download"></i> ดาวน์โหลดรูปนี้';
+                                        btn.disabled = false;
+                                    }
                                 };
                                 document.body.appendChild(btn);
                             }
                             btn.style.display = 'flex';
-                        });
+                        }, 100);
+                    };
 
-                        g.lightboxInstance.on('close.simplelightbox', function() {
-                             const btn = document.querySelector('.sl-download-btn');
-                             if(btn) btn.style.display = 'none';
-                        });
-                    }
-                });
-
-            }, 200);
+                    grid.lightboxInstance.on('shown.simplelightbox', updateDownloadButton);
+                    grid.lightboxInstance.on('changed.simplelightbox', updateDownloadButton);
+                    grid.lightboxInstance.on('close.simplelightbox', function() {
+                        const btn = document.querySelector('.sl-download-btn');
+                        if (btn) btn.style.display = 'none';
+                    });
+                }
+            });
         }
 
-        // --- 7. SMART DOWNLOAD ---
+        // --- SMART DOWNLOAD ---
         function downloadZip(activityName) {
             let url = `/download-zip/${encodeURIComponent(activityName)}`;
             const ua = navigator.userAgent || navigator.vendor || window.opera;
+            
             if (/Line/i.test(ua)) {
                 url += (url.indexOf('?') === -1 ? '?' : '&') + 'openExternalBrowser=1';
-            } else if (/FBAN|FBAV|Instagram/i.test(ua)) {
-                alert('⚠️ กรุณากดปุ่ม 3 จุดมุมขวาบน แล้วเลือก "เปิดในเบราว์เซอร์" เพื่อดาวน์โหลด');
+                window.location.href = url;
                 return;
             }
+            
+            if (/FBAN|FBAV|Instagram/i.test(ua)) {
+                alert('⚠️ แอปนี้บล็อกการดาวน์โหลดไฟล์\n\n1. กดที่จุด 3 จุดมุมขวาบน (...)\n2. เลือก "เปิดในเบราว์เซอร์" (Open in Browser/Chrome/Safari)\n3. กดดาวน์โหลดอีกครั้งครับ');
+                return;
+            }
+            
             window.location.href = url;
         }
 
-        // --- 8. OBSERVER & SCROLL ---
+        // --- OBSERVER ---
         const observer = new IntersectionObserver((entries) => {
             if (entries[0].isIntersecting && !isLoading && currentDisplayCount < filteredPhotos.length) {
                 loadMore();
             }
         }, { rootMargin: '200px' });
+
         observer.observe(document.getElementById('scroll-sentinel'));
 
-        window.onscroll = function () {
-            const btn = document.getElementById("btnBackToTop");
-            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
-                btn.style.display = "flex";
-            } else {
-                btn.style.display = "none";
-            }
-        };
-
-        function scrollToTop() {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        // Start
+        // --- START ---
         fetchPhotos();
     </script>
+
 </body>
 </html>
