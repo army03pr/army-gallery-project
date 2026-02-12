@@ -70,6 +70,7 @@
             color: var(--text-main);
             overflow-y: scroll;
             min-height: 100vh;
+            background-image: url('https://www.transparenttextures.com/patterns/subtle-white-feathers.png');
         }
 
         /* --- NAVBAR --- */
@@ -131,7 +132,7 @@
             letter-spacing: 0.5px;
         }
 
-        /* --- HERO SECTION --- */
+        /* --- HERO SECTION (Sharp Corners) --- */
         .hero-section {
             background: linear-gradient(135deg, var(--pr-green) 0%, #1e2b22 100%);
             color: #fff;
@@ -139,8 +140,6 @@
             text-align: center;
             position: relative;
             overflow: hidden;
-            border-bottom-left-radius: 30px;
-            border-bottom-right-radius: 30px;
             box-shadow: 0 10px 30px rgba(46, 64, 51, 0.2);
         }
 
@@ -549,7 +548,6 @@
 
             .hero-section {
                 padding: 40px 20px 70px;
-                border-radius: 0 0 20px 20px;
             }
 
             .hero-title {
@@ -927,83 +925,90 @@
             }, 300);
         }
 
-        // Global lightbox instance for all photos
-        let globalLightbox = null;
+        // Store lightbox instances per grid
+        const lightboxInstances = new Map();
 
         function initLightboxes() {
-            // Destroy old instance if exists
-            if (globalLightbox) {
-                globalLightbox.destroy();
-            }
-
-            // Get ALL photo links from ALL grids
-            const allLinks = document.querySelectorAll('.photo-grid a');
+            const grids = document.querySelectorAll('.photo-grid');
             
-            if (allLinks.length === 0) return;
+            grids.forEach(grid => {
+                const gridId = grid.closest('.activity-section')?.id || 'default';
+                
+                // Destroy old instance if exists
+                if (lightboxInstances.has(gridId)) {
+                    lightboxInstances.get(gridId).destroy();
+                }
 
-            // Create ONE global lightbox for all photos
-            globalLightbox = new SimpleLightbox(allLinks, {
-                captionsData: 'alt',
-                captionDelay: 250,
-                animationSpeed: 200,
-                showCounter: true,
-            });
+                // Get links only from this grid
+                const links = grid.querySelectorAll('a');
+                if (links.length === 0) return;
 
-            // Download Button
-            const updateDownloadButton = () => {
-                setTimeout(() => {
-                    const img = document.querySelector('.sl-image img');
-                    if (!img) return;
+                // Create lightbox for this specific grid
+                const lightbox = new SimpleLightbox(links, {
+                    captionsData: 'alt',
+                    captionDelay: 250,
+                    animationSpeed: 200,
+                    showCounter: true,
+                });
 
-                    let btn = document.querySelector('.sl-download-btn');
-                    if (!btn) {
-                        btn = document.createElement('button');
-                        btn.className = 'sl-download-btn';
-                        btn.innerHTML = '<i class="fas fa-download"></i> ดาวน์โหลดรูปนี้';
-                        btn.onclick = async function(e) {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            
-                            const imageUrl = img.src;
-                            const fileName = imageUrl.split('/').pop().split('?')[0] || 'photo.jpg';
-                            
-                            try {
-                                const originalHTML = btn.innerHTML;
-                                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> กำลังโหลด...';
-                                btn.disabled = true;
+                lightboxInstances.set(gridId, lightbox);
+
+                // Download Button
+                const updateDownloadButton = () => {
+                    setTimeout(() => {
+                        const img = document.querySelector('.sl-image img');
+                        if (!img) return;
+
+                        let btn = document.querySelector('.sl-download-btn');
+                        if (!btn) {
+                            btn = document.createElement('button');
+                            btn.className = 'sl-download-btn';
+                            btn.innerHTML = '<i class="fas fa-download"></i> ดาวน์โหลดรูปนี้';
+                            btn.onclick = async function(e) {
+                                e.preventDefault();
+                                e.stopPropagation();
                                 
-                                const response = await fetch(imageUrl);
-                                const blob = await response.blob();
-                                const blobUrl = window.URL.createObjectURL(blob);
+                                const imageUrl = img.src;
+                                const fileName = imageUrl.split('/').pop().split('?')[0] || 'photo.jpg';
                                 
-                                const a = document.createElement('a');
-                                a.href = blobUrl;
-                                a.download = fileName;
-                                document.body.appendChild(a);
-                                a.click();
-                                document.body.removeChild(a);
-                                window.URL.revokeObjectURL(blobUrl);
-                                
-                                btn.innerHTML = originalHTML;
-                                btn.disabled = false;
-                            } catch (error) {
-                                console.error('Download failed:', error);
-                                alert('ไม่สามารถดาวน์โหลดได้ กรุณาลองใหม่อีกครั้ง');
-                                btn.innerHTML = '<i class="fas fa-download"></i> ดาวน์โหลดรูปนี้';
-                                btn.disabled = false;
-                            }
-                        };
-                        document.body.appendChild(btn);
-                    }
-                    btn.style.display = 'flex';
-                }, 100);
-            };
+                                try {
+                                    const originalHTML = btn.innerHTML;
+                                    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> กำลังโหลด...';
+                                    btn.disabled = true;
+                                    
+                                    const response = await fetch(imageUrl);
+                                    const blob = await response.blob();
+                                    const blobUrl = window.URL.createObjectURL(blob);
+                                    
+                                    const a = document.createElement('a');
+                                    a.href = blobUrl;
+                                    a.download = fileName;
+                                    document.body.appendChild(a);
+                                    a.click();
+                                    document.body.removeChild(a);
+                                    window.URL.revokeObjectURL(blobUrl);
+                                    
+                                    btn.innerHTML = originalHTML;
+                                    btn.disabled = false;
+                                } catch (error) {
+                                    console.error('Download failed:', error);
+                                    alert('ไม่สามารถดาวน์โหลดได้ กรุณาลองใหม่อีกครั้ง');
+                                    btn.innerHTML = '<i class="fas fa-download"></i> ดาวน์โหลดรูปนี้';
+                                    btn.disabled = false;
+                                }
+                            };
+                            document.body.appendChild(btn);
+                        }
+                        btn.style.display = 'flex';
+                    }, 100);
+                };
 
-            globalLightbox.on('shown.simplelightbox', updateDownloadButton);
-            globalLightbox.on('changed.simplelightbox', updateDownloadButton);
-            globalLightbox.on('close.simplelightbox', function() {
-                const btn = document.querySelector('.sl-download-btn');
-                if (btn) btn.style.display = 'none';
+                lightbox.on('shown.simplelightbox', updateDownloadButton);
+                lightbox.on('changed.simplelightbox', updateDownloadButton);
+                lightbox.on('close.simplelightbox', function() {
+                    const btn = document.querySelector('.sl-download-btn');
+                    if (btn) btn.style.display = 'none';
+                });
             });
         }
 
