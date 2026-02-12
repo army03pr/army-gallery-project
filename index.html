@@ -91,6 +91,12 @@
             padding: 0 20px;
         }
 
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 14px;
+            }
+        }
+
         .nav-content {
             display: flex;
             justify-content: space-between;
@@ -622,36 +628,37 @@
         /* --- MOBILE RESPONSIVE --- */
         @media (max-width: 768px) {
             .navbar {
-                padding: 12px 0;
+                padding: 10px 0;
             }
 
             .logo img {
-                height: 50px;
+                height: 44px;
             }
 
             .logo-text h1 {
-                font-size: 20px;
+                font-size: 18px;
             }
 
             .logo-text p {
-                font-size: 12px;
+                font-size: 11px;
             }
 
             .hero-section {
-                padding: 40px 20px 70px;
+                padding: 30px 16px 60px;
             }
 
             .hero-title {
-                font-size: 26px;
+                font-size: 22px;
             }
 
             .search-wrapper {
-                margin-top: -35px;
+                margin-top: -30px;
+                padding: 0 12px;
             }
 
             .search-box {
                 flex-direction: column;
-                gap: 10px;
+                gap: 8px;
                 padding: 12px;
             }
 
@@ -660,38 +667,81 @@
                 min-width: 0;
             }
 
+            .form-input {
+                padding: 12px 12px 12px 40px;
+                font-size: 14px;
+            }
+
             .btn-reset {
                 width: 100%;
                 justify-content: center;
                 padding: 12px;
+                font-size: 14px;
+            }
+
+            /* Content area tighter on mobile */
+            .content-area {
+                padding: 30px 0;
+            }
+
+            .activity-section {
+                margin-bottom: 36px;
+            }
+
+            /* Section header stacks nicely */
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+                margin-bottom: 16px;
+            }
+
+            /* Title wraps properly, no overflow */
+            .section-title {
+                font-size: 17px;
+                line-height: 1.4;
+                word-break: break-word;
+                padding-left: 12px;
+            }
+
+            .section-title::before {
+                top: 3px;
+                bottom: 3px;
+                width: 4px;
+            }
+
+            /* ZIP button — compact, not full width */
+            .btn-zip {
+                width: auto;
+                align-self: flex-start;
+                padding: 8px 16px;
+                font-size: 13px;
+                border-radius: 20px;
             }
 
             .photo-grid {
                 grid-template-columns: repeat(2, 1fr);
-                gap: 12px;
+                gap: 10px;
             }
 
             .img-box {
-                height: 140px;
+                height: 130px;
             }
 
-            .section-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 12px;
+            .card-body {
+                padding: 10px 12px;
             }
 
-            .btn-zip {
-                width: 100%;
-                justify-content: center;
+            .card-date {
+                font-size: 12px;
             }
 
             #btnBackToTop {
                 bottom: 20px;
-                right: 20px;
-                width: 45px;
-                height: 45px;
-                font-size: 18px;
+                right: 16px;
+                width: 42px;
+                height: 42px;
+                font-size: 16px;
             }
 
             .sl-download-btn {
@@ -699,7 +749,8 @@
                 left: 50% !important;
                 right: auto !important;
                 transform: translateX(-50%) !important;
-                padding: 10px 25px !important;
+                padding: 10px 22px !important;
+                font-size: 14px !important;
             }
 
             .sl-download-btn:hover {
@@ -709,11 +760,20 @@
 
         @media (max-width: 480px) {
             .photo-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+            }
+
+            .img-box {
+                height: 115px;
             }
 
             .logo-text p {
                 display: none;
+            }
+
+            .section-title {
+                font-size: 16px;
             }
         }
     </style>
