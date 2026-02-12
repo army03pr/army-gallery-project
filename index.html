@@ -927,76 +927,83 @@
             }, 300);
         }
 
+        // Global lightbox instance for all photos
+        let globalLightbox = null;
+
         function initLightboxes() {
-            const grids = document.querySelectorAll('.photo-grid');
-            grids.forEach(grid => {
-                if (grid.lightboxInstance) {
-                    grid.lightboxInstance.refresh();
-                } else {
-                    grid.lightboxInstance = new SimpleLightbox(grid.querySelectorAll('a'), {
-                        captionsData: 'alt',
-                        captionDelay: 250,
-                        animationSpeed: 200,
-                        showCounter: true,
-                    });
+            // Destroy old instance if exists
+            if (globalLightbox) {
+                globalLightbox.destroy();
+            }
 
-                    // Download Button
-                    const updateDownloadButton = () => {
-                        setTimeout(() => {
-                            const img = document.querySelector('.sl-image img');
-                            if (!img) return;
+            // Get ALL photo links from ALL grids
+            const allLinks = document.querySelectorAll('.photo-grid a');
+            
+            if (allLinks.length === 0) return;
 
-                            let btn = document.querySelector('.sl-download-btn');
-                            if (!btn) {
-                                btn = document.createElement('button');
-                                btn.className = 'sl-download-btn';
+            // Create ONE global lightbox for all photos
+            globalLightbox = new SimpleLightbox(allLinks, {
+                captionsData: 'alt',
+                captionDelay: 250,
+                animationSpeed: 200,
+                showCounter: true,
+            });
+
+            // Download Button
+            const updateDownloadButton = () => {
+                setTimeout(() => {
+                    const img = document.querySelector('.sl-image img');
+                    if (!img) return;
+
+                    let btn = document.querySelector('.sl-download-btn');
+                    if (!btn) {
+                        btn = document.createElement('button');
+                        btn.className = 'sl-download-btn';
+                        btn.innerHTML = '<i class="fas fa-download"></i> ดาวน์โหลดรูปนี้';
+                        btn.onclick = async function(e) {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            
+                            const imageUrl = img.src;
+                            const fileName = imageUrl.split('/').pop().split('?')[0] || 'photo.jpg';
+                            
+                            try {
+                                const originalHTML = btn.innerHTML;
+                                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> กำลังโหลด...';
+                                btn.disabled = true;
+                                
+                                const response = await fetch(imageUrl);
+                                const blob = await response.blob();
+                                const blobUrl = window.URL.createObjectURL(blob);
+                                
+                                const a = document.createElement('a');
+                                a.href = blobUrl;
+                                a.download = fileName;
+                                document.body.appendChild(a);
+                                a.click();
+                                document.body.removeChild(a);
+                                window.URL.revokeObjectURL(blobUrl);
+                                
+                                btn.innerHTML = originalHTML;
+                                btn.disabled = false;
+                            } catch (error) {
+                                console.error('Download failed:', error);
+                                alert('ไม่สามารถดาวน์โหลดได้ กรุณาลองใหม่อีกครั้ง');
                                 btn.innerHTML = '<i class="fas fa-download"></i> ดาวน์โหลดรูปนี้';
-                                btn.onclick = async function(e) {
-                                    e.preventDefault();
-                                    e.stopPropagation();
-                                    
-                                    const imageUrl = img.src;
-                                    const fileName = imageUrl.split('/').pop().split('?')[0] || 'photo.jpg';
-                                    
-                                    try {
-                                        const originalHTML = btn.innerHTML;
-                                        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> กำลังโหลด...';
-                                        btn.disabled = true;
-                                        
-                                        const response = await fetch(imageUrl);
-                                        const blob = await response.blob();
-                                        const blobUrl = window.URL.createObjectURL(blob);
-                                        
-                                        const a = document.createElement('a');
-                                        a.href = blobUrl;
-                                        a.download = fileName;
-                                        document.body.appendChild(a);
-                                        a.click();
-                                        document.body.removeChild(a);
-                                        window.URL.revokeObjectURL(blobUrl);
-                                        
-                                        btn.innerHTML = originalHTML;
-                                        btn.disabled = false;
-                                    } catch (error) {
-                                        console.error('Download failed:', error);
-                                        alert('ไม่สามารถดาวน์โหลดได้ กรุณาลองใหม่อีกครั้ง');
-                                        btn.innerHTML = '<i class="fas fa-download"></i> ดาวน์โหลดรูปนี้';
-                                        btn.disabled = false;
-                                    }
-                                };
-                                document.body.appendChild(btn);
+                                btn.disabled = false;
                             }
-                            btn.style.display = 'flex';
-                        }, 100);
-                    };
+                        };
+                        document.body.appendChild(btn);
+                    }
+                    btn.style.display = 'flex';
+                }, 100);
+            };
 
-                    grid.lightboxInstance.on('shown.simplelightbox', updateDownloadButton);
-                    grid.lightboxInstance.on('changed.simplelightbox', updateDownloadButton);
-                    grid.lightboxInstance.on('close.simplelightbox', function() {
-                        const btn = document.querySelector('.sl-download-btn');
-                        if (btn) btn.style.display = 'none';
-                    });
-                }
+            globalLightbox.on('shown.simplelightbox', updateDownloadButton);
+            globalLightbox.on('changed.simplelightbox', updateDownloadButton);
+            globalLightbox.on('close.simplelightbox', function() {
+                const btn = document.querySelector('.sl-download-btn');
+                if (btn) btn.style.display = 'none';
             });
         }
 
