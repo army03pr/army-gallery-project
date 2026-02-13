@@ -4,87 +4,512 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>เข้าสู่ระบบ - ระบบจัดการคลังภาพ</title>
-    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --army-green: #2E4033;
+            --army-green-light: #4A6350;
+            --army-gold: #C5A059;
+            --army-dark: #1a2520;
+            --text-light: #f3f4f6;
+            --text-muted: #9ca3af;
+        }
+
         body {
             font-family: 'Sarabun', sans-serif;
-            background-color: #f0f2f5;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
+            background: 
+                radial-gradient(
+                    ellipse at 20% 30%,
+                    rgba(46, 64, 51, 0.12) 0%,
+                    transparent 50%
+                ),
+                radial-gradient(
+                    ellipse at 80% 70%,
+                    rgba(74, 99, 80, 0.1) 0%,
+                    transparent 50%
+                ),
+                radial-gradient(
+                    ellipse at 50% 50%,
+                    rgba(197, 160, 89, 0.04) 0%,
+                    transparent 80%
+                ),
+                linear-gradient(
+                    135deg,
+                    #f8f9fa 0%,
+                    #ffffff 50%,
+                    #f0f4f8 100%
+                );
+            background-attachment: fixed;
+            position: relative;
+            overflow: hidden;
         }
-        .login-card {
-            background: white;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+
+        /* Animated Background Elements */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(46, 64, 51, 0.02) 0%, transparent 50%),
+                radial-gradient(circle at 80% 50%, rgba(197, 160, 89, 0.02) 0%, transparent 50%);
+            animation: rotate 40s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Login Container */
+        .login-container {
+            position: relative;
+            z-index: 10;
             width: 100%;
-            max-width: 400px;
-            text-align: center;
+            max-width: 440px;
+            padding: 20px;
         }
-        .login-header img { width: 80px; margin-bottom: 20px; }
-        .login-header h2 { margin: 0 0 20px; color: #333; }
-        
-        .form-group { margin-bottom: 15px; text-align: left; }
-        .form-group label { display: block; margin-bottom: 5px; color: #666; }
+
+        /* Login Card */
+        .login-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid rgba(46, 64, 51, 0.1);
+            border-radius: 24px;
+            padding: 50px 40px;
+            box-shadow: 
+                0 25px 70px rgba(46, 64, 51, 0.15),
+                0 10px 30px rgba(0, 0, 0, 0.08),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Card Shine Effect */
+        .login-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(197, 160, 89, 0.08),
+                transparent
+            );
+            animation: slideShine 4s ease-in-out infinite;
+        }
+
+        @keyframes slideShine {
+            0%, 100% { left: -100%; }
+            50% { left: 100%; }
+        }
+
+        /* Header */
+        .login-header {
+            text-align: center;
+            margin-bottom: 35px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .logo-container {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .logo-container img {
+            width: 90px;
+            height: 90px;
+            object-fit: contain;
+            filter: drop-shadow(0 4px 15px rgba(197, 160, 89, 0.3));
+            animation: logoFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .login-header h2 {
+            color: #1a2520;
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            text-shadow: none;
+        }
+
+        .login-header p {
+            color: var(--army-gold);
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        /* Form */
+        #loginForm {
+            position: relative;
+            z-index: 2;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: #374151;
+            font-size: 14px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .form-group label i {
+            color: var(--army-gold);
+            font-size: 16px;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
         .form-group input {
             width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
+            padding: 14px 45px 14px 15px;
+            border: 1.5px solid #e5e7eb;
+            border-radius: 10px;
+            background: #ffffff;
+            color: #1f2937;
+            font-size: 15px;
+            font-family: 'Sarabun', sans-serif;
+            transition: all 0.3s ease;
+            outline: none;
         }
-        
+
+        .form-group input::placeholder {
+            color: #9ca3af;
+        }
+
+        .form-group input:focus {
+            border-color: var(--army-gold);
+            background: #ffffff;
+            box-shadow: 
+                0 0 0 3px rgba(197, 160, 89, 0.1),
+                0 4px 12px rgba(46, 64, 51, 0.08);
+            transform: translateY(-2px);
+        }
+
+        /* Password Toggle */
+        .toggle-password {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #9ca3af;
+            cursor: pointer;
+            font-size: 18px;
+            transition: color 0.3s ease;
+            padding: 5px;
+        }
+
+        .toggle-password:hover {
+            color: var(--army-gold);
+        }
+
+        /* Remember Me */
+        .form-options {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            margin-bottom: 25px;
+            font-size: 13px;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #6b7280;
+            cursor: pointer;
+        }
+
+        .remember-me input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+            accent-color: var(--army-gold);
+        }
+
+        /* Login Button */
         .btn-login {
             width: 100%;
-            padding: 12px;
-            background-color: #2c3e50;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--army-green) 0%, var(--army-green-light) 100%);
             color: white;
             border: none;
-            border-radius: 5px;
-            cursor: pointer;
+            border-radius: 10px;
             font-size: 16px;
-            font-weight: bold;
+            font-weight: 700;
+            font-family: 'Sarabun', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(46, 64, 51, 0.4);
+            position: relative;
+            overflow: hidden;
         }
-        .btn-login:hover { background-color: #1a252f; }
+
+        .btn-login::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn-login:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-login:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(46, 64, 51, 0.6);
+        }
+
+        .btn-login:active {
+            transform: translateY(-1px);
+        }
+
+        .btn-login i {
+            margin-left: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .btn-login:hover i {
+            transform: translateX(5px);
+        }
+
+        /* Loading State */
+        .btn-login.loading {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+
+        .btn-login.loading::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            top: 50%;
+            left: 50%;
+            margin-left: -10px;
+            margin-top: -10px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spinner 0.6s linear infinite;
+        }
+
+        @keyframes spinner {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .login-card {
+                padding: 40px 30px;
+                border-radius: 15px;
+            }
+
+            .login-header h2 {
+                font-size: 22px;
+            }
+
+            .logo-container img {
+                width: 70px;
+                height: 70px;
+            }
+
+            .form-group input {
+                padding: 12px 40px 12px 12px;
+                font-size: 14px;
+            }
+
+            .btn-login {
+                padding: 14px;
+                font-size: 15px;
+            }
+
+            .form-options {
+                flex-direction: column;
+                gap: 10px;
+                align-items: flex-start;
+            }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(17, 24, 39, 0.3);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--army-green);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--army-green-light);
+        }
     </style>
 </head>
 <body>
 
-    <div class="login-card">
-        <div class="login-header">
-            <img src="Royal_Thai_Army_3_Logo.png" alt="Logo">
-            <h2>ระบบจัดการคลังภาพ</h2>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <div class="logo-container">
+                    <img src="Royal_Thai_Army_3_Logo.png" alt="Logo กองทัพภาคที่ 3" onerror="this.style.display='none'">
+                </div>
+                <h2>ระบบจัดการคลังภาพ</h2>
+                <p>กองทัพภาคที่ 3</p>
+            </div>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <label>
+                        <i class="fas fa-user"></i>
+                        ชื่อผู้ใช้ (Username)
+                    </label>
+                    <input 
+                        type="text" 
+                        id="username" 
+                        required 
+                        placeholder="กรอกชื่อผู้ใช้"
+                        autocomplete="username"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        <i class="fas fa-lock"></i>
+                        รหัสผ่าน (Password)
+                    </label>
+                    <div class="input-wrapper">
+                        <input 
+                            type="password" 
+                            id="password" 
+                            required 
+                            placeholder="กรอกรหัสผ่าน"
+                            autocomplete="current-password"
+                        >
+                        <button type="button" class="toggle-password" onclick="togglePassword()">
+                            <i class="fas fa-eye" id="toggleIcon"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-options">
+                    <label class="remember-me">
+                        <input type="checkbox" id="rememberMe">
+                        <span>จำฉันไว้</span>
+                    </label>
+                </div>
+
+                <button type="submit" class="btn-login">
+                    <span>เข้าสู่ระบบ</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+            </form>
         </div>
-        
-        <form id="loginForm">
-            <div class="form-group">
-                <label>ชื่อผู้ใช้ (Username)</label>
-                <input type="text" id="username" required placeholder="กรอกชื่อผู้ใช้">
-            </div>
-            <div class="form-group">
-                <label>รหัสผ่าน (Password)</label>
-                <input type="password" id="password" required placeholder="กรอกรหัสผ่าน">
-            </div>
-            <button type="submit" class="btn-login">เข้าสู่ระบบ</button>
-        </form>
     </div>
 
     <script>
+        // Toggle Password Visibility
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const toggleIcon = document.getElementById('toggleIcon');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
+            }
+        }
+
+        // Remember Me - Load from localStorage
+        window.addEventListener('load', () => {
+            const savedUsername = localStorage.getItem('rememberedUsername');
+            if (savedUsername) {
+                document.getElementById('username').value = savedUsername;
+                document.getElementById('rememberMe').checked = true;
+            }
+        });
+
+        // Login Form Submit
         document.getElementById('loginForm').addEventListener('submit', async (e) => {
-            e.preventDefault(); 
+            e.preventDefault();
             
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
+            const rememberMe = document.getElementById('rememberMe').checked;
+            const loginBtn = document.querySelector('.btn-login');
+
+            // Add loading state
+            loginBtn.classList.add('loading');
+            loginBtn.querySelector('span').textContent = 'กำลังเข้าสู่ระบบ...';
 
             try {
-                // 🔥 แก้ไข: ใช้ /login (Relative Path) แทน http://localhost:3001/login
-                // เพื่อให้ทำงานได้ถูกต้องเมื่ออยู่บน Server จริง
                 const response = await fetch('/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -93,14 +518,26 @@
 
                 const data = await response.json();
 
+                // Remove loading state
+                loginBtn.classList.remove('loading');
+                loginBtn.querySelector('span').textContent = 'เข้าสู่ระบบ';
+
                 if (response.ok) {
+                    // Save token
                     localStorage.setItem('token', data.token);
                     localStorage.setItem('user', JSON.stringify(data.user));
+
+                    // Remember Me
+                    if (rememberMe) {
+                        localStorage.setItem('rememberedUsername', username);
+                    } else {
+                        localStorage.removeItem('rememberedUsername');
+                    }
                     
                     Swal.fire({
                         icon: 'success',
                         title: 'เข้าสู่ระบบสำเร็จ!',
-                        text: 'กำลังพาท่านไปหน้าจัดการ...',
+                        text: 'ยินดีต้อนรับเข้าสู่ระบบ',
                         timer: 1500,
                         showConfirmButton: false
                     }).then(() => {
@@ -111,11 +548,28 @@
                     Swal.fire({
                         icon: 'error',
                         title: 'เข้าสู่ระบบไม่สำเร็จ',
-                        text: data.message
+                        text: data.message || 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง',
+                        confirmButtonColor: '#2E4033'
                     });
                 }
             } catch (err) {
-                Swal.fire('Error', 'ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้', 'error');
+                // Remove loading state
+                loginBtn.classList.remove('loading');
+                loginBtn.querySelector('span').textContent = 'เข้าสู่ระบบ';
+
+                Swal.fire({
+                    icon: 'error',
+                    title: 'เกิดข้อผิดพลาด',
+                    text: 'ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้ กรุณาลองใหม่อีกครั้ง',
+                    confirmButtonColor: '#2E4033'
+                });
+            }
+        });
+
+        // Enter key on password field
+        document.getElementById('password').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                document.getElementById('loginForm').dispatchEvent(new Event('submit'));
             }
         });
     </script>
