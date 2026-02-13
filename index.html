@@ -73,44 +73,15 @@
             background-image: url('https://www.transparenttextures.com/patterns/subtle-white-feathers.png');
         }
 
+        /* ⭐ Subtle Dots Pattern - Dark Mode */
         [data-theme="dark"] body {
             background-color: #111827;
-            background-image:
-                /* carbon fiber weave pattern */
-                repeating-linear-gradient(
-                    0deg,
-                    transparent,
-                    transparent 2px,
-                    rgba(255,255,255,0.015) 2px,
-                    rgba(255,255,255,0.015) 4px
-                ),
-                repeating-linear-gradient(
-                    90deg,
-                    transparent,
-                    transparent 2px,
-                    rgba(255,255,255,0.015) 2px,
-                    rgba(255,255,255,0.015) 4px
-                ),
-                repeating-linear-gradient(
-                    45deg,
-                    rgba(255,255,255,0.0) 0px,
-                    rgba(255,255,255,0.0) 3px,
-                    rgba(255,255,255,0.025) 3px,
-                    rgba(255,255,255,0.025) 4px,
-                    rgba(255,255,255,0.0) 4px,
-                    rgba(255,255,255,0.0) 8px
-                ),
-                repeating-linear-gradient(
-                    -45deg,
-                    rgba(255,255,255,0.0) 0px,
-                    rgba(255,255,255,0.0) 3px,
-                    rgba(255,255,255,0.025) 3px,
-                    rgba(255,255,255,0.025) 4px,
-                    rgba(255,255,255,0.0) 4px,
-                    rgba(255,255,255,0.0) 8px
-                ),
-                linear-gradient(160deg, #0d1117 0%, #111827 50%, #0a0f0d 100%);
-            background-size: 4px 4px, 4px 4px, 8px 8px, 8px 8px, cover;
+            background-image: 
+                radial-gradient(circle, rgba(74, 99, 80, 0.08) 1px, transparent 1px),
+                radial-gradient(circle at 30% 40%, rgba(46, 64, 51, 0.1) 0%, transparent 60%),
+                radial-gradient(circle at 70% 70%, rgba(74, 99, 80, 0.08) 0%, transparent 50%),
+                linear-gradient(135deg, #0d1117 0%, #111827 50%, #1a1f2e 100%);
+            background-size: 30px 30px, cover, cover, cover;
             background-attachment: fixed;
         }
 
