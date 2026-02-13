@@ -93,7 +93,7 @@
 
         @media (max-width: 768px) {
             .container {
-                padding: 0 14px;
+                padding: 0 16px;
             }
         }
 
@@ -679,13 +679,18 @@
                 font-size: 14px;
             }
 
-            /* Content area tighter on mobile */
+            /* Content area — more breathing room */
             .content-area {
-                padding: 30px 0;
+                padding: 36px 0 40px;
             }
 
             .activity-section {
-                margin-bottom: 36px;
+                margin-bottom: 20px;
+                background: var(--bg-card);
+                border-radius: 14px;
+                padding: 18px 14px 14px;
+                border: 1px solid var(--border-color);
+                box-shadow: var(--shadow-card);
             }
 
             /* Section header stacks nicely */
@@ -693,15 +698,16 @@
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 10px;
-                margin-bottom: 16px;
+                margin-bottom: 14px;
+                padding-bottom: 14px;
             }
 
-            /* Title wraps properly, no overflow */
+            /* Title — more indent & breathing room */
             .section-title {
                 font-size: 17px;
-                line-height: 1.4;
+                line-height: 1.5;
                 word-break: break-word;
-                padding-left: 12px;
+                padding-left: 14px;
             }
 
             .section-title::before {
@@ -714,9 +720,10 @@
             .btn-zip {
                 width: auto;
                 align-self: flex-start;
-                padding: 8px 16px;
+                padding: 8px 18px;
                 font-size: 13px;
                 border-radius: 20px;
+                margin-left: 2px;
             }
 
             .photo-grid {
@@ -726,6 +733,11 @@
 
             .img-box {
                 height: 130px;
+                border-radius: 8px;
+            }
+
+            .photo-card {
+                border-radius: 10px;
             }
 
             .card-body {
