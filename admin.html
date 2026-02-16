@@ -1499,7 +1499,7 @@
             </div>
         </div>
 
-        <div class="card" style="border-top: 5px solid #9b59b6;">
+        <div id="storageCard" class="card" style="border-top: 5px solid #9b59b6;">
 
             <div class="card-header-wrapper header-color-storage">
                 <h3 class="card-header-title" style="color: #9b59b6;">
@@ -2549,6 +2549,16 @@
                 }
 
                 console.log('📈 Percentage:', p, 'Text:', pText); // Debug
+
+                // 🔥 ซ่อน Card เมื่อ usage = 0%
+                const storageCard = document.getElementById('storageCard');
+                if (p === 0) {
+                    storageCard.style.display = 'none';
+                    console.log('✅ Storage card hidden (0% usage)');
+                    return; // ไม่ต้องอัปเดต UI ต่อ
+                } else {
+                    storageCard.style.display = 'block';
+                }
 
                 // อัพเดท UI
                 document.getElementById('storagePercentage').innerText = pText;
