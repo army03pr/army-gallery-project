@@ -1513,7 +1513,7 @@
             <div
                 style="background:#f8f9fa; padding:15px; border-radius:12px; margin-bottom:15px; border: 1px solid #d2b4de; box-shadow: 0 2px 5px rgba(0,0,0,0.03);">
                 <div style="display:flex; justify-content:space-between; margin-bottom:5px;">
-                    <span style="font-weight:600; color:#555; font-size: 14px;">เครดิตที่ใช้ไป (Usage)</span>
+                    <span style="font-weight:600; color:#555; font-size: 14px;">พื้นที่ที่ใช้ไป (Storage Usage)</span>
                     <span id="storagePercentage" style="font-weight:bold; color:#9b59b6; font-size:18px;">0%</span>
                 </div>
 
@@ -2554,28 +2554,19 @@
                 document.getElementById('storagePercentage').innerText = pText;
                 document.getElementById('storageBarText').innerText = pText;
 
-                // 🔥 ซ่อน Progress Bar เมื่อ 0% แต่แสดงข้อมูลอื่นๆ ปกติ
-                const progressBarContainer = document.getElementById('storageBar').parentElement;
-                if (p === 0) {
-                    progressBarContainer.style.display = 'none';
-                    console.log('✅ Progress bar hidden (0% usage)');
-                } else {
-                    progressBarContainer.style.display = 'block';
-                    
-                    // แสดง Progress Bar
-                    let barWidth = p;
-                    if (p > 0 && p < 1) barWidth = 1; // ขั้นต่ำ 1%
-                    document.getElementById('storageBar').style.width = barWidth + '%';
+                // แสดง Progress Bar (แม้ว่าจะเป็น 0% ก็แสดง)
+                let barWidth = p;
+                if (p > 0 && p < 1) barWidth = 1; // ขั้นต่ำ 1% ถ้ามีข้อมูล
+                document.getElementById('storageBar').style.width = barWidth + '%';
 
-                    // เปลี่ยนสีตามระดับ
-                    const bar = document.getElementById('storageBar');
-                    if (p > 90) {
-                        bar.style.background = 'linear-gradient(90deg, #e74c3c, #c0392b)';
-                    } else if (p > 80) {
-                        bar.style.background = 'linear-gradient(90deg, #f39c12, #e67e22)';
-                    } else {
-                        bar.style.background = 'linear-gradient(90deg, #3498db, #9b59b6)';
-                    }
+                // เปลี่ยนสีตามระดับ
+                const bar = document.getElementById('storageBar');
+                if (p > 90) {
+                    bar.style.background = 'linear-gradient(90deg, #e74c3c, #c0392b)';
+                } else if (p > 80) {
+                    bar.style.background = 'linear-gradient(90deg, #f39c12, #e67e22)';
+                } else {
+                    bar.style.background = 'linear-gradient(90deg, #3498db, #9b59b6)';
                 }
 
                 // 🔥 FIX 4: ป้องกัน undefined
