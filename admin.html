@@ -1513,14 +1513,14 @@
             <div
                 style="background:#f8f9fa; padding:15px; border-radius:12px; margin-bottom:15px; border: 1px solid #d2b4de; box-shadow: 0 2px 5px rgba(0,0,0,0.03);">
                 <div style="display:flex; justify-content:space-between; margin-bottom:5px;">
-                    <span style="font-weight:600; color:#555; font-size: 14px;">พื้นที่จัดเก็บที่ใช้ (Storage Usage)</span>
+                    <span style="font-weight:600; color:#555; font-size: 14px;">เครดิตที่ใช้ไป (Usage)</span>
                     <span id="storagePercentage" style="font-weight:bold; color:#9b59b6; font-size:18px;">0%</span>
                 </div>
 
                 <div
                     style="width:100%; height:26px; background:#ecf0f1; border-radius:15px; position:relative; overflow:hidden; box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);">
                     <div id="storageBar"
-                        style="height:100%; background:transparent; width:0%; transition:width 0.8s cubic-bezier(0.4, 0, 0.2, 1); display:flex; align-items:center; padding-left: 12px;">
+                        style="height:100%; background:transparent; width:0%; transition:width 0.8s cubic-bezier(0.4, 0, 0.2, 1); display:flex; align-items:center; padding-left: 12px; justify-content: flex-start;">
                         <span id="storageBarText"
                             style="color:#fff; font-weight:bold; font-size:13px; text-shadow: 0 1px 1px rgba(0,0,0,0.3); line-height: 26px; white-space: nowrap; display:none;">0.00%</span>
                     </div>
@@ -2553,28 +2553,35 @@
                 // อัพเดท UI
                 document.getElementById('storagePercentage').innerText = pText;
                 
-                // 🔥 ซ่อนข้อความในหลอดเมื่อ 0%
+                // อัพเดทข้อความในหลอด
                 const barText = document.getElementById('storageBarText');
-                if (p === 0) {
-                    barText.style.display = 'none';
-                } else {
-                    barText.style.display = 'block';
-                    barText.innerText = pText;
-                }
+                barText.innerText = pText;
 
-                // แสดง Progress Bar (แม้ว่าจะเป็น 0% ก็แสดง)
-                let barWidth = p;
-                if (p > 0 && p < 1) barWidth = 1; // ขั้นต่ำ 1% ถ้ามีข้อมูล
-                document.getElementById('storageBar').style.width = barWidth + '%';
-
-                // เปลี่ยนสีตามระดับ
+                // แสดง Progress Bar
                 const bar = document.getElementById('storageBar');
-                if (p > 90) {
-                    bar.style.background = 'linear-gradient(90deg, #e74c3c, #c0392b)';
-                } else if (p > 80) {
-                    bar.style.background = 'linear-gradient(90deg, #f39c12, #e67e22)';
+                let barWidth = p;
+                
+                // 🔥 เมื่อ 0% ให้โปร่งใสแต่แสดงข้อความ
+                if (p === 0) {
+                    bar.style.width = '100%'; // ให้เต็มเพื่อแสดงข้อความ
+                    bar.style.background = 'transparent';
+                    barText.style.display = 'block';
+                    barText.style.color = '#999'; // เปลี่ยนสีข้อความเป็นเทา
                 } else {
-                    bar.style.background = 'linear-gradient(90deg, #3498db, #9b59b6)';
+                    // มีข้อมูล
+                    if (p > 0 && p < 1) barWidth = 1; // ขั้นต่ำ 1%
+                    bar.style.width = barWidth + '%';
+                    barText.style.display = 'block';
+                    barText.style.color = '#fff'; // สีขาว
+                    
+                    // เปลี่ยนสีตามระดับ
+                    if (p > 90) {
+                        bar.style.background = 'linear-gradient(90deg, #e74c3c, #c0392b)';
+                    } else if (p > 80) {
+                        bar.style.background = 'linear-gradient(90deg, #f39c12, #e67e22)';
+                    } else {
+                        bar.style.background = 'linear-gradient(90deg, #3498db, #9b59b6)';
+                    }
                 }
 
                 // 🔥 FIX 4: ป้องกัน undefined
