@@ -201,10 +201,14 @@ function formatBytes(bytes) {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
 }
 
-// 🔥 วิธีที่ 1: ดึงข้อมูลจริงจาก Cloudinary API (Real Storage Usage)
+// 🔥 วิธีที่ 1: ดึงข้อมูลจริงจาก Cloudinary API (Real Storage Usage) + Auto-detect Plan
 async function getCloudinaryUsage() {
     try {
         console.log('📊 Fetching Cloudinary Real Storage Usage...');
+        
+        // 🔥 ดึงข้อมูล Plan จาก Cloudinary API
+        const usageData = await cloudinary.api.usage();
+        console.log('Raw Usage Data:', JSON.stringify(usageData, null, 2));
         
         // ดึงรายการไฟล์ทั้งหมดจาก Cloudinary
         let allResources = [];
@@ -249,17 +253,77 @@ async function getCloudinaryUsage() {
 
         console.log(`📦 Summary: ${fileCount} files, ${formatBytes(totalBytes)}`);
 
-        // Free Plan Limit = 25 GB
-        const limit = 26843545600; // 25 GB in bytes
+        // 🔥 ดึง Limit จาก API อัตโนมัติ (รองรับทุก Plan)
+        let limit = 26843545600; // Default: 25 GB for Free Plan
+        let planName = 'Free';
+        
+        // ลอง 1: ดึงจาก storage.limit
+        if (usageData.storage && typeof usageData.storage.limit === 'number' && usageData.storage.limit > 0) {
+            limit = usageData.storage.limit;
+            planName = usageData.plan || 'Paid';
+            console.log(`✅ Found storage.limit from API: ${formatBytes(limit)} (Plan: ${planName})`);
+        }
+        // ลอง 2: ดึงจาก credits.limit
+        else if (usageData.credits && typeof usageData.credits.limit === 'number' && usageData.credits.limit > 0) {
+            const creditsLimit = usageData.credits.limit;
+            
+            // ถ้าเป็นตัวเลขเล็ก (< 10000) น่าจะเป็น Credits (GB)
+            if (creditsLimit < 10000) {
+                limit = creditsLimit * 1024 * 1024 * 1024; // Convert GB to Bytes
+                console.log(`✅ Converted credits.limit ${creditsLimit} GB to ${formatBytes(limit)}`);
+            } else {
+                limit = creditsLimit; // ถ้าเป็นตัวเลขใหญ่ น่าจะเป็น Bytes แล้ว
+                console.log(`✅ Using credits.limit as bytes: ${formatBytes(limit)}`);
+            }
+            
+            planName = usageData.plan || 'Paid';
+            console.log(`✅ Plan: ${planName}`);
+        }
+        // ลอง 3: ดึงจาก bandwidth.limit
+        else if (usageData.bandwidth && typeof usageData.bandwidth.limit === 'number' && usageData.bandwidth.limit > 0) {
+            limit = usageData.bandwidth.limit;
+            planName = usageData.plan || 'Paid';
+            console.log(`✅ Found bandwidth.limit from API: ${formatBytes(limit)} (Plan: ${planName})`);
+        }
+        // ลอง 4: ดึงจาก transformations.limit
+        else if (usageData.transformations && typeof usageData.transformations.limit === 'number' && usageData.transformations.limit > 0) {
+            limit = usageData.transformations.limit;
+            planName = usageData.plan || 'Paid';
+            console.log(`✅ Found transformations.limit from API: ${formatBytes(limit)} (Plan: ${planName})`);
+        }
+        // ไม่เจอ: ใช้ค่า Default
+        else {
+            console.log(`⚠️  No limit found in API response, using default: 25 GB (Free Plan)`);
+            
+            // ลองเช็คว่ามี plan name บอกไว้หรือไม่
+            if (usageData.plan && usageData.plan.toLowerCase() !== 'free') {
+                planName = usageData.plan;
+                
+                // ประมาณการ limit ตาม plan name
+                switch (planName.toLowerCase()) {
+                    case 'plus':
+                        limit = 268435456000; // 250 GB
+                        console.log(`🔍 Detected Plus plan, estimated limit: ${formatBytes(limit)}`);
+                        break;
+                    case 'advanced':
+                        limit = 1099511627776; // 1 TB
+                        console.log(`🔍 Detected Advanced plan, estimated limit: ${formatBytes(limit)}`);
+                        break;
+                    default:
+                        console.log(`🔍 Detected ${planName} plan, using Free plan default`);
+                }
+            }
+        }
+
         const percent = limit > 0 ? parseFloat(((totalBytes / limit) * 100).toFixed(4)) : 0;
 
         const response = {
             used_bytes: totalBytes,
             used_readable: formatBytes(totalBytes),
             limit_bytes: limit,
-            limit_readable: '25 GB',
+            limit_readable: formatBytes(limit),
             usage_percent: percent,
-            plan: 'Free',
+            plan: planName,
             file_count: fileCount
         };
 
