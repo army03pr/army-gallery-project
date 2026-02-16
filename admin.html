@@ -1513,16 +1513,16 @@
             <div
                 style="background:#f8f9fa; padding:15px; border-radius:12px; margin-bottom:15px; border: 1px solid #d2b4de; box-shadow: 0 2px 5px rgba(0,0,0,0.03);">
                 <div style="display:flex; justify-content:space-between; margin-bottom:5px;">
-                    <span style="font-weight:600; color:#555; font-size: 14px;">พื้นที่ที่ใช้ไป (Storage Usage)</span>
+                    <span style="font-weight:600; color:#555; font-size: 14px;">พื้นที่จัดเก็บที่ใช้ (Storage Usage)</span>
                     <span id="storagePercentage" style="font-weight:bold; color:#9b59b6; font-size:18px;">0%</span>
                 </div>
 
                 <div
                     style="width:100%; height:26px; background:#ecf0f1; border-radius:15px; position:relative; overflow:hidden; box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);">
                     <div id="storageBar"
-                        style="height:100%; background:linear-gradient(90deg, #3498db, #9b59b6); width:0%; transition:width 0.8s cubic-bezier(0.4, 0, 0.2, 1); display:flex; align-items:center; padding-left: 12px;">
+                        style="height:100%; background:transparent; width:0%; transition:width 0.8s cubic-bezier(0.4, 0, 0.2, 1); display:flex; align-items:center; padding-left: 12px;">
                         <span id="storageBarText"
-                            style="color:#fff; font-weight:bold; font-size:13px; text-shadow: 0 1px 1px rgba(0,0,0,0.3); line-height: 26px; white-space: nowrap;">0.00%</span>
+                            style="color:#fff; font-weight:bold; font-size:13px; text-shadow: 0 1px 1px rgba(0,0,0,0.3); line-height: 26px; white-space: nowrap; display:none;">0.00%</span>
                     </div>
                 </div>
 
@@ -2552,7 +2552,15 @@
 
                 // อัพเดท UI
                 document.getElementById('storagePercentage').innerText = pText;
-                document.getElementById('storageBarText').innerText = pText;
+                
+                // 🔥 ซ่อนข้อความในหลอดเมื่อ 0%
+                const barText = document.getElementById('storageBarText');
+                if (p === 0) {
+                    barText.style.display = 'none';
+                } else {
+                    barText.style.display = 'block';
+                    barText.innerText = pText;
+                }
 
                 // แสดง Progress Bar (แม้ว่าจะเป็น 0% ก็แสดง)
                 let barWidth = p;
