@@ -69,6 +69,7 @@
             flex-shrink: 0;
             height: 100%;
             overflow-y: auto;
+            -webkit-overflow-scrolling: touch;  
             transition: all 0.3s ease;
             z-index: 1000;
             position: relative;
@@ -2892,7 +2893,7 @@
         async function renamePhoto(id, o) {
             const { value: n } = await Swal.fire({
                 customClass: {
-                    popup: 'small-modal-popup',
+                    paopup: 'small-modal-popup',
                     title: 'small-modal-title',
                     input: 'small-modal-input',
                     confirmButton: 'swal-btn-confirm',
